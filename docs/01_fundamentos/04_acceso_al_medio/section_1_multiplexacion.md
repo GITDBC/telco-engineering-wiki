@@ -46,7 +46,7 @@ entre usuarios. Las dos últimas, la división por pulsos y la multiplexación e
 responden a necesidades más específicas del acceso radio y de las redes de datos a
 ráfagas respectivamente.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     MUX["Multiplexación"] --> FDM["División en frecuencia"]
     MUX --> TDM["División en tiempo"]
@@ -166,14 +166,14 @@ trama se repite con una frecuencia de 8 kHz, es decir, cada 125 microsegundos, d
 que cada intervalo de tiempo transporta un régimen binario de:
 
 $$
-R_\text{IT} = \frac{8\ \text{bits}}{125\ \mu\text{s}} = 64\ \text{kbit/s}
+R_\text{IT} = \frac{8\ \text{bits}}{125\ \mu\text{s}} = 64\ \text{kbit/s}.
 $$
 
 Puesto que la trama completa contiene 32 intervalos de ese régimen, el régimen binario
 agregado del sistema E1 es:
 
 $$
-R_\text{E1} = 32 \times 64\ \text{kbit/s} = 2048\ \text{kbit/s}
+R_\text{E1} = 32 \times 64\ \text{kbit/s} = 2048\ \text{kbit/s}.
 $$
 
 De esos 32 intervalos, el `IT0` se reserva para la alineación de trama, que se describe
@@ -197,10 +197,10 @@ uno de dos canales de tráfico, hasta cubrir los 30 canales al cabo de las 15 tr
 régimen binario que resulta de esa señalización, por canal, es de:
 
 $$
-R_\text{control} = \frac{4\ \text{bits}}{125\ \mu\text{s} \times 16} = 2\ \text{kbit/s}
+R_\text{control} = \frac{4\ \text{bits}}{125\ \mu\text{s} \times 16} = 2\ \text{kbit/s}.
 $$
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     MF["Multitrama: 16 tramas, 2 ms"] --> F0["Trama 0: alineación de multitrama"]
     MF --> FN["Tramas 1 a 15: señalización de los 30 canales, 2 por trama"]
@@ -222,7 +222,7 @@ flowchart TD
     $$
     R_\text{E1} = \underbrace{30 \times 64}_\text{tráfico} +
     \underbrace{64}_\text{alineación} + \underbrace{64}_\text{señalización} =
-    2048\ \text{kbit/s}
+    2048\ \text{kbit/s}.
     $$
 
     De los 2048 kbit/s agregados, 1920 kbit/s corresponden a información de tráfico y
@@ -345,7 +345,7 @@ la que quedaría disponible para tráfico útil.
     banda de guarda que lo precede, es de:
 
     $$
-    B_\text{canal} = 200\ \text{kHz} + 20\ \text{kHz} = 220\ \text{kHz}
+    B_\text{canal} = 200\ \text{kHz} + 20\ \text{kHz} = 220\ \text{kHz}.
     $$
 
     El número de canales que caben en la banda total se obtiene dividiendo el ancho de
@@ -354,7 +354,7 @@ la que quedaría disponible para tráfico útil.
 
     $$
     N_\text{canales} = \left\lfloor \frac{5000\ \text{kHz}}{220\ \text{kHz}}
-    \right\rfloor = \lfloor 22{,}7 \rfloor = 22\ \text{canales}
+    \right\rfloor = \lfloor 22{,}7 \rfloor = 22\ \text{canales}.
     $$
 
     Aumentar la banda de guarda de 20 a 50 kHz por canal, para dar más margen frente a

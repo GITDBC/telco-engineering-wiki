@@ -68,7 +68,7 @@ lugar $N$ pulsos distintos que ocupan el mismo intervalo temporal, cada uno modu
 su propio símbolo:
 
 $$
-s(t) = \sum_{k=0}^{N-1} a_k\, p_k(t)
+s(t) = \sum_{k=0}^{N-1} a_k\, p_k(t),
 $$
 
 donde $a_k$ es el símbolo que transporta el subcanal $k$, tomado de una constelación
@@ -83,7 +83,7 @@ La condición que hace posible esa separación es la **ortogonalidad** entre pul
 se expresa mediante el producto interno de dos de ellos sobre el intervalo de símbolo:
 
 $$
-\langle p_k, p_l \rangle = \int_{0}^{T_S} p_k(t)\, p_l^{*}(t)\, dt = E_p\, \delta_{kl}
+\langle p_k, p_l \rangle = \int_{0}^{T_S} p_k(t)\, p_l^{*}(t)\, dt = E_p\, \delta_{kl},
 $$
 
 donde $T_S$ es la duración del intervalo de símbolo, $p_l^{*}(t)$ es el conjugado
@@ -100,7 +100,7 @@ ausencia de distorsión y de ruido, la correlación con $p_l^{*}(t)$ da:
 
 $$
 \int_{0}^{T_S} s(t)\, p_l^{*}(t)\, dt = \sum_{k=0}^{N-1} a_k \langle p_k, p_l \rangle
-= a_l\, E_p
+= a_l\, E_p.
 $$
 
 El resultado depende exclusivamente del símbolo $a_l$, porque todos los términos con $k
@@ -152,7 +152,7 @@ El pulso asignado al subcanal $k$ en un sistema OFDM es una portadora compleja d
 frecuencia $k\Delta f$, limitada al intervalo de símbolo:
 
 $$
-p_k(t) = e^{\,j2\pi k \Delta f\, t}, \qquad t \in \lbrack 0, T_S)
+p_k(t) = e^{\,j2\pi k \Delta f\, t}, \qquad t \in \lbrack 0, T_S),
 $$
 
 donde $\Delta f$ es la separación entre portadoras contiguas y $T_S$ es la duración útil
@@ -165,7 +165,7 @@ producto interno sobre el intervalo de símbolo:
 
 $$
 \frac{1}{T_S}\int_{0}^{T_S} e^{\,j2\pi k \Delta f\, t}\, e^{-j2\pi l \Delta f\, t}\, dt
-= \frac{1}{T_S}\int_{0}^{T_S} e^{\,j2\pi (k-l) \Delta f\, t}\, dt
+= \frac{1}{T_S}\int_{0}^{T_S} e^{\,j2\pi (k-l) \Delta f\, t}\, dt.
 $$
 
 La integral de una exponencial compleja sobre un intervalo que contiene un número entero
@@ -173,7 +173,7 @@ de sus periodos es nula. Para $k \neq l$, el integrando completa exactamente $(k
 periodos en el intervalo $T_S$ si y solo si la separación entre portadoras cumple:
 
 $$
-\Delta f = \frac{1}{T_S}
+\Delta f = \frac{1}{T_S}.
 $$
 
 Esta igualdad es la condición fundamental de un sistema OFDM y liga de forma rígida dos
@@ -201,7 +201,7 @@ correlacionando. El ancho de banda ocupado es, en consecuencia, el producto del 
 de portadoras por su separación:
 
 $$
-B_w = N_u \Delta f
+B_w = N_u \Delta f,
 $$
 
 donde $N_u$ es el número de portadoras efectivamente empleadas para transmitir. Un
@@ -217,7 +217,7 @@ símbolo, toma en el instante $n T_M$ el valor:
 
 $$
 x\lbrack n \rbrack = \frac{1}{\sqrt{N}} \sum_{k=0}^{N-1} X_k\,
-e^{\,j2\pi k n / N}, \qquad n = 0, 1, \ldots, N-1
+e^{\,j2\pi k n / N}, \qquad n = 0, 1, \ldots, N-1,
 $$
 
 donde $X_k$ es el símbolo QAM que modula la portadora $k$. Esta expresión es la
@@ -233,7 +233,7 @@ coste crece como $N \log_2 N$ en lugar de como $N^2$. Esa reducción hace viable
 sistemas con miles de portadoras, y es la razón por la que el número de portadoras de
 todo sistema OFDM real es una potencia de dos.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     BITS["Flujo de bits"] --> QAM["Codificador de<br/>símbolos QAM"]
     QAM --> MAP["Asignación de símbolos<br/>a portadoras"]
@@ -241,80 +241,6 @@ flowchart LR
     IFFT --> CP["Inserción del<br/>prefijo cíclico"]
     CP --> DAC["Conversión a analógico<br/>y traslación a RF"]
 ```
-
-El código siguiente implementa el modulador y el demodulador completos en dos funciones,
-transmite varios símbolos OFDM de 64 portadoras moduladas en 16-QAM y comprueba que la
-cadena reconstruye los símbolos sin error en ausencia de canal. La última pareja de
-cifras compara el coste de calcular la transformada de forma directa y mediante FFT.
-
-```python linenums="1"
-import numpy as np
-
-
-def modula_ofdm(simbolos: np.ndarray, longitud_prefijo: int) -> np.ndarray:
-    """Modula símbolos OFDM mediante la IDFT e inserta el prefijo cíclico.
-
-    Args:
-        simbolos: Matriz de símbolos QAM con un símbolo OFDM por fila y una
-            columna por portadora.
-        longitud_prefijo: Número de muestras del prefijo cíclico.
-
-    Returns:
-        Vector de muestras temporales de la señal OFDM.
-    """
-    # La IDFT ortonormal convierte cada fila de portadoras en muestras de tiempo
-    muestras = np.fft.ifft(simbolos, axis=-1, norm="ortho")
-    # El prefijo cíclico replica la cola del símbolo al comienzo del mismo
-    prefijo = muestras[:, -longitud_prefijo:]
-    return np.concatenate((prefijo, muestras), axis=-1).ravel()
-
-
-def demodula_ofdm(
-    muestras: np.ndarray, num_portadoras: int, longitud_prefijo: int
-) -> np.ndarray:
-    """Descarta el prefijo cíclico y recupera las portadoras con la DFT."""
-    bloques = muestras.reshape(-1, num_portadoras + longitud_prefijo)
-    # El prefijo solo absorbe el transitorio del canal, no aporta información
-    utiles = bloques[:, longitud_prefijo:]
-    return np.fft.fft(utiles, axis=-1, norm="ortho")
-
-
-num_portadoras = 64
-longitud_prefijo = 16
-num_simbolos = 4
-generador = np.random.default_rng(seed=0)
-niveles = np.array([-3.0, -1.0, 1.0, 3.0]) / np.sqrt(10.0)
-reales = generador.choice(niveles, size=(num_simbolos, num_portadoras))
-imaginarios = generador.choice(niveles, size=(num_simbolos, num_portadoras))
-simbolos = reales + 1j * imaginarios
-transmitida = modula_ofdm(simbolos, longitud_prefijo)
-recibidos = demodula_ofdm(transmitida, num_portadoras, longitud_prefijo)
-
-muestras_por_simbolo = num_portadoras + longitud_prefijo
-error = np.max(np.abs(recibidos - simbolos))
-print(f"Muestras por simbolo OFDM: {muestras_por_simbolo}")
-print(f"Muestras totales transmitidas: {transmitida.size}")
-print(f"Error maximo de reconstruccion: {error:.2e}")
-print(f"Potencia media de la senal: {np.mean(np.abs(transmitida) ** 2):.3f}")
-productos_dft = num_portadoras**2
-productos_fft = num_portadoras * np.log2(num_portadoras) / 2
-print(f"Productos de una DFT directa: {productos_dft}")
-print(f"Productos de una FFT: {productos_fft:.0f}")
-```
-
-```plaintext title="Expected output"
-Muestras por simbolo OFDM: 80
-Muestras totales transmitidas: 320
-Error maximo de reconstruccion: 4.97e-16
-Potencia media de la senal: 1.042
-Productos de una DFT directa: 4096
-Productos de una FFT: 192
-```
-
-El error de reconstrucción queda en el orden de la precisión numérica, lo que confirma
-que la cadena IDFT-DFT recupera los símbolos de forma exacta. Con solo 64 portadoras, el
-cálculo directo de la transformada exigiría más de veinte veces los productos que emplea
-la FFT, y esa proporción crece de forma lineal con el número de portadoras.
 
 ## Canales con ecos
 
@@ -340,7 +266,7 @@ de un símbolo se extinguen antes de que comience el intervalo útil del siguien
 ISI desaparece:
 
 $$
-T_G \ge \Delta\tau_\text{máx}
+T_G \ge \Delta\tau_\text{máx},
 $$
 
 donde $\Delta\tau_\text{máx}$ es el retardo del eco más tardío que llega con potencia
@@ -363,7 +289,7 @@ sino rellenarlo con una copia de las últimas muestras del propio símbolo. Esa 
 denomina **prefijo cíclico** (_cyclic prefix_) y su longitud, expresada en muestras, se
 designa habitualmente por $E$, de modo que $T_G = E\, T_M$.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     subgraph SM["Símbolo OFDM m"]
         direction LR
@@ -386,7 +312,7 @@ n \rbrack$ es la respuesta al impulso discreta del canal y $H_k$ su DFT de $N$ p
 el símbolo recibido en la portadora $k$ resulta ser:
 
 $$
-Y_k = H_k X_k + W_k
+Y_k = H_k X_k + W_k,
 $$
 
 donde $X_k$ es el símbolo transmitido en esa portadora, $H_k$ es la ganancia compleja
@@ -401,71 +327,9 @@ prefijo. Expresada en muestras, la condición es que la longitud $L$ de la respu
 impulso cumpla $L - 1 \le E$, versión discreta de la condición $T_G \ge
 \Delta\tau_\text{máx}$ enunciada más arriba. Cuando se incumple, reaparecen
 simultáneamente la ISI y la ICI, y su severidad crece con la parte de la respuesta del
-canal que queda fuera del prefijo.
-
-El código siguiente cuantifica ese comportamiento. Reutiliza las funciones anteriores,
-hace pasar la señal por un canal de doce ecos de amplitud decreciente y mide, para
-distintas longitudes de prefijo, el error cuadrático medio que queda tras corregir la
-ganancia de cada portadora.
-
-```python linenums="1"
-def error_cuadratico_relativo(
-    simbolos: np.ndarray, respuesta_canal: np.ndarray, longitud_prefijo: int
-) -> float:
-    """Mide el error residual tras ecualizar, relativo a la potencia de símbolo.
-
-    Returns:
-        Error cuadrático medio en decibelios.
-    """
-    num_portadoras = simbolos.shape[-1]
-    transmitida = modula_ofdm(simbolos, longitud_prefijo)
-    recibida = np.convolve(transmitida, respuesta_canal)[: transmitida.size]
-    recibidos = demodula_ofdm(recibida, num_portadoras, longitud_prefijo)
-    # Ecualizador de un solo coeficiente por portadora
-    ecualizados = recibidos / np.fft.fft(respuesta_canal, num_portadoras)
-    error = np.mean(np.abs(ecualizados - simbolos) ** 2)
-    return 10.0 * np.log10(error / np.mean(np.abs(simbolos) ** 2))
-
-
-num_portadoras = 64
-num_simbolos = 200
-generador = np.random.default_rng(seed=1)
-niveles = np.array([-3.0, -1.0, 1.0, 3.0]) / np.sqrt(10.0)
-simbolos = generador.choice(niveles, size=(num_simbolos, num_portadoras)) + 1j * (
-    generador.choice(niveles, size=(num_simbolos, num_portadoras))
-)
-# Canal con doce ecos de amplitud decreciente y fase aleatoria
-retardos = np.arange(12)
-amplitudes = np.exp(-retardos / 4.0)
-fases = generador.uniform(0.0, 2.0 * np.pi, retardos.size)
-respuesta_canal = amplitudes * np.exp(1j * fases)
-
-for longitud_prefijo in (16, 11, 8, 4):
-    error_db = error_cuadratico_relativo(simbolos, respuesta_canal, longitud_prefijo)
-    holgura = longitud_prefijo - (respuesta_canal.size - 1)
-    print(
-        f"Prefijo {longitud_prefijo:2d} muestras, "
-        f"holgura {holgura:3d}: {error_db:6.1f} dB"
-    )
-```
-
-```plaintext title="Expected output"
-Prefijo 16 muestras, holgura   5: -305.8 dB
-Prefijo 11 muestras, holgura   0: -305.8 dB
-Prefijo  8 muestras, holgura  -3:  -25.8 dB
-Prefijo  4 muestras, holgura  -7:  -15.0 dB
-```
-
-Las cifras reproducen con nitidez el carácter abrupto de la condición. Con un prefijo de
-16 muestras el error queda en el nivel de la precisión de la aritmética en punto
-flotante, es decir, la cadena es exacta. Con 11 muestras, justo la longitud del canal
-menos uno, el error sigue siendo nulo: alargar el prefijo por encima de ese valor no
-aporta nada. Con 8 muestras aparece un error de $-26$ dB respecto a la potencia de
-símbolo, suficiente para dispersar la constelación recibida, y con 4 muestras alcanza
-$-15$ dB, un nivel que una constelación de 16-QAM ya no tolera. Esa transición entre el
-error nulo y la degradación severa, gobernada únicamente por la relación entre el
-prefijo y la dispersión del canal, convierte el dimensionado del prefijo en la decisión
-más crítica del diseño.
+canal que queda fuera del prefijo. Esa transición entre el error nulo y la degradación
+severa, gobernada únicamente por la relación entre el prefijo y la dispersión del canal,
+convierte el dimensionado del prefijo en la decisión más crítica del diseño.
 
 ### Ecualizador de frecuencia
 
@@ -474,7 +338,7 @@ un único producto por portadora. El bloque que realiza esa corrección es el
 **ecualizador de frecuencia** (_frequency domain equalizer_, FEQ), cuya salida es:
 
 $$
-\hat{X}_k = \frac{Y_k}{\hat{H}_k}
+\hat{X}_k = \frac{Y_k}{\hat{H}_k},
 $$
 
 donde $\hat{H}_k$ es la estimación de la ganancia del canal en la portadora $k$,
@@ -493,55 +357,6 @@ proporción en que corrige la señal. Las portadoras no ofrecen por tanto la mis
 calidad, y un sistema bien diseñado adapta la constelación de cada una a su relación
 señal-ruido, con constelaciones densas en las portadoras favorecidas y reducidas, o
 ninguna transmisión, en las que caen en un mínimo del canal.
-
-El código siguiente hace pasar la señal por un canal con un rayo directo y tres ecos,
-mide la dispersión de ganancias entre portadoras y compara el error antes y después del
-ecualizador. Reutiliza las funciones de modulación y demodulación definidas más arriba.
-
-```python linenums="1"
-num_portadoras = 64
-longitud_prefijo = 16
-num_simbolos = 8
-generador = np.random.default_rng(seed=3)
-niveles = np.array([-3.0, -1.0, 1.0, 3.0]) / np.sqrt(10.0)
-reales = generador.choice(niveles, size=(num_simbolos, num_portadoras))
-imaginarios = generador.choice(niveles, size=(num_simbolos, num_portadoras))
-simbolos = reales + 1j * imaginarios
-# Canal con un rayo directo y tres ecos retardados respecto a el
-respuesta_canal = np.array([1.0, 0.0, 0.6 - 0.3j, 0.0, 0.0, 0.25j, 0.15])
-transmitida = modula_ofdm(simbolos, longitud_prefijo)
-recibida = np.convolve(transmitida, respuesta_canal)[: transmitida.size]
-recibidos = demodula_ofdm(recibida, num_portadoras, longitud_prefijo)
-# La DFT de la respuesta al impulso da la ganancia compleja de cada portadora
-ganancia = np.fft.fft(respuesta_canal, num_portadoras)
-ecualizados = recibidos / ganancia
-
-modulos = np.abs(ganancia)
-print(f"Longitud del canal: {respuesta_canal.size} muestras")
-print(f"Prefijo ciclico: {longitud_prefijo} muestras")
-print(f"Ganancia minima entre portadoras: {modulos.min():.3f}")
-print(f"Ganancia maxima entre portadoras: {modulos.max():.3f}")
-print(f"Error maximo sin ecualizar: {np.max(np.abs(recibidos - simbolos)):.3f}")
-print(f"Error maximo tras el ecualizador: {np.max(np.abs(ecualizados - simbolos)):.2e}")
-```
-
-```plaintext title="Expected output"
-Longitud del canal: 7 muestras
-Prefijo ciclico: 16 muestras
-Ganancia minima entre portadoras: 0.025
-Ganancia maxima entre portadoras: 1.935
-Error maximo sin ecualizar: 1.433
-Error maximo tras el ecualizador: 1.76e-14
-```
-
-El canal reparte entre las portadoras ganancias que van de 0,025 a 1,935, casi cuarenta
-decibelios de diferencia entre la portadora mejor tratada y la que cae en el mínimo más
-profundo, sobre un ancho de banda de solo 64 portadoras. Sin ecualizar, el error alcanza
-valores del orden de la propia amplitud de la constelación y ninguna decisión de símbolo
-sería fiable. Tras dividir por la ganancia de cada portadora, el error vuelve al nivel
-de la precisión numérica, aunque en la portadora de ganancia 0,025 esa corrección
-multiplica por cuarenta y amplificaría en la misma medida cualquier ruido presente en
-ella.
 
 ## Parámetros y fórmulas de un sistema OFDM
 
@@ -572,14 +387,14 @@ El punto de partida del dimensionado es la condición de ortogonalidad, que liga
 separación entre portadoras con la duración útil del símbolo:
 
 $$
-\Delta f = \frac{1}{T_S}
+\Delta f = \frac{1}{T_S}.
 $$
 
 El muestreo de la señal dentro del intervalo útil reparte $N$ muestras en $T_S$, de
 donde se obtienen el periodo y la frecuencia de muestreo:
 
 $$
-T_M = \frac{T_S}{N}, \qquad f_M = \frac{1}{T_M} = N \Delta f
+T_M = \frac{T_S}{N}, \qquad f_M = \frac{1}{T_M} = N \Delta f.
 $$
 
 La frecuencia de muestreo coincide, por tanto, con el ancho de banda que abarcaría el
@@ -587,11 +402,11 @@ conjunto completo de las $N$ portadoras. El prefijo cíclico ocupa $E$ muestras 
 mismo ritmo, lo que fija su duración y la duración total del símbolo:
 
 $$
-T_G = E\, T_M, \qquad T_\text{OFDM} = T_S + T_G = (N + E)\, T_M
+T_G = E\, T_M, \qquad T_\text{OFDM} = T_S + T_G = (N + E)\, T_M,
 $$
 
 $$
-f_\text{OFDM} = \frac{1}{T_\text{OFDM}}
+f_\text{OFDM} = \frac{1}{T_\text{OFDM}}.
 $$
 
 Conviene ser preciso sobre qué magnitudes afecta el prefijo. El prefijo **se añade** a
@@ -612,7 +427,7 @@ que en el dominio de la frecuencia equivale a exigir que la separación entre po
 supere ampliamente la dispersión Doppler máxima:
 
 $$
-\Delta f \gg f_{d,\text{máx}}
+\Delta f \gg f_{d,\text{máx}}.
 $$
 
 Las dos últimas restricciones tiran en sentidos opuestos y acotan la separación entre
@@ -632,7 +447,7 @@ fijados el entorno de propagación y la movilidad máxima que debe soportarse.
 
     $$
     B_c \sim \frac{1}{\Delta\tau_\text{máx}} = 200\ \text{kHz}
-    \quad \Rightarrow \quad \Delta f \le 20\ \text{kHz}
+    \quad \Rightarrow \quad \Delta f \le 20\ \text{kHz}.
     $$
 
     La movilidad fija el límite inferior. Con
@@ -641,7 +456,7 @@ fijados el entorno de propagación y la movilidad máxima que debe soportarse.
 
     $$
     f_{d,\text{máx}} = \frac{v f_c}{c} =
-    \frac{33{,}3 \times 2 \times 10^{9}}{3 \times 10^{8}} = 222\ \text{Hz}
+    \frac{33{,}3 \times 2 \times 10^{9}}{3 \times 10^{8}} = 222\ \text{Hz}.
     $$
 
     Exigiendo que la separación entre portadoras supere en al menos cincuenta veces esa
@@ -669,7 +484,7 @@ La fracción de la duración del símbolo que transporta información útil defi
 **eficiencia** asociada al prefijo cíclico:
 
 $$
-\eta = \frac{T_S}{T_S + T_G} = \frac{N}{N + E}
+\eta = \frac{T_S}{T_S + T_G} = \frac{N}{N + E}.
 $$
 
 Esta cifra es el coste directo de la inmunidad frente a los ecos: la parte del tiempo
@@ -681,7 +496,7 @@ Cada símbolo OFDM transporta un símbolo de constelación por portadora útil, 
 entrega $\bar{B} N_u$ bits cada $T_\text{OFDM}$ segundos. El régimen binario resulta:
 
 $$
-R_B = \bar{B}\, N_u\, f_\text{OFDM} = \bar{B}\, N_u\, \Delta f\, \eta
+R_B = \bar{B}\, N_u\, f_\text{OFDM} = \bar{B}\, N_u\, \Delta f\, \eta.
 $$
 
 La segunda forma de la expresión, obtenida sustituyendo $f_\text{OFDM} = \eta / T_S =
@@ -691,7 +506,7 @@ portadoras asignadas y la eficiencia del prefijo. Dividiendo por el ancho de ban
 ocupado $B_w = N_u \Delta f$ se obtiene la eficiencia espectral:
 
 $$
-\frac{R_B}{B_w} = \bar{B}\, \eta
+\frac{R_B}{B_w} = \bar{B}\, \eta.
 $$
 
 Este resultado es notablemente simple: la eficiencia espectral de un sistema OFDM es el
@@ -713,7 +528,7 @@ información de usuario.
 
     $$
     f_M = N \Delta f = 2048 \times 15\ \text{kHz} = 30{,}72\ \text{MHz},
-    \qquad T_M = 32{,}55\ \text{ns}
+    \qquad T_M = 32{,}55\ \text{ns}.
     $$
 
     La duración útil del símbolo es el inverso de la separación entre portadoras, y el
@@ -721,19 +536,19 @@ información de usuario.
 
     $$
     T_S = \frac{1}{15\ \text{kHz}} = 66{,}67\ \mu\text{s},
-    \qquad T_G = 144 \times 32{,}55\ \text{ns} = 4{,}69\ \mu\text{s}
+    \qquad T_G = 144 \times 32{,}55\ \text{ns} = 4{,}69\ \mu\text{s},
     $$
 
     $$
     T_\text{OFDM} = 66{,}67 + 4{,}69 = 71{,}35\ \mu\text{s}
-    \quad \Rightarrow \quad f_\text{OFDM} = 14{,}01\ \text{kHz}
+    \quad \Rightarrow \quad f_\text{OFDM} = 14{,}01\ \text{kHz}.
     $$
 
     La eficiencia del prefijo y el régimen binario resultan:
 
     $$
     \eta = \frac{2048}{2048 + 144} = 0{,}9343,
-    \qquad R_B = 4 \times 1200 \times 14{,}01\ \text{kHz} = 67{,}3\ \text{Mbit/s}
+    \qquad R_B = 4 \times 1200 \times 14{,}01\ \text{kHz} = 67{,}3\ \text{Mbit/s}.
     $$
 
     El ancho de banda ocupado por las 1200 portadoras útiles es
@@ -764,7 +579,7 @@ calcula una única IFFT sobre el conjunto. La señal radiada es común a todos l
 usuarios, y cada terminal recupera la suya aplicando la FFT y quedándose con las
 portadoras que le corresponden, descartando las demás.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     BANDA["Banda del sistema: N portadoras"] --> G1["Grupo 1<br/>portadoras 0 a 11"]
     BANDA --> G2["Grupo 2<br/>portadoras 12 a 35"]
@@ -796,7 +611,7 @@ respuestas, cuyo volumen crece con la resolución frecuencial que se desee explo
 
     $$
     R_\text{portadora} = \bar{B}\, \Delta f\, \eta =
-    4 \times 15\ \text{kHz} \times 0{,}9343 = 56{,}06\ \text{kbit/s}
+    4 \times 15\ \text{kHz} \times 0{,}9343 = 56{,}06\ \text{kbit/s}.
     $$
 
     El número de portadoras necesarias es el cociente entre el régimen objetivo y esa
@@ -805,7 +620,7 @@ respuestas, cuyo volumen crece con la resolución frecuencial que se desee explo
 
     $$
     N_u = \left\lceil \frac{2\ \text{Mbit/s}}{56{,}06\ \text{kbit/s}} \right\rceil =
-    \lceil 35{,}7 \rceil = 36\ \text{portadoras}
+    \lceil 35{,}7 \rceil = 36\ \text{portadoras}.
     $$
 
     Las 36 portadoras entregan 2,02 Mbit/s y ocupan
@@ -835,7 +650,7 @@ terminal el avance que debe aplicar, valor que se actualiza a medida que el term
 desplaza por la celda. La granularidad temporal de ese mecanismo condiciona el tamaño
 máximo de celda que el sistema puede soportar.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant TA as Terminal cercano
     participant TB as Terminal lejano
@@ -871,7 +686,7 @@ cociente entre la potencia instantánea máxima y la potencia media:
 
 $$
 \text{PAPR} = \frac{\max_t \lvert x(t) \rvert^{2}}
-{\mathbb{E}\lbrack \lvert x(t) \rvert^{2} \rbrack}
+{\mathbb{E}\lbrack \lvert x(t) \rvert^{2} \rbrack},
 $$
 
 donde $x(t)$ es la señal transmitida y $\mathbb{E}\lbrack \cdot \rbrack$ denota el valor
@@ -920,7 +735,7 @@ el sistema interfiere a las bandas adyacentes y degrada su propia constelación 
     con ambos niveles de potencia es:
 
     $$
-    \frac{d_2}{d_1} = 10^{\,\Delta P / (10 n)} = 10^{\,2{,}1 / 35} = 1{,}15
+    \frac{d_2}{d_1} = 10^{\,\Delta P / (10 n)} = 10^{\,2{,}1 / 35} = 1{,}15.
     $$
 
     El resultado supone un 15 % más de alcance en el enlace ascendente, o de forma
@@ -945,7 +760,7 @@ $M$ coeficientes resultantes se colocan en esas portadoras y el resto de las del
 se pone a cero, tras lo cual se calcula la IFFT de tamaño $N$ y se inserta el prefijo
 cíclico igual que en OFDM.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     QAM["M símbolos QAM"] --> FFTM["FFT de tamaño M<br/>precodificación"]
     FFTM --> MAP["Asignación a las M portadoras<br/>del usuario, resto a cero"]
@@ -970,92 +785,12 @@ la envolvente de la constelación empleada. La relación entre la amplitud máxi
 amplitud eficaz de una constelación QAM es modesta, de modo que la PAPR de la señal
 SC-FDM se mantiene muy por debajo de la de una señal OFDM equivalente.
 
-El código siguiente cuantifica la diferencia. Genera un número elevado de símbolos con
-ambas técnicas sobre 64 portadoras de un sistema de 256, sobremuestrea la señal por
-cuatro para capturar los picos que caen entre muestras y compara la PAPR media y la PAPR
-que se supera en el uno por ciento de los símbolos, tanto para 4-QAM como para 16-QAM.
-
-```python linenums="1"
-import numpy as np
-
-
-def papr_db(muestras: np.ndarray) -> float:
-    """Calcula la relación de potencia de pico a media, en decibelios.
-
-    Args:
-        muestras: Vector de muestras complejas de un símbolo transmitido.
-
-    Returns:
-        Relación entre la potencia instantánea máxima y la media, en dB.
-    """
-    potencia = np.abs(muestras) ** 2
-    return 10.0 * np.log10(np.max(potencia) / np.mean(potencia))
-
-
-def genera_ofdm(
-    datos: np.ndarray, num_portadoras: int, sobremuestreo: int
-) -> np.ndarray:
-    """Sitúa los símbolos en portadoras contiguas y pasa al dominio del tiempo."""
-    espectro = np.zeros(num_portadoras * sobremuestreo, dtype=complex)
-    espectro[: datos.size] = datos
-    return np.fft.ifft(espectro)
-
-
-def genera_sc_fdm(
-    datos: np.ndarray, num_portadoras: int, sobremuestreo: int
-) -> np.ndarray:
-    """Precodifica los símbolos con una DFT de tamaño M antes de la IDFT."""
-    # La precodificación traslada los símbolos al dominio de la frecuencia
-    precodificados = np.fft.fft(datos, norm="ortho")
-    espectro = np.zeros(num_portadoras * sobremuestreo, dtype=complex)
-    espectro[: datos.size] = precodificados
-    return np.fft.ifft(espectro)
-
-
-num_portadoras = 256
-num_asignadas = 64
-sobremuestreo = 4
-num_realizaciones = 2000
-generador = np.random.default_rng(seed=2)
-constelaciones = {
-    "4-QAM": np.array([-1.0, 1.0]) / np.sqrt(2.0),
-    "16-QAM": np.array([-3.0, -1.0, 1.0, 3.0]) / np.sqrt(10.0),
-}
-for nombre, niveles in constelaciones.items():
-    papr_ofdm = np.empty(num_realizaciones)
-    papr_sc = np.empty(num_realizaciones)
-    for indice in range(num_realizaciones):
-        reales = generador.choice(niveles, size=num_asignadas)
-        imaginarios = generador.choice(niveles, size=num_asignadas)
-        datos = reales + 1j * imaginarios
-        papr_ofdm[indice] = papr_db(genera_ofdm(datos, num_portadoras, sobremuestreo))
-        papr_sc[indice] = papr_db(genera_sc_fdm(datos, num_portadoras, sobremuestreo))
-    media_ofdm = np.mean(papr_ofdm)
-    media_sc = np.mean(papr_sc)
-    pico_ofdm = np.percentile(papr_ofdm, 99)
-    pico_sc = np.percentile(papr_sc, 99)
-    print(f"{nombre} sobre {num_asignadas} portadoras")
-    print(f"  PAPR media:      OFDM {media_ofdm:5.2f} dB / SC-FDM {media_sc:5.2f} dB")
-    print(f"  PAPR al 1 %:     OFDM {pico_ofdm:5.2f} dB / SC-FDM {pico_sc:5.2f} dB")
-```
-
-```plaintext title="Expected output"
-4-QAM sobre 64 portadoras
-  PAPR media:      OFDM  7.48 dB / SC-FDM  5.33 dB
-  PAPR al 1 %:     OFDM  9.87 dB / SC-FDM  6.99 dB
-16-QAM sobre 64 portadoras
-  PAPR media:      OFDM  7.42 dB / SC-FDM  5.90 dB
-  PAPR al 1 %:     OFDM  9.92 dB / SC-FDM  7.82 dB
-```
-
-Las cifras confirman la ventaja y revelan un matiz importante. En el percentil que
-interesa al dimensionado del amplificador, SC-FDM reduce la PAPR en 2,9 dB con 4-QAM y
-en 2,1 dB con 16-QAM, que son los márgenes que el ejemplo anterior traducía en alcance.
-El matiz está en la dependencia con la constelación: la PAPR de OFDM apenas varía entre
-4-QAM y 16-QAM, porque la gobierna la suma de muchas portadoras y no la constelación
-individual, mientras que la de SC-FDM crece 0,8 dB al pasar de una a la otra. Recurrir a
-constelaciones de orden reducido para contener la PAPR es por tanto eficaz en SC-FDM e
-inútil en OFDM.
+Esa diferencia estructural tiene una consecuencia adicional sobre la dependencia con la
+constelación. La PAPR de OFDM apenas varía al cambiar el orden de la constelación,
+porque la gobierna la suma de muchas portadoras y no la constelación individual,
+mientras que la de SC-FDM crece con el orden de la constelación, puesto que sigue de
+cerca su envolvente. Recurrir a constelaciones de orden reducido para contener la PAPR
+es por tanto eficaz en SC-FDM e inútil en OFDM.
 
 ### Recepción y deshecho de la precodificación
 
@@ -1066,7 +801,7 @@ asignadas al usuario y las corrige con el ecualizador de frecuencia, que sigue s
 convolución circular. Solo entonces deshace la precodificación aplicando una IDFT de
 tamaño $M$, que devuelve los símbolos de constelación originales.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     ADC["Muestreo y paso a<br/>banda base"] --> QCP["Eliminación<br/>del prefijo"]
     QCP --> FFTN["FFT de tamaño N"]
@@ -1099,7 +834,7 @@ Una secuencia de Zadoff-Chu de longitud $N_{zc}$ y raíz $u$ se define mediante 
 que crece de forma cuadrática con el índice de muestra:
 
 $$
-x_u\lbrack n \rbrack = e^{\,-j\pi u n (n+1) / N_{zc}}, \qquad n = 0, 1, \ldots, N_{zc}-1
+x_u\lbrack n \rbrack = e^{\,-j\pi u n (n+1) / N_{zc}}, \qquad n = 0, 1, \ldots, N_{zc}-1,
 $$
 
 donde $u$ es un entero primo relativo con $N_{zc}$. Tres propiedades se siguen de esa
@@ -1111,64 +846,6 @@ llegada sin ambigüedad. La tercera es una **correlación cruzada reducida** ent
 distintas, acotada por $1/\sqrt{N_{zc}}$, lo que permite asignar raíces diferentes a
 celdas o terminales vecinos y distinguir sus transmisiones aunque lleguen
 simultáneamente.
-
-El código siguiente verifica las tres propiedades sobre una secuencia de longitud 63.
-
-```python linenums="1"
-import numpy as np
-
-
-def secuencia_zadoff_chu(longitud: int, raiz: int) -> np.ndarray:
-    """Genera una secuencia de Zadoff-Chu de longitud y raíz dadas.
-
-    Args:
-        longitud: Longitud de la secuencia, habitualmente impar.
-        raiz: Índice de raíz, primo relativo con la longitud.
-
-    Returns:
-        Vector complejo de módulo unidad con la secuencia generada.
-    """
-    indices = np.arange(longitud)
-    # Fase cuadrática: cada muestra avanza un incremento proporcional a n
-    fase = -np.pi * raiz * indices * (indices + 1) / longitud
-    return np.exp(1j * fase)
-
-
-def correlacion_ciclica(primera: np.ndarray, segunda: np.ndarray) -> np.ndarray:
-    """Calcula la correlación cíclica normalizada entre dos secuencias."""
-    espectro = np.fft.fft(primera) * np.conj(np.fft.fft(segunda))
-    return np.abs(np.fft.ifft(espectro)) / primera.size
-
-
-longitud = 63
-secuencia = secuencia_zadoff_chu(longitud, raiz=25)
-otra = secuencia_zadoff_chu(longitud, raiz=29)
-autocorrelacion = correlacion_ciclica(secuencia, secuencia)
-cruzada = correlacion_ciclica(secuencia, otra)
-modulos = np.abs(secuencia)
-print(f"Longitud de la secuencia: {longitud}")
-print(f"Modulo minimo y maximo: {modulos.min():.3f} y {modulos.max():.3f}")
-print(f"Autocorrelacion en el origen: {autocorrelacion[0]:.3f}")
-print(f"Lobulo secundario maximo: {np.max(autocorrelacion[1:]):.2e}")
-print(f"Correlacion cruzada maxima: {np.max(cruzada):.3f}")
-print(f"Cota teorica 1/raiz(N): {1.0 / np.sqrt(longitud):.3f}")
-```
-
-```plaintext title="Expected output"
-Longitud de la secuencia: 63
-Modulo minimo y maximo: 1.000 y 1.000
-Autocorrelacion en el origen: 1.000
-Lobulo secundario maximo: 7.81e-14
-Correlacion cruzada maxima: 0.126
-Cota teorica 1/raiz(N): 0.126
-```
-
-Los tres resultados son categóricos. El módulo de todas las muestras vale exactamente la
-unidad, el lóbulo secundario máximo de la autocorrelación queda en el nivel de la
-precisión numérica, lo que confirma que la autocorrelación cíclica es una delta
-perfecta, y la correlación cruzada máxima entre dos raíces distintas coincide con la
-cota teórica $1/\sqrt{63} = 0{,}126$, lo que indica que la familia alcanza esa cota y
-que ninguna elección de raíces la mejora.
 
 La combinación de amplitud constante y autocorrelación ideal explica por qué estas
 secuencias se emplean tanto en las señales que un terminal transmite al solicitar acceso

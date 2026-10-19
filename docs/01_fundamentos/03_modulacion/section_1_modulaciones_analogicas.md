@@ -47,7 +47,7 @@ un entorno de una frecuencia $f_c$ mucho mayor que su propio ancho de banda. El 
 sencillo es una portadora cuya amplitud varía lentamente,
 
 $$
-x(t) = a(t) \cos(2 \pi f_c t)
+x(t) = a(t) \cos(2 \pi f_c t),
 $$
 
 donde $a(t)$ es la amplitud instantánea y $f_c$ la frecuencia de la portadora. Su
@@ -55,7 +55,7 @@ transformada de Fourier reparte el espectro de la amplitud en dos réplicas cent
 las frecuencias de la portadora,
 
 $$
-X(f) = \frac{A(f - f_c)}{2} + \frac{A(f + f_c)}{2}
+X(f) = \frac{A(f - f_c)}{2} + \frac{A(f + f_c)}{2},
 $$
 
 siendo $A(f)$ la transformada de $a(t)$. El factor un medio y la duplicación de réplicas
@@ -68,7 +68,7 @@ Una sola portadora admite dos señales moduladoras independientes, porque un cos
 seno de la misma frecuencia son ortogonales. La forma general de una señal paso banda es
 
 $$
-x(t) = x_p(t) \cos(2 \pi f_c t) - x_c(t) \operatorname{sen}(2 \pi f_c t)
+x(t) = x_p(t) \cos(2 \pi f_c t) - x_c(t) \operatorname{sen}(2 \pi f_c t),
 $$
 
 donde $x_p(t)$ es la **componente en fase** y $x_c(t)$ la **componente en cuadratura**,
@@ -80,7 +80,7 @@ Las dos componentes se agrupan en el **equivalente paso bajo**, señal compleja 
 concentra toda la información sin arrastrar la portadora:
 
 $$
-x_{eq}(t) = x_p(t) + j \, x_c(t)
+x_{eq}(t) = x_p(t) + j \, x_c(t),
 $$
 
 de modo que $x(t) = \operatorname{Re} \lbrack x_{eq}(t) \, e^{j 2 \pi f_c t} \rbrack$.
@@ -90,7 +90,7 @@ desfase del oscilador local se traduce en un simple giro de fase de $x_{eq}(t)$.
 El modulador consta por tanto de dos ramas, y el demodulador replica la estructura en
 sentido inverso recuperando cada componente por separado mediante un filtro paso bajo.
 
-```mermaid linenums="1"
+```mermaid
 graph LR
     XP["Componente en fase<br/>x_p(t)"] --> M1(("×"))
     OSC["Oscilador<br/>f_c"] --> M1
@@ -114,14 +114,14 @@ suma de las réplicas desplazadas de las densidades de cada componente,
 
 $$
 S_x(f) = \frac{A^2}{4} \lbrack S_{x_p}(f - f_c) + S_{x_c}(f - f_c)
-+ S_{x_p}(f + f_c) + S_{x_c}(f + f_c) \rbrack
++ S_{x_p}(f + f_c) + S_{x_c}(f + f_c) \rbrack,
 $$
 
 donde $A$ es la amplitud que aplica el modulador. Integrando esa densidad se obtiene la
 potencia transmitida,
 
 $$
-P_x = \frac{A^2}{2} \lbrack P_{x_p} + P_{x_c} \rbrack
+P_x = \frac{A^2}{2} \lbrack P_{x_p} + P_{x_c} \rbrack,
 $$
 
 con $P_{x_p}$ y $P_{x_c}$ las potencias medias de cada componente. La potencia de la
@@ -158,7 +158,7 @@ gaussiano aditivo, con densidad espectral de potencia bilateral constante de val
 / 2$. La señal disponible a la entrada del receptor es por tanto
 
 $$
-r(t) = c \, x(t) + n(t)
+r(t) = c \, x(t) + n(t).
 $$
 
 ### Filtro predetector y filtro posdetección
@@ -170,7 +170,7 @@ la señal modulada, que elimina todo el ruido ajeno a esa banda antes de la dete
 mensaje, que actúa después del detector y suprime el ruido residual que la detección ha
 trasladado a banda base.
 
-```mermaid linenums="1"
+```mermaid
 graph LR
     M["Mensaje<br/>m(t)"] --> MOD["Modulador<br/>amplitud A"]
     MOD --> CAN["Canal<br/>atenuación c"]
@@ -195,7 +195,7 @@ Cuando los filtros no son ideales la integración debe hacerse sobre el módulo 
 cuadrado de la respuesta,
 
 $$
-P_N = \frac{N_0}{2} \int_{-\infty}^{\infty} |H_P(f)|^2 \, df
+P_N = \frac{N_0}{2} \int_{-\infty}^{\infty} |H_P(f)|^2 \, df,
 $$
 
 y el resultado es siempre mayor que el ideal, porque las faldas del filtro admiten ruido
@@ -217,14 +217,14 @@ vacía la de cuadratura, $x_p(t) = m(t)$ y $x_c(t) = 0$, con lo que la señal tr
 es
 
 $$
-x(t) = A \, m(t) \cos(2 \pi f_c t)
+x(t) = A \, m(t) \cos(2 \pi f_c t).
 $$
 
 Su densidad espectral son las dos réplicas del espectro del mensaje centradas en las
 frecuencias de la portadora,
 
 $$
-S_x(f) = \frac{A^2}{4} \lbrack S_m(f - f_c) + S_m(f + f_c) \rbrack
+S_x(f) = \frac{A^2}{4} \lbrack S_m(f - f_c) + S_m(f + f_c) \rbrack,
 $$
 
 de donde la potencia transmitida vale $P_x = A^2 P_m / 2$ y el ancho de banda ocupado es
@@ -239,14 +239,14 @@ La **modulación de amplitud** añade a la señal anterior una portadora residua
 que la componente en fase pasa a tener un nivel de continua,
 
 $$
-x_p(t) = 1 + k_a \, m(t), \qquad x_c(t) = 0
+x_p(t) = 1 + k_a \, m(t), \qquad x_c(t) = 0,
 $$
 
 donde $k_a$ es la **sensibilidad de amplitud** del modulador. La señal transmitida se
 escribe habitualmente en función del índice de modulación,
 
 $$
-x(t) = A \lbrack 1 + \mu \, m(t) \rbrack \cos(2 \pi f_c t)
+x(t) = A \lbrack 1 + \mu \, m(t) \rbrack \cos(2 \pi f_c t),
 $$
 
 con el mensaje normalizado a amplitud máxima unidad. Su densidad espectral reproduce la
@@ -254,13 +254,13 @@ de la doble banda lateral y le añade dos deltas en las frecuencias de la portad
 
 $$
 S_x(f) = \frac{A^2 \mu^2}{4} \lbrack S_m(f - f_c) + S_m(f + f_c) \rbrack
-+ \frac{A^2}{4} \lbrack \delta(f - f_c) + \delta(f + f_c) \rbrack
++ \frac{A^2}{4} \lbrack \delta(f - f_c) + \delta(f + f_c) \rbrack,
 $$
 
 y la potencia transmitida se reparte en consecuencia entre portadora y bandas laterales,
 
 $$
-P_x = \frac{A^2}{2} \lbrack 1 + \mu^2 P_m \rbrack
+P_x = \frac{A^2}{2} \lbrack 1 + \mu^2 P_m \rbrack.
 $$
 
 El ancho de banda sigue siendo $B_T = 2B$, igual que en doble banda lateral, porque la
@@ -276,7 +276,7 @@ de su valor de reposo. Para que la envolvente $1 + \mu \, m(t)$ no cambie de sig
 cumplirse
 
 $$
-0 < \mu \leq 1
+0 < \mu \leq 1.
 $$
 
 Por encima de ese límite se produce **sobremodulación**, la envolvente cruza por cero y
@@ -290,62 +290,12 @@ El precio del margen de seguridad es potencia. La fracción de potencia transmit
 transporta información es
 
 $$
-\eta = \frac{\mu^2 P_m}{1 + \mu^2 P_m}
+\eta = \frac{\mu^2 P_m}{1 + \mu^2 P_m},
 $$
 
-que ni siquiera en el caso límite favorable alcanza valores altos. El código siguiente
-recorre tres índices de modulación y muestra a la vez la aparición de la sobremodulación
-y el reparto de potencia resultante.
-
-```python linenums="1"
-import numpy as np
-
-
-def modula_am(
-    t: np.ndarray, m: np.ndarray, indice: float, f_c: float, amplitud: float
-) -> tuple[np.ndarray, np.ndarray]:
-    """Modula en amplitud una señal moduladora normalizada.
-
-    Args:
-        t: Vector de instantes de tiempo, en segundos.
-        m: Moduladora normalizada a amplitud máxima unidad.
-        indice: Índice de modulación.
-        f_c: Frecuencia de la portadora, en hercios.
-        amplitud: Amplitud de la portadora, en voltios.
-
-    Returns:
-        Tupla con la señal modulada y con su envolvente.
-    """
-    # La envolvente es la que transporta el mensaje sobre un nivel de continua
-    envolvente = amplitud * (1.0 + indice * m)
-    return envolvente * np.cos(2.0 * np.pi * f_c * t), envolvente
-
-
-frecuencia_muestreo = 400e3
-t = np.arange(0.0, 5e-3, 1.0 / frecuencia_muestreo)
-# Tono de 1 kHz normalizado, de potencia media 1/2
-m = np.cos(2.0 * np.pi * 1e3 * t)
-for indice in (0.5, 1.0, 2.0):
-    x, envolvente = modula_am(t, m, indice, f_c=20e3, amplitud=1.0)
-    # Reparto de potencia entre portadora y bandas laterales
-    potencia_bandas = 0.5 * indice**2 * 0.5
-    fraccion = potencia_bandas / (0.5 + potencia_bandas)
-    sobremodula = np.any(envolvente < 0.0)
-    print(
-        f"mu = {indice:.1f}  envolvente mínima = {envolvente.min():+.2f} V  "
-        f"potencia útil = {100.0 * fraccion:4.1f} %  "
-        f"sobremodulación = {sobremodula}"
-    )
-```
-
-```plaintext title="Expected output"
-mu = 0.5  envolvente mínima = +0.50 V  potencia útil = 11.1 %  sobremodulación = False
-mu = 1.0  envolvente mínima = +0.00 V  potencia útil = 33.3 %  sobremodulación = False
-mu = 2.0  envolvente mínima = -1.00 V  potencia útil = 66.7 %  sobremodulación = True
-```
-
-El índice unidad es la frontera exacta entre los dos regímenes, con envolvente mínima
-nula y un tercio de la potencia dedicado a la información. Reducirlo a la mitad
+que ni siquiera en el caso límite favorable alcanza valores altos. Con el índice unidad,
+frontera exacta entre los dos regímenes, la envolvente mínima se anula y solo un tercio
+de la potencia transmitida se dedica a la información. Reducir el índice a la mitad
 multiplica por tres el desperdicio, y superarlo mejora el reparto de potencia a cambio
 de una distorsión que ninguna ganancia compensa.
 
@@ -359,7 +309,7 @@ de una distorsión que ninguna ganancia compensa.
     amplitud de la portadora y despeja el índice:
 
     $$
-    \mu = \frac{1{,}5 - 0{,}5}{1{,}5 + 0{,}5} = 0{,}5
+    \mu = \frac{1{,}5 - 0{,}5}{1{,}5 + 0{,}5} = 0{,}5,
     $$
 
     mientras que la semisuma devuelve $A = 1$ V. Si el mensaje es un tono normalizado,
@@ -380,14 +330,14 @@ mensajes independientes sobre la misma portadora, $x_p(t) = m_1(t)$ y $x_c(t) = 
 con lo que la señal transmitida es
 
 $$
-x(t) = A \, m_1(t) \cos(2 \pi f_c t) - A \, m_2(t) \operatorname{sen}(2 \pi f_c t)
+x(t) = A \, m_1(t) \cos(2 \pi f_c t) - A \, m_2(t) \operatorname{sen}(2 \pi f_c t).
 $$
 
 Su densidad espectral suma las réplicas de los dos mensajes,
 
 $$
 S_x(f) = \frac{A^2}{4} \lbrack S_{m_1}(f - f_c) + S_{m_2}(f - f_c)
-+ S_{m_1}(f + f_c) + S_{m_2}(f + f_c) \rbrack
++ S_{m_1}(f + f_c) + S_{m_2}(f + f_c) \rbrack,
 $$
 
 y la potencia transmitida vale $P_x = A^2 \lbrack P_{m_1} + P_{m_2} \rbrack / 2$. El
@@ -442,11 +392,11 @@ La señal modulada en frecuencia es una portadora de amplitud constante cuyo arg
 incorpora la integral del mensaje,
 
 $$
-x(t) = A \cos \lbrack 2 \pi f_c t + \varphi(t) \rbrack
+x(t) = A \cos \lbrack 2 \pi f_c t + \varphi(t) \rbrack,
 $$
 
 $$
-\varphi(t) = 2 \pi k_f \int_{0}^{t} m(\tau) \, d\tau
+\varphi(t) = 2 \pi k_f \int_{0}^{t} m(\tau) \, d\tau,
 $$
 
 donde $k_f$ es la **sensibilidad de frecuencia** del modulador, en hercios por voltio, y
@@ -456,14 +406,14 @@ de la modulación. El equivalente paso bajo tiene módulo constante y toda la in
 reside en su fase,
 
 $$
-x_{eq}(t) = A \, e^{j \varphi(t)}
+x_{eq}(t) = A \, e^{j \varphi(t)}.
 $$
 
 La realización directa del modulador consta de un integrador seguido de un oscilador
 controlado por tensión, dispositivo cuya frecuencia de salida depende linealmente de la
 tensión aplicada a su entrada de control.
 
-```mermaid linenums="1"
+```mermaid
 graph LR
     M["Mensaje<br/>m(t)"] --> INT["Integrador"]
     INT --> VCO["Oscilador controlado<br/>por tensión"]
@@ -477,14 +427,14 @@ La **desviación máxima de frecuencia** mide cuánto se aparta la frecuencia in
 de la frecuencia de reposo,
 
 $$
-f_\Delta = k_f \max |m(t)|
+f_\Delta = k_f \max |m(t)|,
 $$
 
 y es el parámetro que el diseñador fija según el ancho de banda disponible. El **índice
 de modulación** relaciona esa desviación con el contenido en frecuencia del mensaje,
 
 $$
-\beta = \frac{f_\Delta}{B}
+\beta = \frac{f_\Delta}{B},
 $$
 
 donde $B$ es la frecuencia máxima del mensaje, que para una moduladora de tono único se
@@ -504,7 +454,7 @@ La **regla de Carson** estima el ancho de banda ocupado sumando la desviación d
 frecuencia y el ancho de banda del mensaje,
 
 $$
-B_T = 2 \lbrack f_\Delta + B \rbrack = 2 B \lbrack \beta + 1 \rbrack
+B_T = 2 \lbrack f_\Delta + B \rbrack = 2 B \lbrack \beta + 1 \rbrack,
 $$
 
 expresión que se particulariza sustituyendo $B$ por $f_0$ cuando la moduladora es un
@@ -516,85 +466,10 @@ Los dos regímenes límite se leen directamente en la expresión. Con $\beta \ll
 ancho de banda tiende a $2B$, el mismo que consumiría una modulación lineal de doble
 banda lateral. Con $\beta \gg 1$ el ancho de banda queda dominado por la desviación de
 frecuencia y crece proporcionalmente a ella, régimen en que la modulación angular compra
-calidad a cambio de espectro. El código siguiente comprueba la regla midiendo qué
-fracción de la potencia transmitida cae dentro de la banda que predice.
-
-```python linenums="1"
-import numpy as np
-
-
-def modula_fm(
-    t: np.ndarray, m: np.ndarray, f_c: float, desviacion: float, amplitud: float
-) -> np.ndarray:
-    """Modula en frecuencia una señal moduladora normalizada.
-
-    Args:
-        t: Vector de instantes de tiempo, en segundos.
-        m: Moduladora normalizada a amplitud máxima unidad.
-        f_c: Frecuencia de la portadora, en hercios.
-        desviacion: Desviación máxima de frecuencia, en hercios.
-        amplitud: Amplitud de la portadora, en voltios.
-
-    Returns:
-        Señal modulada en frecuencia.
-    """
-    periodo = float(t[1] - t[0])
-    # La fase instantánea es proporcional a la integral del mensaje
-    integral = np.cumsum(m) * periodo
-    fase = 2.0 * np.pi * f_c * t + 2.0 * np.pi * desviacion * integral
-    return amplitud * np.cos(fase)
-
-
-def fraccion_potencia(
-    x: np.ndarray, frecuencia_muestreo: float, f_c: float, ancho_banda: float
-) -> float:
-    """Calcula la fracción de potencia contenida en una banda centrada en f_c.
-
-    Args:
-        x: Señal modulada muestreada.
-        frecuencia_muestreo: Frecuencia de muestreo, en hercios.
-        f_c: Frecuencia central de la banda, en hercios.
-        ancho_banda: Anchura total de la banda, en hercios.
-
-    Returns:
-        Cociente entre la potencia dentro de la banda y la potencia total.
-    """
-    espectro = np.fft.rfft(x)
-    frecuencias = np.fft.rfftfreq(x.size, d=1.0 / frecuencia_muestreo)
-    densidad = np.abs(espectro) ** 2
-    dentro = np.abs(frecuencias - f_c) <= ancho_banda / 2.0
-    return float(np.sum(densidad[dentro]) / np.sum(densidad))
-
-
-frecuencia_muestreo = 1e6
-t = np.arange(0.0, 100e-3, 1.0 / frecuencia_muestreo)
-f_0 = 1e3
-m = np.cos(2.0 * np.pi * f_0 * t)
-for desviacion in (5e3, 10e3, 15e3, 20e3):
-    x = modula_fm(t, m, f_c=100e3, desviacion=desviacion, amplitud=1.0)
-    # Regla de Carson para una moduladora de tono único
-    ancho_carson = 2.0 * (desviacion + f_0)
-    indice = desviacion / f_0
-    fraccion = fraccion_potencia(x, frecuencia_muestreo, 100e3, ancho_carson)
-    print(
-        f"f_delta = {desviacion / 1e3:4.1f} kHz  beta = {indice:4.1f}  "
-        f"B_T = {ancho_carson / 1e3:4.1f} kHz  "
-        f"potencia dentro de B_T = {100.0 * fraccion:.2f} %"
-    )
-```
-
-```plaintext title="Expected output"
-f_delta =  5.0 kHz  beta =  5.0  B_T = 12.0 kHz  potencia dentro de B_T = 97.62 %
-f_delta = 10.0 kHz  beta = 10.0  B_T = 22.0 kHz  potencia dentro de B_T = 97.47 %
-f_delta = 15.0 kHz  beta = 15.0  B_T = 32.0 kHz  potencia dentro de B_T = 97.44 %
-f_delta = 20.0 kHz  beta = 20.0  B_T = 42.0 kHz  potencia dentro de B_T = 97.45 %
-```
-
-La fracción recogida se mantiene en torno al 97 % para índices de modulación muy
-distintos, lo que confirma que la regla es una estimación estable y no un ajuste válido
-solo en un punto. El 3 % restante existe y se manifiesta como componentes espectrales
-fuera de la banda nominal, de amplitud suficientemente baja para no interferir a las
-emisiones vecinas.
+calidad a cambio de espectro. La banda que predice la regla recoge la mayor parte de la
+potencia transmitida con independencia del índice de modulación, y el resto se
+manifiesta como componentes espectrales fuera de la banda nominal, de amplitud
+suficientemente baja para no interferir a las emisiones vecinas.
 
 ???+ example "Ancho de banda asignado a una emisión de frecuencia modulada"
 
@@ -605,7 +480,7 @@ emisiones vecinas.
     $$
     B_T = 2 \lbrack 10 + 1 \rbrack = 22 \; \mathrm{kHz}, \quad
     B_T = 2 \lbrack 15 + 1 \rbrack = 32 \; \mathrm{kHz}, \quad
-    B_T = 2 \lbrack 20 + 1 \rbrack = 42 \; \mathrm{kHz}
+    B_T = 2 \lbrack 20 + 1 \rbrack = 42 \; \mathrm{kHz},
     $$
 
     con índices de modulación de 10, 15 y 20 respectivamente. El ancho de banda crece
@@ -626,7 +501,7 @@ La referencia frente a la que se juzga toda modulación es la transmisión en ba
 sin modular, cuya relación señal-ruido a la salida vale
 
 $$
-\left( \frac{S}{N} \right)_{BB} = \frac{P_R}{N_0 B}
+\left( \frac{S}{N} \right)_{BB} = \frac{P_R}{N_0 B},
 $$
 
 donde $P_R = c^2 P_x$ es la potencia recibida y $B$ el ancho de banda del mensaje. Esta
@@ -639,7 +514,7 @@ conforme la modulación ocupa más espectro. En doble banda lateral y en modulac
 amplitud, con $B_T = 2B$, resulta
 
 $$
-\left( \frac{S}{N} \right)_E = \frac{P_R}{2 N_0 B}
+\left( \frac{S}{N} \right)_E = \frac{P_R}{2 N_0 B},
 $$
 
 exactamente la mitad de la referencia en banda base. A la salida, la detección traslada
@@ -666,7 +541,7 @@ La **ganancia del proceso** compara las relaciones señal-ruido a la salida y a 
 entrada del demodulador,
 
 $$
-G_p = \frac{(S/N)_S}{(S/N)_E}
+G_p = \frac{(S/N)_S}{(S/N)_E},
 $$
 
 y mide lo que aporta el demodulador por sí mismo, con independencia del ruido que el
@@ -696,7 +571,7 @@ La **eficiencia espectral** es el cociente entre el ancho de banda del mensaje y
 ocupa la señal modulada,
 
 $$
-\varepsilon = \frac{B}{B_T}
+\varepsilon = \frac{B}{B_T},
 $$
 
 y expresa cuántos mensajes de ancho de banda $B$ caben en la banda consumida. Vale un
@@ -737,12 +612,12 @@ espectro y un umbral por debajo del cual falla.
     $$
     \left( \frac{S}{N} \right)_E
     = \frac{0{,}25}{2 \cdot 2 \cdot 10^{-10} \cdot 2 \cdot 10^3}
-    = 3{,}13 \cdot 10^5 \rightarrow 54{,}9 \; \mathrm{dB}
+    = 3{,}13 \cdot 10^5 \rightarrow 54{,}9 \; \mathrm{dB},
     $$
 
     $$
     \left( \frac{S}{N} \right)_S = 2 \left( \frac{S}{N} \right)_E \rightarrow
-    57{,}9 \; \mathrm{dB}
+    57{,}9 \; \mathrm{dB}.
     $$
 
     Con modulación de frecuencia y desviación $f_\Delta = 5$ kHz el índice vale
@@ -753,7 +628,7 @@ espectro y un umbral por debajo del cual falla.
 
     $$
     \left( \frac{S}{N} \right)_E = \frac{0{,}5}{2 \cdot 10^{-10} \cdot 14 \cdot 10^3}
-    = 1{,}79 \cdot 10^5 \rightarrow 52{,}5 \; \mathrm{dB}
+    = 1{,}79 \cdot 10^5 \rightarrow 52{,}5 \; \mathrm{dB},
     $$
 
     mientras que a la salida la ganancia del proceso, $G_p = 6 \beta^2 P_m (\beta + 1) =
@@ -761,7 +636,7 @@ espectro y un umbral por debajo del cual falla.
 
     $$
     \left( \frac{S}{N} \right)_S = 65{,}6 \cdot 1{,}79 \cdot 10^5
-    = 1{,}17 \cdot 10^7 \rightarrow 70{,}7 \; \mathrm{dB}
+    = 1{,}17 \cdot 10^7 \rightarrow 70{,}7 \; \mathrm{dB}.
     $$
 
     La modulación de frecuencia entrega 12,8 dB más que la doble banda lateral en
@@ -780,7 +655,7 @@ fase y otro en torno al doble de la frecuencia de la portadora que el filtro pas
 elimina,
 
 $$
-q(t) = 2 \, y(t) \cos(2 \pi f_c t + \phi_{Rx})
+q(t) = 2 \, y(t) \cos(2 \pi f_c t + \phi_{Rx}),
 $$
 
 donde $\phi_{Rx}$ es la fase del oscilador local y el factor dos compensa la pérdida de
@@ -788,7 +663,7 @@ amplitud del traslado. En modulación de amplitud se añade a la salida un supre
 continua, que cancela el término constante debido a la portadora emitida sin afectar al
 mensaje.
 
-```mermaid linenums="1"
+```mermaid
 graph LR
     Y["Señal recibida<br/>y(t)"] --> MUL(("×"))
     OL["Oscilador local<br/>2cos(2πf_c t + φ_Rx)"] --> MUL
@@ -812,7 +687,7 @@ sigue directamente la envolvente de la señal recibida. Se construye con un rect
 un filtro paso bajo y un supresor de continua, y funciona porque en modulación de
 amplitud sin sobremodulación la envolvente reproduce el mensaje.
 
-```mermaid linenums="1"
+```mermaid
 graph LR
     Y["Señal recibida<br/>y(t)"] --> RECT["Rectificador"]
     RECT --> Q["q(t)"]
@@ -828,7 +703,7 @@ separación holgada entre las dos escalas de tiempo. La señal recuperada es el 
 equivalente paso bajo,
 
 $$
-|y_{eq}(t)| = \sqrt{ \lbrack A_c (1 + \mu \, m(t)) + n_p(t) \rbrack^2 + n_c^2(t) }
+|y_{eq}(t)| = \sqrt{ \lbrack A_c (1 + \mu \, m(t)) + n_p(t) \rbrack^2 + n_c^2(t) },
 $$
 
 donde $n_p(t)$ y $n_c(t)$ son las componentes en fase y en cuadratura del ruido paso
@@ -863,113 +738,33 @@ Un **error de fase** entre los osciladores del transmisor y del receptor, $\thet
 \phi_{Tx} - \phi_{Rx}$, hace girar el equivalente paso bajo de la señal recibida,
 
 $$
-y'_{eq}(t) = y_{eq}(t) \, e^{j \theta}
+y'_{eq}(t) = y_{eq}(t) \, e^{j \theta}.
 $$
 
 Separando parte real e imaginaria se obtiene el efecto sobre las dos componentes,
 
 $$
-y'_p(t) = y_p(t) \cos \theta - y_c(t) \operatorname{sen} \theta
+y'_p(t) = y_p(t) \cos \theta - y_c(t) \operatorname{sen} \theta,
 $$
 
 $$
-y'_c(t) = y_c(t) \cos \theta + y_p(t) \operatorname{sen} \theta
+y'_c(t) = y_c(t) \cos \theta + y_p(t) \operatorname{sen} \theta.
 $$
 
 En doble banda lateral y en amplitud, donde la componente en cuadratura está vacía, el
 único efecto es una atenuación de la salida por el factor $\cos \theta$. La degradación
 es inapreciable para desfases pequeños, alcanza un factor $\sqrt{2}/2$ en amplitud a los
 cuarenta y cinco grados, invierte el signo del mensaje a los ciento ochenta grados y
-cancela la salida por completo a los noventa. El código siguiente recorre esos cuatro
-casos sobre una señal de amplitud modulada.
-
-```python linenums="1"
-import numpy as np
-
-
-def filtra_paso_bajo(
-    x: np.ndarray, frecuencia_muestreo: float, ancho_banda: float
-) -> np.ndarray:
-    """Aplica un filtro paso bajo ideal en el dominio de la frecuencia.
-
-    Args:
-        x: Señal de entrada muestreada.
-        frecuencia_muestreo: Frecuencia de muestreo, en hercios.
-        ancho_banda: Frecuencia de corte del filtro, en hercios.
-
-    Returns:
-        Señal filtrada, con las componentes por encima del corte anuladas.
-    """
-    espectro = np.fft.rfft(x)
-    frecuencias = np.fft.rfftfreq(x.size, d=1.0 / frecuencia_muestreo)
-    # Un filtro ideal anula por completo todo lo que queda fuera de la banda
-    espectro[frecuencias > ancho_banda] = 0.0
-    return np.fft.irfft(espectro, n=x.size)
-
-
-def demodula_coherente(
-    t: np.ndarray,
-    y: np.ndarray,
-    f_c: float,
-    error_fase: float,
-    ancho_banda: float,
-    frecuencia_muestreo: float,
-) -> np.ndarray:
-    """Demodula de forma coherente una señal paso banda con error de fase.
-
-    Args:
-        t: Vector de instantes de tiempo, en segundos.
-        y: Señal recibida a la entrada del demodulador.
-        f_c: Frecuencia de la portadora, en hercios.
-        error_fase: Desfase entre los osciladores, en radianes.
-        ancho_banda: Ancho de banda del filtro posdetección, en hercios.
-        frecuencia_muestreo: Frecuencia de muestreo, en hercios.
-
-    Returns:
-        Señal demodulada sin componente continua.
-    """
-    # Traslado a banda base con la réplica local de la portadora
-    q = 2.0 * y * np.cos(2.0 * np.pi * f_c * t - error_fase)
-    v = filtra_paso_bajo(q, frecuencia_muestreo, ancho_banda)
-    # Supresor de continua: la portadora no transporta información
-    return v - np.mean(v)
-
-
-frecuencia_muestreo = 400e3
-t = np.arange(0.0, 20e-3, 1.0 / frecuencia_muestreo)
-m = np.cos(2.0 * np.pi * 1e3 * t)
-indice = 0.5
-# Señal AM transmitida con fase nula en el oscilador del transmisor
-x = (1.0 + indice * m) * np.cos(2.0 * np.pi * 20e3 * t)
-for error_fase in (0.0, np.pi / 4.0, np.pi / 2.0, np.pi):
-    s = demodula_coherente(t, x, 20e3, error_fase, 2e3, frecuencia_muestreo)
-    # Proyección de la salida sobre el mensaje, normalizada por el índice
-    ganancia = float(np.dot(s, m) / np.dot(m, m)) / indice
-    print(
-        f"theta = {error_fase:.4f} rad  amplitud relativa = {ganancia:+.3f}  "
-        f"cos(theta) = {np.cos(error_fase):+.3f}"
-    )
-```
-
-```plaintext title="Expected output"
-theta = 0.0000 rad  amplitud relativa = +1.000  cos(theta) = +1.000
-theta = 0.7854 rad  amplitud relativa = +0.707  cos(theta) = +0.707
-theta = 1.5708 rad  amplitud relativa = -0.000  cos(theta) = +0.000
-theta = 3.1416 rad  amplitud relativa = -1.000  cos(theta) = -1.000
-```
-
-La amplitud relativa medida reproduce el coseno del desfase en los cuatro casos,
-incluida la cancelación completa a noventa grados, donde el residuo numérico queda por
-debajo de la precisión de impresión. La consecuencia práctica es que un receptor
-coherente sin lazo de enganche es inservible, porque ningún oscilador libre mantiene la
-fase de otro situado al otro extremo del canal.
+cancela la salida por completo a los noventa. La consecuencia práctica es que un
+receptor coherente sin lazo de enganche es inservible, porque ningún oscilador libre
+mantiene la fase de otro situado al otro extremo del canal.
 
 En modulación en cuadratura el mismo desfase tiene un efecto más grave, ya que cada
 salida recibe una contribución del mensaje ajeno. Esa interferencia mutua degrada la
 relación señal-ruido de cada rama según
 
 $$
-\left( \frac{S}{N} \right)' = \frac{S \cos^2 \theta}{N + S \operatorname{sen}^2 \theta}
+\left( \frac{S}{N} \right)' = \frac{S \cos^2 \theta}{N + S \operatorname{sen}^2 \theta},
 $$
 
 donde la potencia de señal desviada hacia la otra rama actúa como ruido añadido. La
@@ -984,7 +779,7 @@ compensarse amplificando.
 
     $$
     s_1(t) = \frac{\sqrt{2}}{2} \lbrack m_1(t) - m_2(t) \rbrack, \qquad
-    s_2(t) = \frac{\sqrt{2}}{2} \lbrack m_2(t) + m_1(t) \rbrack
+    s_2(t) = \frac{\sqrt{2}}{2} \lbrack m_2(t) + m_1(t) \rbrack,
     $$
 
     de modo que cada salida entrega una mezcla a partes iguales de los dos mensajes y
@@ -1022,13 +817,13 @@ oscilador local sintonizable, y la diferencia entre ambas frecuencias es la frec
 intermedia,
 
 $$
-f_{OL} = f_c + f_{FI}
+f_{OL} = f_c + f_{FI},
 $$
 
 de modo que sintonizar una emisión distinta consiste únicamente en desplazar el
 oscilador local. Todo el filtrado exigente ocurre después, a frecuencia fija.
 
-```mermaid linenums="1"
+```mermaid
 graph LR
     ANT["Antena"] --> RF["Filtro de radiofrecuencia<br/>poco selectivo"]
     RF --> MEZ(("×"))

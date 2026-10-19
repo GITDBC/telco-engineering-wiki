@@ -37,7 +37,7 @@ más amplio que acompaña a una red celular durante toda su vida operativa. Ese 
 organiza en tres fases sucesivas que se repiten de forma continua, porque una red nunca
 deja de evolucionar una vez desplegada.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     PLAN["Planificación"] --> DESP["Despliegue"]
     DESP --> OPER["Operación"]
@@ -165,7 +165,7 @@ longitud en que se divide la circunferencia completa de 360°, y en cada repetic
 cilindro rota ligeramente para que su línea de tangencia coincida con el meridiano
 central de ese huso.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     TIERRA["Tierra completa, 360 grados de longitud"] --> HUSOS["60 husos de 6 grados"]
     HUSOS --> H1["Huso 1: cilindro tangente al meridiano central 1"]
@@ -300,7 +300,7 @@ La geometría que determina el ángulo de inclinación relaciona la altura de la
 sobre el terreno, la distancia al punto que se quiere cubrir y la anchura del haz
 vertical de la antena.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     BS["Estacion base, altura h"] -->|"angulo de inclinacion"| BORESIGHT["Eje del haz principal"]
     BORESIGHT -->|"mitad del haz vertical"| BORDE["Borde de celda a distancia R"]
@@ -311,7 +311,7 @@ una distancia $R$ de la base de la antena, a una altura $h$ sobre la altura del
 terminal, es
 
 $$
-\theta_{\text{apuntamiento}} = \arctan\left(\frac{h}{R}\right)
+\theta_{\text{apuntamiento}} = \arctan\left(\frac{h}{R}\right),
 $$
 
 donde $h$ es la diferencia de altura entre la antena de la estación base y la antena del
@@ -324,7 +324,7 @@ de celda, la inclinación total debe añadir la mitad del ancho de haz vertical 
 potencia:
 
 $$
-\theta_{\text{tilt}} = \arctan\left(\frac{h}{R}\right) + \frac{\text{HPBW}_v}{2}
+\theta_{\text{tilt}} = \arctan\left(\frac{h}{R}\right) + \frac{\text{HPBW}_v}{2},
 $$
 
 donde $\text{HPBW}_v$ es el ancho de haz vertical a mitad de potencia de la antena, un
@@ -344,7 +344,7 @@ de estación base.
     El ángulo de apuntamiento directo al borde de celda es
 
     $$
-    \theta_{\text{apuntamiento}} = \arctan\left(\frac{28{,}5}{3240}\right) \approx 0{,}50°
+    \theta_{\text{apuntamiento}} = \arctan\left(\frac{28{,}5}{3240}\right) \approx 0{,}50°,
     $$
 
     un valor pequeño porque la distancia horizontal es casi tres órdenes de magnitud
@@ -352,7 +352,7 @@ de estación base.
     obtiene la inclinación total requerida:
 
     $$
-    \theta_{\text{tilt}} = 0{,}50° + \frac{6{,}5°}{2} = 0{,}50° + 3{,}25° = 3{,}75°
+    \theta_{\text{tilt}} = 0{,}50° + \frac{6{,}5°}{2} = 0{,}50° + 3{,}25° = 3{,}75°.
     $$
 
     Una inclinación de aproximadamente $3{,}75°$ hacia abajo respecto a la horizontal
@@ -410,7 +410,7 @@ recepción y de diversidad.
 Con el mapa, el sistema de coordenadas y las antenas ya caracterizados, el proceso de
 planificación propiamente dicho se organiza en tres fases sucesivas.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     PRE["Preplanificacion<br/>estimacion del numero de emplazamientos"] --> NOM["Planificacion nominal<br/>seleccion y ubicacion de emplazamientos"]
     NOM --> DET["Planificacion detallada<br/>planes de vecinas, frecuencias e identificadores"]
@@ -518,7 +518,7 @@ de aceptar el resultado final.
 El balance del enlace ascendente, desde el terminal hasta la estación base, encadena los
 siguientes términos:
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     A["EIRP del terminal<br/>Ptx - Lbl"] --> B["+ Gbs, ganancia de antena en la BS"]
     B --> C["+ Gd, ganancia de diversidad"]
@@ -537,7 +537,7 @@ flowchart LR
     equivalente es
 
     $$
-    \text{EIRP}_{ms} = P_{tx} - L_{bl} = 21 - 2 = 19\ \text{dBm}
+    \text{EIRP}_{ms} = P_{tx} - L_{bl} = 21 - 2 = 19\ \text{dBm}.
     $$
 
     La estación base recibe esa señal con una antena sectorial de ganancia
@@ -555,7 +555,7 @@ flowchart LR
     desvanecimiento lento es
 
     $$
-    M_{sf} = z_{0{,}90} \cdot \sigma_{sf} = 1{,}28 \times 8{,}5 \approx 10{,}88\ \text{dB}
+    M_{sf} = z_{0{,}90} \cdot \sigma_{sf} = 1{,}28 \times 8{,}5 \approx 10{,}88\ \text{dB}.
     $$
 
     Encadenando todos los términos, sin omitir ni repetir ninguno, las pérdidas máximas
@@ -563,11 +563,11 @@ flowchart LR
 
     $$
     \text{MAPL} = \text{EIRP}_{ms} + G_{bs} + G_d + G_{sh} -
-    S_{\min,\text{antena}} - M_{sf}
+    S_{\min,\text{antena}} - M_{sf},
     $$
 
     $$
-    \text{MAPL} = 19 + 18 + 5 + 2 - (-121{,}06) - 10{,}88 = 154{,}18\ \text{dB}
+    \text{MAPL} = 19 + 18 + 5 + 2 - (-121{,}06) - 10{,}88 = 154{,}18\ \text{dB}.
     $$
 
     El resultado, unas $154{,}2\ \text{dB}$, es el presupuesto de pérdidas de propagación
@@ -601,7 +601,7 @@ El **ruido térmico** que genera cualquier resistencia o componente disipativo a
 temperatura $T$ tiene una densidad espectral de potencia dada por
 
 $$
-N_0\ \lbrack \text{dBm/Hz}\rbrack = 10\log_{10}(kT) + 30
+N_0\ \lbrack \text{dBm/Hz}\rbrack = 10\log_{10}(kT) + 30,
 $$
 
 donde $k = 1{,}38 \times 10^{-23}\ \text{J/K}$ es la constante de Boltzmann, $T$ es la
@@ -610,7 +610,7 @@ de vatios a milivatios antes del logaritmo. Integrando esa densidad sobre el anc
 banda del sistema $W$, la potencia total de ruido térmico es
 
 $$
-N\ \lbrack \text{dBm}\rbrack = N_0 + 10\log_{10}(W)
+N\ \lbrack \text{dBm}\rbrack = N_0 + 10\log_{10}(W),
 $$
 
 y añadiendo la **cifra de ruido** del propio receptor, $NF$, que recoge el ruido
@@ -624,7 +624,7 @@ se relaciona con la relación señal a ruido en el ancho de banda del sistema me
 **ganancia de procesado**
 
 $$
-PG\ \lbrack \text{dB}\rbrack = 10\log_{10}\left(\frac{W}{R_b}\right)
+PG\ \lbrack \text{dB}\rbrack = 10\log_{10}\left(\frac{W}{R_b}\right),
 $$
 
 donde $R_b$ es la velocidad binaria del servicio. La relación señal a ruido necesaria en
@@ -633,7 +633,7 @@ negativa en un sistema de espectro ensanchado porque la ganancia de procesado su
 holgura al requisito de $E_b/N_0$, y la sensibilidad del receptor resulta
 
 $$
-S_{\min}\ \lbrack \text{dBm}\rbrack = N + NF + \left(\frac{E_b}{N_0} - PG\right)
+S_{\min}\ \lbrack \text{dBm}\rbrack = N + NF + \left(\frac{E_b}{N_0} - PG\right).
 $$
 
 ???+ example "Cálculo de la sensibilidad del receptor de estación base"
@@ -643,13 +643,13 @@ $$
     de banda de canal de UMTS. La densidad de ruido térmico es
 
     $$
-    N_0 = 10\log_{10}(1{,}38\times 10^{-23}\times 293) + 30 \approx -173{,}93\ \text{dBm/Hz}
+    N_0 = 10\log_{10}(1{,}38\times 10^{-23}\times 293) + 30 \approx -173{,}93\ \text{dBm/Hz},
     $$
 
     y la potencia de ruido en el ancho de banda completo del sistema es
 
     $$
-    N = -173{,}93 + 10\log_{10}(3{,}84\times 10^{6}) = -173{,}93 + 65{,}85 = -108{,}08\ \text{dBm}
+    N = -173{,}93 + 10\log_{10}(3{,}84\times 10^{6}) = -173{,}93 + 65{,}85 = -108{,}08\ \text{dBm}.
     $$
 
     Con una cifra de ruido de receptor $NF = 5\ \text{dB}$, el suelo de ruido efectivo es
@@ -659,14 +659,14 @@ $$
 
     $$
     PG = 10\log_{10}\left(\frac{3{,}84\times 10^{6}}{12{,}2\times 10^{3}}\right) \approx
-    24{,}98\ \text{dB}
+    24{,}98\ \text{dB},
     $$
 
     de modo que la relación señal a ruido necesaria en el ancho de banda completo es
     $5 - 24{,}98 \approx -19{,}98\ \text{dB}$, y la sensibilidad resultante es
 
     $$
-    S_{\min} = -103{,}08 + (-19{,}98) = -123{,}06\ \text{dBm}
+    S_{\min} = -103{,}08 + (-19{,}98) = -123{,}06\ \text{dBm}.
     $$
 
     Este es el valor referido a la entrada del receptor que se ha empleado en el
@@ -687,7 +687,7 @@ el cuantil de la distribución normal correspondiente a la probabilidad de cober
 borde que se persigue,
 
 $$
-M_{sf} = z_{Y} \cdot \sigma_{sf}
+M_{sf} = z_{Y} \cdot \sigma_{sf},
 $$
 
 una aproximación que trata la probabilidad de cobertura como una probabilidad de borde
@@ -758,18 +758,18 @@ planificación celular.
 
     $$
     L_b\ \lbrack \text{dB}\rbrack \approx 136{,}19 + 35{,}23 \log_{10}\lbrack d_{\text{km}}
-    \rbrack
+    \rbrack.
     $$
 
     Igualando $L_b$ a las pérdidas máximas admisibles obtenidas en el balance del
     enlace, $\text{MAPL} = 154{,}18\ \text{dB}$, y despejando la distancia:
 
     $$
-    \log_{10}(d_{\text{km}}) = \frac{154{,}18 - 136{,}19}{35{,}23} \approx 0{,}5108
+    \log_{10}(d_{\text{km}}) = \frac{154{,}18 - 136{,}19}{35{,}23} \approx 0{,}5108,
     $$
 
     $$
-    d_{\text{km}} = 10^{0{,}5108} \approx 3{,}24\ \text{km}
+    d_{\text{km}} = 10^{0{,}5108} \approx 3{,}24\ \text{km}.
     $$
 
     El radio máximo de celda compatible con el balance del enlace calculado en este
@@ -792,7 +792,7 @@ del número de sectores del emplazamiento, de forma que el área servida por un
 emplazamiento es
 
 $$
-A_{\text{emp}} = K \cdot R^{2}
+A_{\text{emp}} = K \cdot R^{2}.
 $$
 
 | Sectorización              | Constante $K$ (valor típico) |
@@ -814,7 +814,7 @@ emplazamiento:
 
 $$
 N_{\text{cobertura}} = \left\lceil \frac{A_{\text{objetivo}}}{A_{\text{emp}}}
-\right\rceil
+\right\rceil,
 $$
 
 donde $A_{\text{objetivo}}$ es el área total a cubrir y el redondeo hacia el entero
@@ -828,14 +828,14 @@ superior refleja que un emplazamiento no puede desplegarse de forma parcial.
     emplazamiento trisectorial, con $K = 1{,}95$, es
 
     $$
-    A_{\text{emp}} = 1{,}95 \times 3{,}24^{2} \approx 20{,}5\ \text{km}^2
+    A_{\text{emp}} = 1{,}95 \times 3{,}24^{2} \approx 20{,}5\ \text{km}^2,
     $$
 
     y el número de emplazamientos que exige el criterio de cobertura es
 
     $$
     N_{\text{cobertura}} = \left\lceil \frac{25}{20{,}5} \right\rceil =
-    \lceil 1{,}22 \rceil = 2
+    \lceil 1{,}22 \rceil = 2.
     $$
 
     Con un radio de celda tan amplio frente al área objetivo, dos emplazamientos
@@ -856,7 +856,7 @@ admisible correspondiente.
 
 $$
 N_{\text{capacidad}} = \left\lceil \frac{A_{\text{ofrecido,total}}}{n_{\text{sect}}
-\cdot A_{\max}(c, B)} \right\rceil
+\cdot A_{\max}(c, B)} \right\rceil,
 $$
 
 donde $A_{\text{ofrecido,total}}$ es el tráfico ofrecido total del área durante la hora
@@ -880,14 +880,14 @@ servicio objetivo $B$, obtenido de la fórmula de Erlang B.
     y no del balance del enlace. El tráfico ofrecido total del área es, entonces,
 
     $$
-    A_{\text{ofrecido,total}} = 60 \times 25 = 1500\ \text{erlangs}
+    A_{\text{ofrecido,total}} = 60 \times 25 = 1500\ \text{erlangs},
     $$
 
     y el número de emplazamientos que exige el criterio de capacidad es
 
     $$
     N_{\text{capacidad}} = \left\lceil \frac{1500}{163{,}1} \right\rceil =
-    \lceil 9{,}19 \rceil = 10
+    \lceil 9{,}19 \rceil = 10.
     $$
 
     Frente a los dos emplazamientos que bastaban por criterio de cobertura, la demanda

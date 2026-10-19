@@ -67,7 +67,7 @@ del tratamiento de una llamada.
 | Sistema de gestión de servicio         | `SMS` | Recoge estadísticas y alarmas, y despliega nuevos servicios.                                                                     |
 | Entorno de creación de servicio        | `SCE` | Facilita la creación de nuevos servicios.                                                                                        |
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     SSP[Punto de conmutacion de servicio SSP] -->|condicion de disparo| SCP[Punto de control de servicio SCP]
     SCP --> IP[Periferico inteligente IP]
@@ -194,7 +194,7 @@ paquetes consecutivos. La duración de cada periodo, tanto `ON` como `OFF`, se m
 habitualmente mediante una distribución exponencial,
 
 $$
-f(t) = \frac{1}{t_0} e^{-t / t_0}
+f(t) = \frac{1}{t_0} e^{-t / t_0},
 $$
 
 donde $t$ es la duración del periodo considerado y $t_0$ es su valor medio, el parámetro
@@ -245,11 +245,11 @@ precisamente, el ejemplo canónico de esa categoría.
 
     $$
     T = T_\text{codec} + T_\text{ascendente} + T_\text{troncal} +
-    T_\text{descendente} + T_\text{decod} + T_\text{bufer}
+    T_\text{descendente} + T_\text{decod} + T_\text{bufer},
     $$
 
     $$
-    T = 20 + 9 + 10 + 1 + 5 + 60 = 105\ \text{ms}
+    T = 20 + 9 + 10 + 1 + 5 + 60 = 105\ \text{ms},
     $$
 
     donde $T_\text{codec}$ es el retardo de empaquetado del códec, $T_\text{ascendente}$
@@ -319,7 +319,7 @@ de las redes de generaciones anteriores. A diferencia de la voz sobre IP como se
 acceso radio con tasa de bits garantizada, dimensionado específicamente para el tráfico
 de voz.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     UE[Terminal] -->|portador GBR dedicado a voz| ENB[eNodeB]
     UE -->|portador no GBR, senalizacion y datos| ENB
@@ -350,7 +350,7 @@ terminal que se encuentra bajo cobertura de la cuarta generación pero que no di
 procedimiento de continuidad hacia una generación anterior que sí ofrece voz sobre
 conmutación de circuitos, en lugar de dejar la llamada sin cursar.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant UE as Terminal
     participant ENB as eNodeB de la cuarta generacion
@@ -466,7 +466,7 @@ Broadcast Multimedia Service, `eMBMS`) es una tecnología del 3GPP diseñada par
 transmisión eficiente de contenido multimedia sobre la red de la cuarta generación,
 complementaria a la entrega individual que describe el resto de este capítulo.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     FUENTE[Fuente del contenido] --> ENB[eNodeB]
     ENB -->|flujo multicast unico| UE1[Terminal 1]

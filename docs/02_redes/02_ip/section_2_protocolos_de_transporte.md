@@ -49,7 +49,7 @@ procesos sobre una única dirección IP, y el nivel de transporte del extremo re
 demultiplexa cada segmento o datagrama entrante hacia el proceso correcto a partir del
 puerto de destino.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     subgraph HostA["Equipo origen (una dirección IP)"]
         P1["Proceso A<br/>puerto 51000"]
@@ -192,7 +192,7 @@ confirma el número de secuencia del receptor. A partir de ese momento ambos ext
 conocen el número de secuencia inicial del otro y la conexión queda establecida en ambos
 sentidos.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant C as Cliente
     participant S as Servidor
@@ -208,7 +208,7 @@ inicia el cierre envía un segmento `FIN`, el otro extremo lo confirma con `ACK`
 cuando también termina de enviar sus propios datos, envía su propio `FIN`, que el
 iniciador confirma con un último `ACK`.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant C as Cliente
     participant S as Servidor
@@ -307,7 +307,7 @@ queden bytes autorizados dentro de esa ventana.
 
     $$
     \text{Throughput}_{\text{máx}} = \frac{65535 \times 8\ \text{bit}}{0{,}1\ \text{s}}
-    \approx 5{,}24\ \text{Mbit/s}
+    \approx 5{,}24\ \text{Mbit/s}.
     $$
 
     Aunque el enlace subyacente ofrezca una capacidad muy superior a 5,24 Mbit/s, la
@@ -336,7 +336,7 @@ lento, mientras que una pérdida detectada por vencimiento del temporizador, se�
 congestión más severa, sí reinicia la ventana de congestión a su valor mínimo y regresa
 al arranque lento.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     AL["Arranque lento<br/>(crecimiento exponencial)"] -->|"Umbral alcanzado"| EC["Evitación de congestión<br/>(crecimiento lineal)"]
     EC -->|"3 confirmaciones duplicadas"| RR["Recuperación rápida<br/>(ventana a la mitad)"]

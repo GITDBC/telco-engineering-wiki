@@ -22,7 +22,7 @@ Un sistema con $N_T$ antenas transmisoras y $N_R$ antenas receptoras puede trans
 sobre el mismo canal y al mismo tiempo, hasta
 
 $$
-N_S = \min(N_T, N_R)
+N_S = \min(N_T, N_R),
 $$
 
 flujos de información independientes, donde $N_S$ es el número de flujos espaciales.
@@ -33,7 +33,7 @@ antena transmisora $i$ hasta cada antena receptora. Con este convenio, la señal
 se escribe como
 
 $$
-\mathbf{y} = \mathbf{H} \mathbf{x} + \mathbf{n}
+\mathbf{y} = \mathbf{H} \mathbf{x} + \mathbf{n},
 $$
 
 donde $\mathbf{x}$ es el vector de $N_T$ símbolos enviados por las antenas transmisoras,
@@ -91,7 +91,7 @@ vector $\mathbf{d}$, entre las $N_T$ antenas transmisoras mediante una matriz de
 precodificación $\mathbf{W}$ de dimensión $N_T \times N_L$,
 
 $$
-\mathbf{x} = \mathbf{W} \mathbf{d}
+\mathbf{x} = \mathbf{W} \mathbf{d}.
 $$
 
 Cada columna de $\mathbf{W}$ define cómo se distribuye un flujo entre las antenas, y
@@ -100,14 +100,14 @@ común, de forma que la potencia total radiada no depende del número de flujos 
 La señal recibida resulta de combinar la precodificación con el canal,
 
 $$
-\mathbf{y} = \mathbf{H} \mathbf{W} \mathbf{d} + \mathbf{n}
+\mathbf{y} = \mathbf{H} \mathbf{W} \mathbf{d} + \mathbf{n},
 $$
 
 y cada antena receptora recoge, por tanto, una combinación lineal de los $N_L$ flujos
 entrelazados a través de $\mathbf{H} \mathbf{W}$, que el receptor debe deshacer antes de
 poder decidir cada símbolo por separado.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     d1["Flujo 1"] --> W
     d2["Flujo 2"] --> W
@@ -140,7 +140,7 @@ matriz de ecualización $\mathbf{G}$ de dimensión $N_L \times N_R$ que, aplicad
 vector recibido, aproxima el vector de datos transmitido,
 
 $$
-\hat{\mathbf{d}} = \mathbf{G} \mathbf{y}
+\hat{\mathbf{d}} = \mathbf{G} \mathbf{y}.
 $$
 
 Cuando el sistema es cuadrado, $N_T = N_R = N_L$, la matriz de canal efectiva
@@ -152,7 +152,7 @@ se recurre en su lugar a la pseudoinversa de Moore-Penrose,
 
 $$
 \mathbf{G} = \left( (\mathbf{H}\mathbf{W})^{H} (\mathbf{H}\mathbf{W})
-\right)^{-1} (\mathbf{H}\mathbf{W})^{H}
+\right)^{-1} (\mathbf{H}\mathbf{W})^{H},
 $$
 
 donde $(\cdot)^{H}$ denota la transpuesta conjugada, expresión que se reduce a la
@@ -180,7 +180,7 @@ errores de decisión de los primeros flujos se propaguen sin control a los sigui
 detectar primero los flujos más fiables, la probabilidad de arrastrar un error hacia
 etapas posteriores es menor que en el orden inverso.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     A["Vector recibido y"] --> B{"¿Información de canal\nen el transmisor?"}
     B -- No --> C{"¿Presupuesto\nde cómputo alto?"}
@@ -213,7 +213,7 @@ El instrumento que permite ese diseño a medida es la **descomposición en valor
 singulares** (_singular value decomposition_, SVD) de la matriz de canal,
 
 $$
-\mathbf{H} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^{H}
+\mathbf{H} = \mathbf{U} \mathbf{\Sigma} \mathbf{V}^{H},
 $$
 
 donde $\mathbf{U}$ es una matriz unitaria $N_R \times N_R$, $\mathbf{V}$ es una matriz
@@ -226,7 +226,7 @@ $\mathbf{G} = \mathbf{U}_{N_L}^{H}$, diagonaliza por completo el canal efectivo:
 
 $$
 \mathbf{U}_{N_L}^{H} \mathbf{H} \mathbf{V}_{N_L} = \mathrm{diag}(\sigma_1, \dots,
-\sigma_{N_L})
+\sigma_{N_L}).
 $$
 
 El resultado transforma el canal MIMO acoplado en $N_L$ subcanales independientes y sin
@@ -262,7 +262,7 @@ la transmisión en las portadoras que caen en un mínimo profundo del canal.
     independientes de igual ganancia y alcanza
 
     $$
-    C_2 = 2 \log_2\!\left(1 + \frac{\mathrm{SNR}}{2}\right)
+    C_2 = 2 \log_2\!\left(1 + \frac{\mathrm{SNR}}{2}\right).
     $$
 
     Para $\mathrm{SNR} = 100$ (20 dB), $C_1 = \log_2(101) \approx 6{,}66$ bits por uso
@@ -308,13 +308,13 @@ canal multiusuario se construye apilando esos vectores como columnas,
 
 $$
 \mathbf{H}_{UL} = \lbrack \mathbf{h}_1 \enspace \mathbf{h}_2 \enspace \cdots \enspace
-\mathbf{h}_{N_U} \rbrack
+\mathbf{h}_{N_U} \rbrack,
 $$
 
 y la señal recibida en la estación base es
 
 $$
-\mathbf{y} = \mathbf{H}_{UL} \mathbf{d} + \mathbf{n}
+\mathbf{y} = \mathbf{H}_{UL} \mathbf{d} + \mathbf{n},
 $$
 
 donde $\mathbf{d}$ agrupa el símbolo transmitido por cada usuario. Esta expresión tiene
@@ -340,7 +340,7 @@ usuarios, con matrices que dependen de las respuestas de canal $\mathbf{h}_i$ de
 los usuarios servidos simultáneamente, en lugar de dejar la separación a un ecualizador
 en recepción como en el enlace ascendente.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     d1["Datos usuario 1"] --> P["Precodificación\nmultiusuario"]
     d2["Datos usuario 2"] --> P
@@ -414,7 +414,7 @@ aplicada de forma independiente a cada par transmisor-receptor una vez separadas
 contribuciones de cada antena transmisora,
 
 $$
-\hat{H}_{ji} = \frac{Y_{p,ji}}{X_{p,i}}
+\hat{H}_{ji} = \frac{Y_{p,ji}}{X_{p,i}},
 $$
 
 donde $X_{p,i}$ es el símbolo piloto conocido enviado por la antena transmisora $i$,
@@ -486,7 +486,7 @@ plana. La matriz de canal deja de ser una única matriz $N_R \times N_T$ y pasa 
 familia de matrices $\mathbf{H}_k$, una por cada subportadora $k$,
 
 $$
-\mathbf{y}_k = \mathbf{H}_k \mathbf{x}_k + \mathbf{n}_k
+\mathbf{y}_k = \mathbf{H}_k \mathbf{x}_k + \mathbf{n}_k,
 $$
 
 donde $\mathbf{x}_k$ es el vector de símbolos transmitidos por las distintas antenas en

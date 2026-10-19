@@ -39,7 +39,7 @@ encargada de la conmutación y de la gestión de la movilidad y de los abonados.
 comunican a través de interfaces normalizadas que permiten sustituir el equipo de un
 fabricante por el de otro en cualquiera de los dos extremos.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     SIM["SIM"] --- ME["ME"]
     ME --- MS["Estación móvil, MS"]
@@ -185,7 +185,7 @@ múltiple.
     portadoras de 200 kHz, es
 
     $$
-    N_\text{portadoras} = \frac{2600\ \text{kHz}}{200\ \text{kHz}} = 13\ \text{portadoras}
+    N_\text{portadoras} = \frac{2600\ \text{kHz}}{200\ \text{kHz}} = 13\ \text{portadoras}.
     $$
 
     Cada portadora aporta 8 canales físicos por división en tiempo. De las 13
@@ -194,7 +194,7 @@ múltiple.
     total de canales de tráfico simultáneos es, por tanto,
 
     $$
-    N_\text{TCH} = 12 \times 8 + 1 \times 7 = 96 + 7 = 103\ \text{canales de tráfico}
+    N_\text{TCH} = 12 \times 8 + 1 \times 7 = 96 + 7 = 103\ \text{canales de tráfico},
     $$
 
     de modo que la celda puede atender hasta 103 comunicaciones de voz de forma
@@ -207,7 +207,7 @@ La unidad de transmisión más pequeña de la interfaz radio de GSM es la **ráf
 ráfagas consecutivas, una por cada _slot_, forman una **trama** TDMA de
 
 $$
-T_\text{trama} = 8 \times 0{,}577\ \text{ms} = 4{,}615\ \text{ms}
+T_\text{trama} = 8 \times 0{,}577\ \text{ms} = 4{,}615\ \text{ms}.
 $$
 
 La modulación empleada sobre cada ráfaga es `GMSK` (_Gaussian minimum shift keying_),
@@ -252,7 +252,7 @@ de sensibilidad del receptor $S_\text{rx}$, expresado en dBm y por tanto negativ
 
 $$
 L_\text{max}\ \lbrack \text{dB}\rbrack = P_\text{tx} + G_\text{tx} + G_\text{rx} -
-L_\text{cable} - S_\text{rx}
+L_\text{cable} - S_\text{rx}.
 $$
 
 ???+ example "Balance de potencia de una celda GSM en enlace ascendente y descendente"
@@ -270,13 +270,13 @@ $$
     estación base al terminal, son
 
     $$
-    L_\text{DL} = 43 + 18 + 0 - 3 - (-102) = 160\ \text{dB}
+    L_\text{DL} = 43 + 18 + 0 - 3 - (-102) = 160\ \text{dB},
     $$
 
     y las que tolera el enlace ascendente, del terminal a la estación base, son
 
     $$
-    L_\text{UL} = 33 + 0 + 18 - 3 - (-104) = 152\ \text{dB}
+    L_\text{UL} = 33 + 0 + 18 - 3 - (-104) = 152\ \text{dB}.
     $$
 
     El enlace ascendente tolera 8 dB menos de pérdidas que el descendente, de modo que
@@ -377,7 +377,7 @@ tramas descrita en el apartado de trama y multitrama. Un SDCCH, cuando la celda 
 dedica a un _slot_ propio en lugar de combinarlo con el canal de difusión, sigue el
 mismo esquema de multitrama de 51 tramas que el CCCH.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     TS0["Slot 0 de la portadora de difusión<br/>multitrama de 51 tramas"] --> FCCH["FCCH"]
     TS0 --> SCH["SCH"]
@@ -404,14 +404,14 @@ flowchart TD
 
     $$
     N_\text{multitramas/h} = \frac{3600\ \text{s}}{51 \times 4{,}615\times 10^{-3}\
-    \text{s}} = \frac{3600}{0{,}2354} \approx 15\,297\ \text{multitramas/h}
+    \text{s}} = \frac{3600}{0{,}2354} \approx 15\,297\ \text{multitramas/h}.
     $$
 
     Con 8 bloques de aviso por multitrama y 2 avisos por bloque, la capacidad máxima del
     canal de aviso de llamada de la celda es
 
     $$
-    C_\text{PCH} = 15\,297 \times 8 \times 2 \approx 244\,752\ \text{avisos/h}
+    C_\text{PCH} = 15\,297 \times 8 \times 2 \approx 244\,752\ \text{avisos/h}.
     $$
 
     Esa capacidad supera la carga ofrecida de $200\,000$ avisos por hora, de modo que la
@@ -444,7 +444,7 @@ el centro de conmutación y los registros de localización se apoya en el sistem
 señalización `SS7`, el mismo empleado en la red telefónica fija, lo que permite
 reutilizar la infraestructura de señalización existente del operador.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant MS as Estación móvil
     participant BTS as BTS

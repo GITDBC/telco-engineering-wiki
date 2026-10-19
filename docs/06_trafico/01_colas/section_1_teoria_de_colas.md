@@ -77,7 +77,7 @@ que el mecanismo de servicio queda libre. Cuando eso ocurre, se selecciona la si
 petición a atender según una disciplina de cola, un conjunto de reglas que decide el
 orden de atención entre las peticiones almacenadas.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Fuente[Fuente de peticiones] --> Cola[Cola de espera]
     Cola --> Servidor[Mecanismo de servicio]
@@ -220,7 +220,7 @@ La **intensidad de tráfico**, también llamada **tráfico ofrecido** y medida e
 **erlangs**, se define para un sistema de un solo servidor como el cociente
 
 $$
-\rho = \frac{\lambda}{\mu}
+\rho = \frac{\lambda}{\mu},
 $$
 
 donde $\lambda$ es la tasa media de llegadas y $\mu$ la tasa media de servicio de un
@@ -232,7 +232,7 @@ Cuando el sistema dispone de $c$ servidores, la magnitud que mide su grado de oc
 es el **factor de utilización**,
 
 $$
-\rho = \min \left\lbrack \frac{\lambda}{c\mu}, \, 1 \right\rbrack
+\rho = \min \left\lbrack \frac{\lambda}{c\mu}, \, 1 \right\rbrack,
 $$
 
 que indica la fracción media de la capacidad total de servicio, $c\mu$, que la demanda
@@ -315,7 +315,7 @@ transcurrido desde que una petición llega al sistema hasta que su servicio se c
 por entero. Se descompone en dos términos,
 
 $$
-T = W + \frac{1}{\mu}
+T = W + \frac{1}{\mu},
 $$
 
 donde $W$ es el tiempo medio de espera en cola, definido antes, y $1/\mu$ es el tiempo
@@ -331,14 +331,14 @@ colas en régimen estacionario, con independencia de la distribución concreta q
 las llegadas o el servicio:
 
 $$
-N = \lambda T
+N = \lambda T,
 $$
 
 donde $\lambda$ es la tasa media de llegadas que efectivamente entran en el sistema. La
 misma relación se aplica de forma análoga a la cola de espera exclusivamente,
 
 $$
-Q = \lambda W
+Q = \lambda W,
 $$
 
 de modo que conocer dos de las tres magnitudes de cualquiera de los dos pares, número
@@ -373,7 +373,7 @@ capacidad infinita y disciplina por orden de llegada. Con la intensidad de tráf
 en el que el número de peticiones en el sistema sigue una distribución geométrica,
 
 $$
-P_n = (1-\rho)\,\rho^n
+P_n = (1-\rho)\,\rho^n,
 $$
 
 donde $P_n$ es la probabilidad de que haya exactamente $n$ peticiones en el sistema, y
@@ -382,19 +382,19 @@ de esa distribución se obtienen las cuatro magnitudes que resumen el comportami
 sistema `M/M/1`:
 
 $$
-N = \frac{\rho}{1-\rho}
+N = \frac{\rho}{1-\rho},
 $$
 
 $$
-Q = N - \rho = \frac{\rho^2}{1-\rho}
+Q = N - \rho = \frac{\rho^2}{1-\rho},
 $$
 
 $$
-T = \frac{1}{\mu(1-\rho)}
+T = \frac{1}{\mu(1-\rho)},
 $$
 
 $$
-W = \frac{\rho}{\mu(1-\rho)}
+W = \frac{\rho}{\mu(1-\rho)}.
 $$
 
 En todas ellas, $\rho$ es la intensidad de tráfico definida antes, $\mu$ es la tasa
@@ -403,7 +403,7 @@ con la descomposición $T = W + 1/\mu$: puede comprobarse que $N = \lambda T$ y 
 \lambda W$ se cumplen de forma exacta al sustituir $\rho = \lambda/\mu$ en cualquiera de
 las cuatro expresiones.
 
-```mermaid linenums="1"
+```mermaid
 stateDiagram-v2
     [*] --> S0
     S0 --> S1: lambda

@@ -99,7 +99,7 @@ El `IMS` estructura sus funciones en tres capas, cada una con una responsabilida
 distinta y sin apenas dependencia de los detalles internos de las capas vecinas, lo que
 permite hacer evolucionar cada una por su lado.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph CAP[Capa de aplicacion]
         AS[Servidores de aplicacion]
@@ -347,7 +347,7 @@ permanezca activo. El usuario envía periódicamente refrescos de registro para 
 vigente; si deja de hacerlo, el `S-CSCF` lo desregistra en cuanto vence el lapso de
 registro concedido.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant UE as Terminal
     participant PCSCF as P-CSCF
@@ -413,7 +413,7 @@ inversa hasta el usuario A. Tras varias interacciones adicionales que siguen el 
 procedimiento de enrutamiento, la sesión se establece de manera efectiva y ambos
 usuarios pueden emplear la aplicación.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant A as Usuario A
     participant PCSCFA as P-CSCF de la red de A

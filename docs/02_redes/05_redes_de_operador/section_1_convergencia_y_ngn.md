@@ -40,7 +40,7 @@ apenas nada con los silos vecinos, lo que produce una falta de integración y de
 comunicación efectiva entre servicios que, en principio, podrían compartir buena parte
 de su infraestructura de transporte.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph Modelo en silos
         direction TB
@@ -264,7 +264,7 @@ Una `NGN` organiza sus funciones en cuatro niveles, accesibles desde cualquier
 dispositivo con conexión, que separan con claridad el plano de servicio, el plano de
 control y el plano de transporte.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     L1["Gestion de servicios y aplicacion"]
     L2["Control de red"]
@@ -308,7 +308,7 @@ de conmutación de circuitos. La interconexión entre ambas exige tres elementos
 adaptan, en cada dirección, la señalización y los medios de un dominio de conmutación de
 circuitos a un dominio de conmutación de paquetes, y viceversa.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant PSTN as Red telefonica conmutada
     participant SG as Pasarela de senalizacion

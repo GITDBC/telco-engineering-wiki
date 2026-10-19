@@ -57,7 +57,7 @@ de los espacios ordinarios de esta capa. `DIFS` se compone del espacio entre tra
 corto, `SIFS`, más dos _slots_ de tiempo:
 
 $$
-\text{DIFS} = \text{SIFS} + 2 \cdot \text{aSlotTime}
+\text{DIFS} = \text{SIFS} + 2 \cdot \text{aSlotTime}.
 $$
 
 Sobre una capa física OFDM de referencia como la de 802.11a, con `aSlotTime = 9` µs y
@@ -76,7 +76,7 @@ a estar libre durante un `DIFS` completo, lo que evita que dos estaciones que ll
 esperando tiempos distintos converjan de nuevo sobre el mismo instante de transmisión en
 cuanto el medio se libera.
 
-```mermaid linenums="1"
+```mermaid
 stateDiagram-v2
     [*] --> MedioLibre
     MedioLibre --> MedioLibre: contador de backoff decrementado un slot
@@ -122,7 +122,7 @@ margen.
 
     $$
     T = \text{DIFS} + \overline{\text{backoff}} + \text{PPDU}_{\text{datos}} +
-    \text{SIFS} + \text{PPDU}_{\text{ACK}}
+    \text{SIFS} + \text{PPDU}_{\text{ACK}},
     $$
 
     que sustituyendo resulta $34 + 67{,}5 + 246{,}37 + 16 + 22{,}07 \approx 385{,}9$ µs.
@@ -130,7 +130,7 @@ margen.
     `MSDU` original y ese tiempo total,
 
     $$
-    S = \frac{12\,000\ \text{bits}}{385{,}9\ \text{µs}} \approx 31{,}1\ \text{Mbps}
+    S = \frac{12\,000\ \text{bits}}{385{,}9\ \text{µs}} \approx 31{,}1\ \text{Mbps},
     $$
 
     apenas el $57{,}6\,\%$ de la tasa nominal de $54$ Mbps. El resto de la capacidad
@@ -149,7 +149,7 @@ competir por el medio. El acceso con `PCF` se activa mediante un espacio entre t
 más corto que `DIFS`, el **espacio entre tramas de prioridad** (`PIFS`), definido como
 
 $$
-\text{PIFS} = \text{SIFS} + \text{aSlotTime}
+\text{PIFS} = \text{SIFS} + \text{aSlotTime},
 $$
 
 que sobre la misma referencia de 802.11a resulta $16 + 9 = 25$ µs. Al ser más corto que
@@ -171,7 +171,7 @@ libre en ese intervalo. El `NAV` es, en este sentido, un mecanismo de reserva vi
 del canal que complementa a la detección física de portadora, y reaparece más adelante
 en este capítulo como la pieza central que resuelve el problema de la estación oculta.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     subgraph SF["Supertrama"]
         direction LR
@@ -264,7 +264,7 @@ antes de transmitir, porque ninguna percibe la señal de la otra, y ambas pueden
 una transmisión simultánea que colisiona en el receptor común sin que ninguna de las dos
 emisoras llegue a advertirlo por detección de portadora.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     A["Estacion A"] -.->|fuera de alcance| C["Estacion C"]
     A ---|alcance radio| B["Estacion B / punto de acceso"]
@@ -286,7 +286,7 @@ independencia de que perciba o no la transmisión de datos que sigue. De esta fo
 estación oculta para el emisor pero visible para el receptor, o viceversa, queda
 igualmente advertida a través de cualquiera de las dos tramas que sí alcanza a escuchar.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant A as Estacion A
     participant B as Estacion B
@@ -318,7 +318,7 @@ sequenceDiagram
 
     $$
     D_{\text{RTS}} = \text{SIFS} + \text{PPDU}_{\text{CTS}} + \text{SIFS} +
-    \text{PPDU}_{\text{datos}} + \text{SIFS} + \text{PPDU}_{\text{ACK}}
+    \text{PPDU}_{\text{datos}} + \text{SIFS} + \text{PPDU}_{\text{ACK}},
     $$
 
     que sustituyendo resulta $16 + 22{,}07 + 16 + 246{,}37 + 16 + 22{,}07 \approx
@@ -329,7 +329,7 @@ sequenceDiagram
     $$
     D_{\text{CTS}} = \text{SIFS} + \text{PPDU}_{\text{datos}} + \text{SIFS} +
     \text{PPDU}_{\text{ACK}} \approx 16 + 246{,}37 + 16 + 22{,}07 \approx
-    300{,}4\ \text{µs}
+    300{,}4\ \text{µs}.
     $$
 
     Una estacion que solo escucha el `CTS`, por ser oculta para el emisor original,
@@ -363,7 +363,7 @@ un número de _slots_ propio de cada categoría, `AIFSN`:
 
 $$
 \text{AIFS}\lbrack \text{AC} \rbrack = \text{AIFSN}\lbrack \text{AC} \rbrack \cdot
-\text{aSlotTime} + \text{aSIFSTime}
+\text{aSlotTime} + \text{aSIFSTime},
 $$
 
 donde $\text{AIFSN}\lbrack \text{AC} \rbrack$ es el número entero de _slots_ asignado a

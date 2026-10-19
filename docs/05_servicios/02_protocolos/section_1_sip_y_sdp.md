@@ -154,7 +154,7 @@ ignoran o se reenvían sin interpretar, mientras que extender `H.323` con una ca
 nueva exige coordinar la actualización del esquema `ASN.1` en todos los fabricantes de
 equipamiento que deban seguir interoperando con la extensión.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant A as Terminal A
     participant GKA as Gatekeeper de la zona A
@@ -266,7 +266,7 @@ sobre el transporte elegido.
 Una red `SIP` reparte sus funciones entre seis tipos de entidades, que colaboran entre
 sí para establecer, encaminar y terminar sesiones.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     UA1[Agente de usuario A] -- registro --> REG[Registrador]
     UA1 -- INVITE --> PROXY[Servidor proxy]
@@ -400,7 +400,7 @@ a=rtpmap:0 PCMU/8000
     servidor proxy que ninguno de los dos conoce por adelantado, salvo por el
     dominio al que pertenece B.
 
-    ```mermaid linenums="1"
+    ```mermaid
     sequenceDiagram
         participant A as Agente de usuario A
         participant P as Servidor proxy

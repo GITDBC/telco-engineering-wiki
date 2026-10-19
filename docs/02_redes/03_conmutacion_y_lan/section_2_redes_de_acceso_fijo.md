@@ -68,7 +68,7 @@ los **nodos de interconexión**, o IXC, que actúan como pasarela entre LATA gra
 **puntos de presencia**, o POP, que hacen de frontera de acceso de cada LATA hacia los
 IXC.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Abonado[Terminal de abonado] --> Bucle[Bucle de abonado]
     Bucle --> Local[Central local]
@@ -197,7 +197,7 @@ necesita los equipos y los enlaces de telecomunicación necesarios para operar. 
 de presencia para facilitar el acceso de sus clientes, que se conectan a través del
 punto de presencia más cercano.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Host[Equipo terminal] --> Isp[Proveedor de acceso ISP]
     Isp --> PopIsp[Punto de presencia del ISP]

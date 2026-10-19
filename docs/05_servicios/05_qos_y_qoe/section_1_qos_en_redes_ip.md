@@ -181,7 +181,7 @@ bits, la probabilidad de que el paquete llegue sin ningún bit erróneo tras atr
 saltos independientes es:
 
 $$
-P_{\text{exito}} = \prod_{i=1}^{N} \left(1 - p_i\right)^{L}
+P_{\text{exito}} = \prod_{i=1}^{N} \left(1 - p_i\right)^{L},
 $$
 
 y la tasa de error de paquete extremo a extremo es $PER = 1 - P_{\text{exito}}$.
@@ -195,45 +195,15 @@ y la tasa de error de paquete extremo a extremo es $PER = 1 - P_{\text{exito}}$.
     de error de paquete extremo a extremo de ambas alternativas para un paquete de 1000
     bits, equivalente a 125 bytes.
 
-    ```python linenums="1"
-    def per_extremo_a_extremo(ber_por_salto: list[float], longitud_bits: int) -> float:
-        """Calcula la tasa de error de paquete extremo a extremo.
-
-        Args:
-            ber_por_salto: Tasa de error de bit de cada salto independiente de la ruta.
-            longitud_bits: Longitud del paquete, en bits.
-
-        Returns:
-            Tasa de error de paquete extremo a extremo, como fracción entre 0 y 1.
-        """
-        # Probabilidad de que el paquete atraviese cada salto sin ningun bit erroneo
-        exito = 1.0
-        for ber in ber_por_salto:
-            exito *= (1 - ber) ** longitud_bits
-        return 1 - exito
-
-
-    ber_cable = [1e-6, 1e-8, 1e-6, 5e-5]
-    ber_satelite = [1e-6, 1e-8, 2e-5, 7e-5]
-    per_cable = per_extremo_a_extremo(ber_cable, 1000)
-    per_satelite = per_extremo_a_extremo(ber_satelite, 1000)
-    print(f"PER cable: {per_cable:.4%}")
-    print(f"PER satelite: {per_satelite:.4%}")
-    ```
-
-    ```plaintext title="Expected output"
-    PER cable: 5.0682%
-    PER satelite: 8.6994%
-    ```
-
-    La alternativa por satélite presenta una tasa de error de paquete casi un 72 % más alta
-    que la del cable submarino, principalmente porque sus dos saltos geoestacionarios
-    acumulan tasas de error de bit de $2 \times 10^{-5}$ y $7 \times 10^{-5}$, sensiblemente
-    peores que el peor tramo del cable submarino. Este resultado, combinado con la
-    diferencia de retardo de propagación del ejemplo anterior, confirma que el enlace por
-    satélite ofrece peores prestaciones objetivas de `QoS` en ambos indicadores, lo que
-    obligaría a compensarlo con mecanismos de corrección de errores o de retransmisión más
-    agresivos si esa fuera la alternativa elegida.
+    Aplicando $PER = 1 - \prod_{i}\left(1 - p_i\right)^{L}$ con $L = 1000$ bits a cada
+    conjunto de tramos, la alternativa por satélite presenta una tasa de error de paquete
+    sensiblemente más alta que la del cable submarino, principalmente porque sus dos saltos
+    geoestacionarios acumulan tasas de error de bit de $2 \times 10^{-5}$ y
+    $7 \times 10^{-5}$, peores que el peor tramo del cable submarino. Este resultado,
+    combinado con la diferencia de retardo de propagación del ejemplo anterior, confirma que
+    el enlace por satélite ofrece peores prestaciones objetivas de `QoS` en ambos
+    indicadores, lo que obligaría a compensarlo con mecanismos de corrección de errores o de
+    retransmisión más agresivos si esa fuera la alternativa elegida.
 
 ## Acuerdos de nivel de servicio
 
@@ -347,7 +317,7 @@ para anunciar las características de su flujo a lo largo de la ruta hacia el re
 que el receptor utiliza, en sentido inverso, para confirmar la reserva en cada uno de
 los routers intermedios que la ruta atraviesa.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant Emisor
     participant R1 as Router intermedio 1
@@ -410,7 +380,7 @@ comportamiento por salto (Per-Hop Behavior, `PHB`), y es ese comportamiento, no 
 reserva de extremo a extremo, el que determina cómo un router encola, descarta o reenvía
 el paquete.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     subgraph Borde[Borde del dominio DiffServ]
         C[Clasificacion segun politica]
@@ -437,7 +407,7 @@ dificultad al volumen de tráfico agregado de miles de flujos simultáneos.
 El `QoS` se organiza en tres planos funcionales, cada uno compuesto por un conjunto de
 elementos con una responsabilidad distinta dentro del conjunto.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph PC[Plano de control]
         CA[Control de admision]
@@ -577,42 +547,6 @@ ocasional sin renunciar a un límite medio a largo plazo, mientras que el cubo c
 resulta más adecuado cuando se necesita un flujo de salida perfectamente regular en todo
 momento.
 
-```python linenums="1"
-def duracion_maxima_rafaga(
-    profundidad_bits: float, tasa_reposicion_bps: float, tasa_pico_bps: float
-) -> float:
-    """Calcula la duracion maxima de una rafaga a tasa de pico en un cubo de fichas.
-
-    Args:
-        profundidad_bits: Capacidad maxima del deposito de fichas, en bits.
-        tasa_reposicion_bps: Tasa de reposicion de fichas del cubo, en bits por segundo.
-        tasa_pico_bps: Tasa de pico a la que se transmite mientras el deposito no
-            se ha agotado, en bits por segundo.
-
-    Returns:
-        Duracion maxima de la rafaga a tasa de pico, en segundos, antes de que el
-        deposito se agote y el trafico deba ajustarse a la tasa de reposicion.
-    """
-    if tasa_pico_bps <= tasa_reposicion_bps:
-        raise ValueError("La tasa de pico debe superar la tasa de reposicion.")
-    # El deposito se vacia a un ritmo neto igual a la diferencia entre ambas tasas
-    return profundidad_bits / (tasa_pico_bps - tasa_reposicion_bps)
-
-
-profundidad = 100_000  # bits, equivalentes a 12500 bytes
-tasa_comprometida = 2_000_000  # 2 Mbit/s de tasa comprometida
-tasa_pico = 10_000_000  # 10 Mbit/s de tasa de pico disponible en la interfaz
-duracion = duracion_maxima_rafaga(profundidad, tasa_comprometida, tasa_pico)
-bits_transmitidos = tasa_pico * duracion
-print(f"Duracion maxima de rafaga: {duracion * 1000:.2f} ms")
-print(f"Bits transmitidos durante la rafaga: {bits_transmitidos:.0f} bits")
-```
-
-```plaintext title="Expected output"
-Duracion maxima de rafaga: 12.50 ms
-Bits transmitidos durante la rafaga: 125000 bits
-```
-
 ???+ example "Interpretación del resultado de un cubo de fichas con ráfaga permitida"
 
     Un enlace de acceso está regulado por un cubo de fichas con una tasa comprometida de
@@ -674,40 +608,6 @@ prioridad. Cada cola recibe una fracción de la capacidad total del enlace igual
 peso dividido entre la suma de todos los pesos, lo que garantiza un reparto mínimo
 incluso a las colas de menor peso mientras exista tráfico en todas ellas.
 
-```python linenums="1"
-def reparto_ancho_banda_wfq(
-    capacidad_enlace_bps: float, pesos: dict[str, float]
-) -> dict[str, float]:
-    """Calcula el reparto de ancho de banda garantizado bajo WFQ.
-
-    Args:
-        capacidad_enlace_bps: Capacidad total del enlace, en bits por segundo.
-        pesos: Peso relativo asignado a cada cola, indexado por su nombre.
-
-    Returns:
-        Ancho de banda garantizado a cada cola, en bits por segundo, indexado
-        por el mismo nombre que en `pesos`.
-    """
-    suma_pesos = sum(pesos.values())
-    return {
-        nombre: capacidad_enlace_bps * peso / suma_pesos
-        for nombre, peso in pesos.items()
-    }
-
-
-capacidad = 10_000_000  # enlace de 10 Mbit/s
-pesos_colas = {"voz": 4, "video": 3, "datos": 1}
-reparto = reparto_ancho_banda_wfq(capacidad, pesos_colas)
-for nombre, ancho_banda in reparto.items():
-    print(f"{nombre}: {ancho_banda / 1e6:.2f} Mbit/s")
-```
-
-```plaintext title="Expected output"
-voz: 5.00 Mbit/s
-video: 3.75 Mbit/s
-datos: 1.25 Mbit/s
-```
-
 El **encolado justo ponderado basado en clases** (Class-Based Weighted Fair Queuing,
 `CBWFQ`) extiende el `WFQ` agrupando el tráfico en clases definidas por el operador, en
 lugar de por flujo individual, de la misma manera en que `DiffServ` agrupa flujos en
@@ -727,7 +627,7 @@ inanición que ofrece `CBWFQ` para el resto de las clases, resolviendo la princi
 limitación de cada disciplina por separado: la inanición del `PQ` puro y la falta de una
 garantía de retardo mínimo estricto del `CBWFQ` puro.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     T[Trafico de salida] --> CL2[Clasificacion]
     CL2 --> COLP[Cola de prioridad estricta]

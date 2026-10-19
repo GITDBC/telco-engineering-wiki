@@ -63,7 +63,7 @@ no por duración de conexión.
 
 <figure markdown="span">
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph RA["Red de acceso radio, GSM"]
         MS["Estacion movil"]
@@ -145,7 +145,7 @@ radio durante una misma sesión de usuario.
     tiempo total de transmisión activa es, por tanto,
 
     $$
-    t_{\text{activo}} = 2 + 3 + 1 = 6\ \text{s}
+    t_{\text{activo}} = 2 + 3 + 1 = 6\ \text{s}.
     $$
 
     Si esa sesión se sirviera con un canal dedicado, como los que GSM reserva para la
@@ -156,7 +156,7 @@ radio durante una misma sesión de usuario.
     real es
 
     $$
-    \frac{t_{\text{activo}}}{T} = \frac{6}{180} \approx 0{,}033
+    \frac{t_{\text{activo}}}{T} = \frac{6}{180} \approx 0{,}033,
     $$
 
     es decir, solo un $3{,}3\ \%$ del tiempo de reserva se emplea en transmitir algo, y
@@ -166,7 +166,7 @@ radio durante una misma sesión de usuario.
     que la misma sesión permite repartir el recurso liberado entre hasta
 
     $$
-    \frac{T}{t_{\text{activo}}} = \frac{180}{6} = 30
+    \frac{T}{t_{\text{activo}}} = \frac{180}{6} = 30,
     $$
 
     sesiones equivalentes en el mismo intervalo de tiempo, si ese tiempo liberado se
@@ -220,7 +220,7 @@ entre dominio de circuitos y dominio de paquetes sin alteración estructural.
 
 <figure markdown="span">
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph UT["UTRAN"]
         UE["Equipo de usuario"]
@@ -269,7 +269,7 @@ disponible antes de aplicar la codificación de canal.
     fijo del sistema es
 
     $$
-    R_s = \frac{R_c}{SF} = \frac{3{,}84 \cdot 10^6}{32} = 120\,000\ \text{simbolos/s}
+    R_s = \frac{R_c}{SF} = \frac{3{,}84 \cdot 10^6}{32} = 120\,000\ \text{simbolos/s},
     $$
 
     y el régimen binario bruto, antes de descontar la redundancia introducida por la
@@ -277,7 +277,7 @@ disponible antes de aplicar la codificación de canal.
     bits que transporta cada símbolo QPSK,
 
     $$
-    R_b = 2 \, R_s = 2 \cdot 120\,000 = 240\,000\ \text{bit/s} = 240\ \text{kbit/s}
+    R_b = 2 \, R_s = 2 \cdot 120\,000 = 240\,000\ \text{bit/s} = 240\ \text{kbit/s}.
     $$
 
     Reducir el factor de ensanchamiento a la mitad, a $SF = 16$, duplicaría tanto la
@@ -299,7 +299,7 @@ disponible antes de aplicar la codificación de canal.
     empleado,
 
     $$
-    N_{\max}(SF=64) = 64\ \text{usuarios}
+    N_{\max}(SF=64) = 64\ \text{usuarios},
     $$
 
     un límite que procede exclusivamente de la disponibilidad de códigos y que se suma,

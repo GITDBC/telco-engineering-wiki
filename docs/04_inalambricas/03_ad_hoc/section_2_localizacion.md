@@ -53,7 +53,7 @@ principios de medida cubren la práctica totalidad de los sistemas empleados: el
 que tarda la señal en llegar, el nivel de potencia con el que llega, la identidad del
 transmisor que la envía y el ángulo con el que llega.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     LOC["Sistemas de localizacion"] --> EXT["Exteriores"]
     LOC --> INT["Interiores"]
@@ -150,14 +150,14 @@ desvanecimiento no modelado.
     de pérdidas es
 
     $$
-    L\ \lbrack \text{dB}\rbrack = L_{fs}(d_0) + 10\, n \log_{10}\left(\frac{d}{d_0}\right)
+    L\ \lbrack \text{dB}\rbrack = L_{fs}(d_0) + 10\, n \log_{10}\left(\frac{d}{d_0}\right),
     $$
 
     donde $d$ es la distancia que se quiere estimar. Despejando $d$ en función de las
     pérdidas medidas $L$:
 
     $$
-    d = d_0 \cdot 10^{\frac{L - L_{fs}(d_0)}{10 n}}
+    d = d_0 \cdot 10^{\frac{L - L_{fs}(d_0)}{10 n}}.
     $$
 
     Si el desvanecimiento por multitrayecto añade, en un instante dado, un margen
@@ -167,7 +167,7 @@ desvanecimiento no modelado.
 
     $$
     \frac{d_{\text{estimada}}}{d_{\text{real}}} = 10^{\frac{\Delta L}{10 n}} =
-    10^{\frac{6}{30}} \approx 1{,}58
+    10^{\frac{6}{30}} \approx 1{,}58.
     $$
 
     Un margen de solo 6 dB de desvanecimiento, indistinguible por el receptor de un

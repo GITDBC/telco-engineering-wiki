@@ -47,7 +47,7 @@ sufrida por ese camino y cuya fase recoge el retardo acumulado a lo largo de él
 señal resultante en el receptor es la suma de todos esos fasores:
 
 $$
-r = \sum_{i=1}^{N} a_i\, e^{j\varphi_i}
+r = \sum_{i=1}^{N} a_i\, e^{j\varphi_i},
 $$
 
 donde $N$ es el número de caminos que alcanzan el receptor, $a_i$ es la amplitud real y
@@ -57,7 +57,7 @@ Puesto que las fases $\varphi_i$ dependen de la longitud exacta de cada trayecto
 cambio muy pequeño en la geometría del entorno, del orden de una fracción de la longitud
 de onda, puede alterar de forma notable el resultado de la suma.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     TX["Transmisor"] -->|"a1, φ1 (directo)"| RX["Receptor"]
     TX -->|"a2, φ2 (reflejo 1)"| OBJ1["Obstáculo 1"] --> RX
@@ -91,7 +91,7 @@ distintos, uno por cada camino de propagación, cada uno con su propio retardo y
 propia amplitud. La respuesta al impulso del canal multitrayecto recoge esa estructura:
 
 $$
-h(\tau) = \sum_{i=1}^{N} a_i\, e^{j\varphi_i}\, \delta(\tau - \tau_i)
+h(\tau) = \sum_{i=1}^{N} a_i\, e^{j\varphi_i}\, \delta(\tau - \tau_i),
 $$
 
 donde $\tau_i$ es el retardo de propagación del camino $i$ respecto al camino más
@@ -111,7 +111,7 @@ de fasores presentada más arriba, ahora explícita en su dependencia con la fre
 $f$:
 
 $$
-H(f) = \sum_{i=1}^{N} a_i\, e^{j\varphi_i}\, e^{-j2\pi f \tau_i}
+H(f) = \sum_{i=1}^{N} a_i\, e^{j\varphi_i}\, e^{-j2\pi f \tau_i}.
 $$
 
 Para cada frecuencia, el término de fase $e^{-j2\pi f \tau_i}$ de cada camino toma un
@@ -132,7 +132,7 @@ ancho de banda de coherencia es del orden inverso de la dispersión temporal
 $\Delta\tau$:
 
 $$
-B_c \sim \frac{1}{\Delta\tau}
+B_c \sim \frac{1}{\Delta\tau}.
 $$
 
 Esta expresión es una relación de orden de magnitud, no una identidad exacta: el factor
@@ -151,7 +151,7 @@ temporal tiene, en la misma proporción inversa, un ancho de banda de coherencia
     ancho de banda de coherencia:
 
     $$
-    B_c \sim \frac{1}{\Delta\tau} = \frac{1}{1\ \mu\text{s}} = 1\ \text{MHz}
+    B_c \sim \frac{1}{\Delta\tau} = \frac{1}{1\ \mu\text{s}} = 1\ \text{MHz}.
     $$
 
     El resultado indica que, en ese entorno, dos componentes espectrales separadas menos
@@ -175,7 +175,7 @@ señal experimentan ganancias distintas, y el canal se denomina **selectivo en
 frecuencia**: la forma de la señal recibida se distorsiona, con algunas componentes
 atenuadas mucho más que otras.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     B["Ancho de banda de la señal, B"] --> CMP{"¿B frente a Bc?"}
     CMP -->|"B << Bc"| PLANO["Canal plano<br/>ganancia ~ constante en B"]
@@ -234,7 +234,7 @@ una componente que llega con un ángulo $\theta$ respecto a la dirección de mov
 el desplazamiento Doppler de esa componente es:
 
 $$
-f_d = \frac{v}{\lambda} \cos\theta
+f_d = \frac{v}{\lambda} \cos\theta,
 $$
 
 donde $\lambda$ es la longitud de onda de la portadora. El desplazamiento Doppler
@@ -242,7 +242,7 @@ máximo, que corresponde a una componente que llega exactamente en la dirección
 movimiento del terminal ($\theta = 0$), es:
 
 $$
-f_{d,\text{máx}} = \frac{v}{\lambda} = \frac{v f_c}{c}
+f_{d,\text{máx}} = \frac{v}{\lambda} = \frac{v f_c}{c},
 $$
 
 con $f_c$ la frecuencia de la portadora y $c$ la velocidad de la luz. Cuando la señal
@@ -258,7 +258,7 @@ canal puede considerarse aproximadamente constante. El tiempo de coherencia es d
 inverso del desplazamiento Doppler máximo:
 
 $$
-T_c \sim \frac{1}{f_{d,\text{máx}}}
+T_c \sim \frac{1}{f_{d,\text{máx}}}.
 $$
 
 De nuevo, esta es una relación de orden de magnitud y no una identidad exacta, por el
@@ -280,14 +280,14 @@ y tiempo de coherencia forman el par inverso equivalente en tiempo.
 
     $$
     f_{d,\text{máx},1} = \frac{1{,}39}{0{,}1154} \approx 12{,}0\ \text{Hz}, \qquad
-    f_{d,\text{máx},2} = \frac{33{,}33}{0{,}1154} \approx 288{,}9\ \text{Hz}
+    f_{d,\text{máx},2} = \frac{33{,}33}{0{,}1154} \approx 288{,}9\ \text{Hz},
     $$
 
     y el tiempo de coherencia correspondiente, aplicando la relación de orden de
     magnitud $T_c \sim 1/f_{d,\text{máx}}$:
 
     $$
-    T_{c,1} \approx 83\ \text{ms}, \qquad T_{c,2} \approx 3{,}5\ \text{ms}
+    T_{c,1} \approx 83\ \text{ms}, \qquad T_{c,2} \approx 3{,}5\ \text{ms}.
     $$
 
     El usuario vehicular experimenta un tiempo de coherencia unas 24 veces menor que el
@@ -310,7 +310,7 @@ del terminal, la distancia de coherencia guarda con el tiempo de coherencia la r
 dimensional esperada:
 
 $$
-D_c \sim v \, T_c
+D_c \sim v \, T_c.
 $$
 
 Esta relación explica por qué, a igual tiempo de coherencia, un terminal más rápido
@@ -337,7 +337,7 @@ condiciones, el módulo de la ganancia sigue una **distribución de Rayleigh**, 
 función densidad de probabilidad es:
 
 $$
-f(r) = \frac{r}{\sigma^2}\, e^{-r^2/(2\sigma^2)}, \qquad r \ge 0
+f(r) = \frac{r}{\sigma^2}\, e^{-r^2/(2\sigma^2)}, \qquad r \ge 0,
 $$
 
 donde $r$ es el módulo de la ganancia del canal y $\sigma^2$ es la potencia media de
@@ -355,7 +355,7 @@ módulo de esa ganancia sigue entonces una **distribución de Rice**:
 
 $$
 f(r) = \frac{r}{\sigma^2}\, \exp\!\left(-\frac{r^2 + A^2}{2\sigma^2}\right)
-I_0\!\left(\frac{rA}{\sigma^2}\right), \qquad r \ge 0
+I_0\!\left(\frac{rA}{\sigma^2}\right), \qquad r \ge 0,
 $$
 
 donde $A$ es la amplitud del trayecto dominante, $\sigma^2$ es la potencia de las

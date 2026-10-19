@@ -50,11 +50,11 @@ codificador son
 
 $$
 y_1\lbrack k \rbrack = u\lbrack k \rbrack \oplus s_1\lbrack k \rbrack \oplus
-s_2\lbrack k \rbrack
+s_2\lbrack k \rbrack,
 $$
 
 $$
-y_2\lbrack k \rbrack = u\lbrack k \rbrack \oplus s_2\lbrack k \rbrack
+y_2\lbrack k \rbrack = u\lbrack k \rbrack \oplus s_2\lbrack k \rbrack,
 $$
 
 donde $\oplus$ es la suma módulo dos, $s_1\lbrack k \rbrack = u\lbrack k-1 \rbrack$ y
@@ -62,7 +62,7 @@ $s_2\lbrack k \rbrack = u\lbrack k-2 \rbrack$. Tras calcular la salida, el regis
 desplaza: $s_2\lbrack k+1 \rbrack = s_1\lbrack k \rbrack$ y $s_1\lbrack k+1 \rbrack =
 u\lbrack k \rbrack$.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     U[Bit de entrada u] --> S1[Etapa de memoria s1]
     S1 --> S2[Etapa de memoria s2]
@@ -99,7 +99,7 @@ que produce, como un arco dirigido. Dos arcos salen de cada estado, uno por cada
 posible del bit de entrada, y dos arcos entran en cada estado, procedentes de los dos
 estados cuya etapa más reciente coincide con la primera componente del estado destino.
 
-```mermaid linenums="1"
+```mermaid
 stateDiagram-v2
     S00 --> S00 : u=0, salida 00
     S00 --> S10 : u=1, salida 11
@@ -152,7 +152,7 @@ mismo papel que la distancia mínima para un código de bloque: la capacidad de 
 garantizada es
 
 $$
-t = \left\lfloor \frac{d_{\text{libre}} - 1}{2} \right\rfloor
+t = \left\lfloor \frac{d_{\text{libre}} - 1}{2} \right\rfloor,
 $$
 
 donde $t$ es el número de errores que el descodificador corrige con garantía en
@@ -190,7 +190,7 @@ se calcula de forma recursiva,
 
 $$
 \Gamma_k(s) = \min_{s' \to s} \left\lbrack \Gamma_{k-1}(s') + d\!\left(r_k,
-y(s' \to s)\right) \right\rbrack
+y(s' \to s)\right) \right\rbrack,
 $$
 
 donde la minimización recorre los estados $s'$ desde los que existe una transición hacia
@@ -263,59 +263,6 @@ almacenados en cada paso, un proceso llamado traza hacia atrás.
     error queda corregido porque su peso, $1$, no supera la capacidad de corrección
     $t = 2$ del código.
 
-La misma recursión se programa de forma directa. La función siguiente calcula las cuatro
-métricas acumuladas de una etapa a partir de las de la etapa anterior y del par de bits
-recibido, y se invoca una vez por cada etapa del Trellis.
-
-```python linenums="1"
-import math
-
-# Tabla de transiciones: estado -> {entrada: (salida, estado_siguiente)}
-TRANSICIONES = {
-    (0, 0): {0: ((0, 0), (0, 0)), 1: ((1, 1), (1, 0))},
-    (1, 0): {0: ((1, 0), (0, 1)), 1: ((0, 1), (1, 1))},
-    (0, 1): {0: ((1, 1), (0, 0)), 1: ((0, 0), (1, 0))},
-    (1, 1): {0: ((0, 1), (0, 1)), 1: ((1, 0), (1, 1))},
-}
-
-
-def distancia_hamming(a: tuple[int, int], b: tuple[int, int]) -> int:
-    """Calcula la distancia de Hamming entre dos pares de bits.
-
-    Args:
-        a: Primer par de bits.
-        b: Segundo par de bits.
-
-    Returns:
-        Número de posiciones en que ambos pares difieren.
-    """
-    return (a[0] != b[0]) + (a[1] != b[1])
-
-
-def actualiza_metricas(
-    metricas: dict[tuple[int, int], float],
-    recibido: tuple[int, int],
-) -> dict[tuple[int, int], float]:
-    """Calcula las métricas acumuladas de la etapa siguiente del Trellis.
-
-    Args:
-        metricas: Métrica acumulada de cada estado en la etapa actual.
-        recibido: Par de bits recibidos en la etapa siguiente.
-
-    Returns:
-        Métrica acumulada de cada estado en la etapa siguiente.
-    """
-    nuevas = {estado: math.inf for estado in TRANSICIONES}
-    for estado, metrica in metricas.items():
-        if metrica == math.inf:
-            continue
-        for _, (salida, estado_siguiente) in TRANSICIONES[estado].items():
-            candidata = metrica + distancia_hamming(recibido, salida)
-            if candidata < nuevas[estado_siguiente]:
-                nuevas[estado_siguiente] = candidata
-    return nuevas
-```
-
 ## Perforado
 
 Un código convolucional de tasa $1/2$ o $1/3$ ofrece una protección generosa pero
@@ -335,7 +282,7 @@ información, produciendo $nN$ bits codificados de los que se eliminan $p$, la t
 efectiva es
 
 $$
-R_{\text{ef}} = \frac{N}{nN - p}
+R_{\text{ef}} = \frac{N}{nN - p},
 $$
 
 donde $N$ es el período del patrón en bits de información, $n$ el inverso de la tasa del
@@ -360,7 +307,7 @@ descodificador ya no puede aprovechar para distinguir caminos.
     y la tasa efectiva resulta
 
     $$
-    R_{\text{ef}} = \frac{4}{8-2} = \frac{4}{6} = \frac{2}{3}
+    R_{\text{ef}} = \frac{4}{8-2} = \frac{4}{6} = \frac{2}{3}.
     $$
 
     Un enlace que necesite ajustar su protección con más granularidad que la que
@@ -389,7 +336,7 @@ indica cuánto. Esa idea se formaliza con la **razón de verosimilitud logarítm
 $$
 L\!\left(y\lbrack k \rbrack\right) = \ln \frac{P\!\left(y\lbrack k \rbrack = 1 \mid
 q\lbrack k \rbrack\right)}{P\!\left(y\lbrack k \rbrack = 0 \mid q\lbrack k
-\rbrack\right)}
+\rbrack\right)},
 $$
 
 donde $y\lbrack k \rbrack$ es el bit codificado transmitido en el instante $k$ y
@@ -440,7 +387,7 @@ haberlos reordenado con un **entrelazador**. Ambos codificadores tienen tasa $1/
 como solo se transmite la parte de paridad de cada uno junto con una única copia de los
 bits sistemáticos, la tasa conjunta se aproxima a $1/3$.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     BITS[Bits sistematicos] --> RSC1[Codificador recursivo 1]
     RSC1 --> P1[Paridad 1]
@@ -472,7 +419,7 @@ descodificador se emplea como información a priori del segundo, y viceversa en 
 iteración siguiente, en un intercambio que da nombre al principio turbo por su analogía
 con la realimentación de un motor turbocompresor.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     R1[Descodificador MAP 1] -->|fiabilidad extrinseca| R2[Descodificador MAP 2]
     R2 -->|fiabilidad extrinseca| R1

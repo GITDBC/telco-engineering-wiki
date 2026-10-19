@@ -300,7 +300,7 @@ su tabla, difunde una petición `ARP` a toda la red, y el equipo cuya dirección
 coincide con la solicitada responde con su dirección física, que el solicitante almacena
 en su tabla para usos posteriores.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant A as Equipo A
     participant Red as Red local (difusion)
@@ -369,7 +369,7 @@ propio,
     la suya, y entrega el datagrama IP que contiene a la capa de transporte para su
     procesado.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     A[Host A] -- Trama 1: fisica A a fisica R --> R[Encaminador]
     R -- Trama 2: fisica R a fisica B --> B[Host B]

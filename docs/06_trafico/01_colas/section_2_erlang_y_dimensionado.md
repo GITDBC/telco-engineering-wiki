@@ -42,7 +42,7 @@ un sistema con tasa media de llegadas $\lambda$ y tiempo medio de servicio $1/\m
 intensidad de tráfico es
 
 $$
-A = \lambda \cdot \frac{1}{\mu}
+A = \lambda \cdot \frac{1}{\mu},
 $$
 
 donde $\lambda$ es el número medio de peticiones que llegan por unidad de tiempo y
@@ -103,7 +103,7 @@ los $c$ servidores ocupados y sea rechazada, en función del tráfico ofrecido $
 número de servidores $c$:
 
 $$
-B(c, A) = \frac{\dfrac{A^{c}}{c!}}{\displaystyle\sum_{k=0}^{c} \dfrac{A^{k}}{k!}}
+B(c, A) = \frac{\dfrac{A^{c}}{c!}}{\displaystyle\sum_{k=0}^{c} \dfrac{A^{k}}{k!}},
 $$
 
 donde $A$ es el tráfico ofrecido en erlangs y $c$ es el número de servidores o canales
@@ -113,32 +113,15 @@ numéricamente inestable para valores de $c$ grandes, porque $A^{c}$ y $c!$ crec
 rápido por separado. La forma recursiva evita ese problema:
 
 $$
-B(0, A) = 1
+B(0, A) = 1,
 $$
 
 $$
-B(c, A) = \frac{A \cdot B(c-1, A)}{c + A \cdot B(c-1, A)}
+B(c, A) = \frac{A \cdot B(c-1, A)}{c + A \cdot B(c-1, A)},
 $$
 
 que calcula $B(c, A)$ a partir de $B(c-1, A)$ sin evaluar potencias ni factoriales
-grandes, y es la forma que conviene implementar en código.
-
-```python linenums="1"
-def erlang_b(canales: int, trafico_erlangs: float) -> float:
-    """Calcula la probabilidad de bloqueo de Erlang B de forma recursiva.
-
-    Args:
-        canales: Número de servidores o canales disponibles, c.
-        trafico_erlangs: Tráfico ofrecido A, en erlangs.
-
-    Returns:
-        Probabilidad de que una petición encuentre el sistema ocupado.
-    """
-    bloqueo = 1.0
-    for canal in range(1, canales + 1):
-        bloqueo = (trafico_erlangs * bloqueo) / (canal + trafico_erlangs * bloqueo)
-    return bloqueo
-```
+grandes, y es la forma que conviene emplear en la práctica.
 
 ### Probabilidad de bloqueo
 
@@ -221,7 +204,7 @@ petición que llega tenga que esperar porque los $c$ servidores están ocupados,
 A)$, y se expresa a partir de la propia fórmula de Erlang B:
 
 $$
-C(c, A) = \frac{c \cdot B(c, A)}{c - A \cdot \lbrack 1 - B(c, A) \rbrack}
+C(c, A) = \frac{c \cdot B(c, A)}{c - A \cdot \lbrack 1 - B(c, A) \rbrack},
 $$
 
 donde $A$ es el tráfico ofrecido en erlangs, $c$ es el número de servidores y $B(c, A)$
@@ -232,30 +215,6 @@ anterior: si $A \geq c$, la tasa de llegadas iguala o supera a la capacidad tota
 servicio, la cola crece sin límite y ninguna de las magnitudes de este apartado alcanza
 un régimen estacionario.
 
-```python linenums="1"
-def erlang_c(canales: int, trafico_erlangs: float) -> float:
-    """Calcula la probabilidad de retardo de Erlang C a partir de Erlang B.
-
-    Args:
-        canales: Número de servidores disponibles, c.
-        trafico_erlangs: Tráfico ofrecido A, en erlangs. Debe cumplir A < c.
-
-    Returns:
-        Probabilidad de que una petición encuentre ocupados todos los
-        servidores y deba esperar en cola.
-
-    Raises:
-        ValueError: Si el tráfico ofrecido no es estrictamente menor que
-            el número de canales, lo que viola la condición de estabilidad.
-    """
-    if trafico_erlangs >= canales:
-        raise ValueError("El tráfico ofrecido debe ser menor que el número de canales.")
-    bloqueo = 1.0
-    for canal in range(1, canales + 1):
-        bloqueo = (trafico_erlangs * bloqueo) / (canal + trafico_erlangs * bloqueo)
-    return (canales * bloqueo) / (canales - trafico_erlangs * (1 - bloqueo))
-```
-
 ### Probabilidad de retardo y tiempo de encolado
 
 $C(c, A)$ es la probabilidad de que una petición tenga que esperar, no la probabilidad
@@ -263,7 +222,7 @@ de que espere un tiempo concreto. El tiempo medio de espera en cola, $W$, se obt
 combinando $C(c, A)$ con la tasa media de servicio $\mu$ y el propio tráfico ofrecido:
 
 $$
-W = \frac{C(c, A)}{c\mu - \lambda}
+W = \frac{C(c, A)}{c\mu - \lambda},
 $$
 
 donde $\lambda = A\mu$ es la tasa media de llegadas, $\mu$ es la tasa media de servicio
@@ -314,7 +273,7 @@ La distribución estacionaria del número de peticiones en el sistema, $P_n$ par
 truncada en el estado $K$:
 
 $$
-P_n = \frac{1-\rho}{1-\rho^{K+1}}\,\rho^{n}
+P_n = \frac{1-\rho}{1-\rho^{K+1}}\,\rho^{n},
 $$
 
 donde $\rho = \lambda/\mu$ es la intensidad de tráfico y $K$ es la capacidad total del
@@ -327,7 +286,7 @@ rechaza por encontrar el sistema lleno, es directamente la probabilidad del últ
 estado,
 
 $$
-P_K = \frac{1-\rho}{1-\rho^{K+1}}\,\rho^{K}
+P_K = \frac{1-\rho}{1-\rho^{K+1}}\,\rho^{K},
 $$
 
 y la tasa de llegadas efectivamente cursada por el sistema es $\lambda_{\text{ef}} =

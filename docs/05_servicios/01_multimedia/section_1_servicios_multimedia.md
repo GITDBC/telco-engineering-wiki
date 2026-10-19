@@ -48,7 +48,7 @@ interactividad y de dirección que establecen entre los usuarios que participan 
 Esta clasificación es la que determina, más adelante en el capítulo, qué requisitos de
 calidad impone cada categoría a la red.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     SM[Servicio multimedia] --> Conv[Conversacional]
     SM --> Demanda[Bajo demanda]
@@ -175,7 +175,7 @@ sus valores típicos de margen, se trata en detalle como almacenamiento de desac
 el capítulo de
 [calidad de experiencia](../05_qos_y_qoe/section_2_calidad_de_experiencia.md#almacenamiento-inicial-y-rellenado-de-buffer).
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Fuente[Fuente] --> Red[Red con retardo variable]
     Red --> Bufer[Bufer de reproduccion]

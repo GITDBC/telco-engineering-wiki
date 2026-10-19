@@ -71,7 +71,7 @@ implicadas. Es el mecanismo que sostiene la televisión terrestre, las redes mó
 celulares y los enlaces por satélite, estos últimos atravesando la atmósfera en línea
 recta hasta un satélite en órbita.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     VLF["VLF / LF / MF"] --> SUP["Onda de superficie"]
     HF["HF"] --> ION["Onda ionosférica"]
@@ -107,7 +107,7 @@ completa de transmisión. Un sistema de transmisión radio puede representarse c
 canal discreto equivalente que engloba, a su vez, un canal continuo equivalente entre
 las dos antenas.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     X["x[n]"] --> DA["Conversor D/A"]
     DA --> MOD["Modulador"]
@@ -150,7 +150,7 @@ distancia $d$ entre antenas y la longitud de onda $\lambda$ de la portadora, las
 pérdidas de propagación en espacio libre son:
 
 $$
-L_{fs}\ \lbrack \text{dB}\rbrack = 20 \log_{10}\left(\frac{4\pi d}{\lambda}\right)
+L_{fs}\ \lbrack \text{dB}\rbrack = 20 \log_{10}\left(\frac{4\pi d}{\lambda}\right),
 $$
 
 donde $\lambda = c / f$, con $c$ la velocidad de la luz y $f$ la frecuencia de la
@@ -159,7 +159,7 @@ expresión anterior se reduce a la forma numérica de uso habitual en balances d
 
 $$
 L_{fs}\ \lbrack \text{dB}\rbrack = 20 \log_{10}\lbrack d_{\text{km}}\rbrack +
-20 \log_{10}\lbrack f_{\text{MHz}}\rbrack + 32{,}44
+20 \log_{10}\lbrack f_{\text{MHz}}\rbrack + 32{,}44,
 $$
 
 donde $d_{\text{km}}$ es la distancia entre antenas en kilómetros y $f_{\text{MHz}}$ es
@@ -179,14 +179,14 @@ factores fijos de la ecuación de Friis una vez fijadas esas unidades.
 
     $$
     L_{fs} = 20 \log_{10}(5) + 20 \log_{10}(2000) + 32{,}44 \approx
-    13{,}98 + 66{,}02 + 32{,}44 = 112{,}44\ \text{dB}
+    13{,}98 + 66{,}02 + 32{,}44 = 112{,}44\ \text{dB}.
     $$
 
     La potencia recibida se obtiene restando las pérdidas de propagación a la potencia
     transmitida y sumando la ganancia de ambas antenas:
 
     $$
-    P_r\ \lbrack \text{dBm}\rbrack = P_t + G_t + G_r - L_{fs}
+    P_r\ \lbrack \text{dBm}\rbrack = P_t + G_t + G_r - L_{fs},
     $$
 
     con $P_t = 43$, $G_t = G_r = 15$ y $L_{fs} = 112{,}44$, lo que da
@@ -203,7 +203,7 @@ que predice la ecuación de Friis, y esa diferencia se recoge mediante un expone
 pérdidas $n$ propio del medio:
 
 $$
-L\ \lbrack \text{dB}\rbrack = L_{fs}(d_0) + 10\, n \log_{10}\left(\frac{d}{d_0}\right)
+L\ \lbrack \text{dB}\rbrack = L_{fs}(d_0) + 10\, n \log_{10}\left(\frac{d}{d_0}\right),
 $$
 
 donde $L_{fs}(d_0)$ son las pérdidas en espacio libre a una distancia de referencia
@@ -233,7 +233,7 @@ objeto en relación con la longitud de onda de la señal. Esta redistribución e
 principal de que la señal recibida llegue por múltiples caminos distintos del trayecto
 directo.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     TX["Transmisor"] --> OBJ["Objeto en el trayecto"]
     OBJ --> REF["Reflexión"]
@@ -289,7 +289,7 @@ Las pérdidas de propagación se calculan como:
 $$
 L_b\ \lbrack \text{dB}\rbrack = A + B \log_{10}\lbrack f\rbrack -
 13{,}82 \log_{10}\lbrack h_{bs}\rbrack - a(h_{ms}) +
-\left(44{,}9 - 6{,}55 \log_{10}\lbrack h_{bs}\rbrack\right) \log_{10}\lbrack d\rbrack + C
+\left(44{,}9 - 6{,}55 \log_{10}\lbrack h_{bs}\rbrack\right) \log_{10}\lbrack d\rbrack + C,
 $$
 
 con $f$ la frecuencia en megahercios, $h_{bs}$ la altura de la antena de la estación
@@ -329,7 +329,7 @@ recalibrados para ese rango.
 
     $$
     a(h_{ms}) = (1{,}1 \log_{10}\lbrack f\rbrack - 0{,}7)\, h_{ms} -
-    (1{,}56 \log_{10}\lbrack f\rbrack - 0{,}8)
+    (1{,}56 \log_{10}\lbrack f\rbrack - 0{,}8).
     $$
 
     Sustituyendo $f = 1800$ y $h_{ms} = 1{,}5$ resulta $a(h_{ms}) \approx 0{,}04$ dB, un
@@ -339,13 +339,13 @@ recalibrados para ese rango.
 
     $$
     L_b\ \lbrack \text{dB}\rbrack \approx 136{,}19 + 35{,}23 \log_{10}\lbrack d_{\text{km}}
-    \rbrack
+    \rbrack.
     $$
 
     Igualando $L_b$ al presupuesto de pérdidas de 145 dB y despejando la distancia:
 
     $$
-    d_{\text{km}} = 10^{\frac{145 - 136{,}19}{35{,}23}} \approx 1{,}78\ \text{km}
+    d_{\text{km}} = 10^{\frac{145 - 136{,}19}{35{,}23}} \approx 1{,}78\ \text{km}.
     $$
 
     El emplazamiento puede, por tanto, dar servicio hasta una distancia de
@@ -363,7 +363,7 @@ libre:
 
 $$
 L_0\ \lbrack \text{dB}\rbrack = 42{,}6 + 26 \log_{10}\lbrack d_{\text{km}}\rbrack +
-20 \log_{10}\lbrack f_{\text{MHz}}\rbrack
+20 \log_{10}\lbrack f_{\text{MHz}}\rbrack.
 $$
 
 Sin visión directa, las pérdidas se descomponen en tres términos: unas pérdidas de
@@ -371,10 +371,10 @@ espacio libre $L_0$, unas pérdidas de difracción del tejado a la calle $L_{rts
 pérdidas de difracción múltiple entre las filas de edificios $L_{msd}$:
 
 $$
-L_b\ \lbrack \text{dB}\rbrack = L_0 + L_{rts} + L_{msd}
+L_b\ \lbrack \text{dB}\rbrack = L_0 + L_{rts} + L_{msd}.
 $$
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     BS["Estación base"] --> RTS["Difracción tejado-calle (Lrts)"]
     RTS --> MSD["Difracción múltiple entre edificios (Lmsd)"]
@@ -405,7 +405,7 @@ La elección de un modelo de propagación es, en última instancia, un compromis
 resolución del entorno que se quiere representar y el coste computacional que se puede
 asumir para calcular la cobertura de toda una red.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     ENT["Entorno a planificar"] --> MACRO["Macrocelda rural o suburbana"]
     ENT --> MICRO["Microcelda urbana por debajo de tejados"]

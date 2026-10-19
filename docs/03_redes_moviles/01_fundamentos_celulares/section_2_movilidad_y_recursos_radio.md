@@ -65,7 +65,7 @@ terminal conectado a la red, y ambas transiciones son simétricas: el inicio de 
 comunicación lleva al terminal de inactivo a activo, y la finalización de esa
 comunicación lo devuelve a inactivo.
 
-```mermaid linenums="1"
+```mermaid
 stateDiagram-v2
     [*] --> Inactivo: registro en la red
     Inactivo --> Activo: inicio de comunicación
@@ -169,7 +169,7 @@ pueden coincidir con una frontera de área.
     donde $R$ es el radio de la celda, y el tiempo de permanencia en cada celda es
 
     $$
-    T = \frac{L}{v} = \frac{2000}{25} = 80\ \text{s}
+    T = \frac{L}{v} = \frac{2000}{25} = 80\ \text{s}.
     $$
 
     La tasa de cruce de celdas es la inversa de ese tiempo de permanencia,
@@ -232,7 +232,7 @@ celda que le sirve y de las celdas vecinas; una fase de decisión, en la que esa
 se comparan con un criterio de traspaso; y una fase de ejecución, en la que, si la
 decisión es afirmativa, la comunicación se traslada efectivamente a la nueva celda.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     A[Medición periódica de la celda<br/>servidora y de las celdas vecinas] --> B[Filtrado o promediado<br/>de las medidas]
     B --> C{Comparación con el<br/>criterio de traspaso}
@@ -255,7 +255,7 @@ El intercambio de mensajes que ejecuta un traspaso involucra, de forma genérica
 celda que sirve al terminal, a la celda destino y al propio terminal, con independencia
 de qué entidad de red concreta arbitre la decisión en cada generación.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant T as Terminal
     participant CO as Celda origen

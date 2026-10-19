@@ -77,7 +77,7 @@ a Internet a hogares y empresas. Un operador de nivel inferior alcanza el resto 
 Internet a través de un operador de nivel superior, mientras que los operadores de nivel
 1 entre sí no dependen de ningún nivel más alto para alcanzarse.
 
-```mermaid linenums="1"
+```mermaid
 graph TB
     T1a["Operador de nivel 1, A"]
     T1b["Operador de nivel 1, B"]
@@ -128,7 +128,7 @@ necesarias para intercambiar tráfico. Un IXP no sustituye la negociación comer
 sus miembros: solo les proporciona la infraestructura compartida sobre la que, si
 acuerdan un _peering_, ese _peering_ se implementa.
 
-```mermaid linenums="1"
+```mermaid
 graph TB
     SW["Punto neutro de intercambio (conmutadores Ethernet)"]
     ISP1["Operador miembro 1"]
@@ -146,7 +146,7 @@ Con tránsito de pago, el tráfico entre dos redes atraviesa la red del proveedo
 tránsito que ambas contratan. Con un intercambio directo, ya sea por _peering_ privado o
 a través de un IXP, el tráfico va de una red a la otra sin atravesar ningún tercero.
 
-```mermaid linenums="1"
+```mermaid
 graph LR
     subgraph "Transito de pago"
         A1["Red origen"] --> B1["Proveedor de transito"] --> C1["Red destino"]

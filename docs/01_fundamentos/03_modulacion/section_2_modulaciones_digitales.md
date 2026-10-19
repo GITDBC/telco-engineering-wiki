@@ -43,7 +43,7 @@ El modelo de referencia consta de un transmisor que convierte bits en una señal
 eléctrica, un canal que la atenúa y le añade ruido, y un receptor que recupera los bits.
 La cadena completa es la siguiente.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     BITS["Secuencia de bits"] --> COD["Codificador<br/>de símbolos"]
     COD --> MOD["Modulador<br/>forma de pulso p(t)"]
@@ -84,7 +84,7 @@ generalidad al resultado:
 La magnitud que resume las prestaciones es la **probabilidad de error de símbolo**,
 
 $$
-P_e = P\lbrace \hat{a} \neq a \rbrace
+P_e = P\lbrace \hat{a} \neq a \rbrace,
 $$
 
 donde $a$ es el símbolo transmitido y $\hat{a}$ el decidido. Cuando la constelación
@@ -99,21 +99,21 @@ El **tamaño de la modulación** $M$ es el número de símbolos de la constelaci
 elige siempre como potencia de dos,
 
 $$
-M = 2^{k}
+M = 2^{k},
 $$
 
 donde $k = \log_2 M$ es el número de bits que transporta cada símbolo. Esa relación
 vincula el período de símbolo con el **período de bit** $T_b$,
 
 $$
-T = k \, T_b = T_b \log_2 M
+T = k \, T_b = T_b \log_2 M,
 $$
 
 de modo que el **régimen binario**, el número de bits transmitidos por unidad de tiempo,
 vale
 
 $$
-R_b = \frac{1}{T_b} = \frac{\log_2 M}{T}
+R_b = \frac{1}{T_b} = \frac{\log_2 M}{T}.
 $$
 
 Junto a él se define la **velocidad de símbolo** $R_s = 1/T$, medida en baudios, que
@@ -137,7 +137,7 @@ El canal se modela como una atenuación de amplitud seguida de la suma de ruido 
 gaussiano aditivo,
 
 $$
-r(t) = c \, x(t) + w(t)
+r(t) = c \, x(t) + w(t),
 $$
 
 donde $x(t)$ es la señal transmitida, $c$ el factor de amplitud del canal, menor que la
@@ -145,7 +145,7 @@ unidad en un enlace real, y $w(t)$ el ruido. La densidad espectral de potencia d
 es constante y se expresa de forma bilateral como
 
 $$
-S_W(f) = \frac{N_0}{2}
+S_W(f) = \frac{N_0}{2},
 $$
 
 donde $N_0$ es la densidad espectral de potencia unilateral, en vatios por hercio. Las
@@ -168,7 +168,7 @@ se emiten cada período de símbolo. La señal modulada es la suma de réplicas 
 de una única forma de onda,
 
 $$
-x(t) = \sum_{n} a\lbrack n \rbrack \, p(t - nT)
+x(t) = \sum_{n} a\lbrack n \rbrack \, p(t - nT),
 $$
 
 donde $a\lbrack n \rbrack$ es el símbolo del intervalo $n$ y $p(t)$ la forma de pulso,
@@ -188,7 +188,7 @@ en un nivel $+V$ durante los intervalos en que se envía un uno y un nivel $-V$ 
 que se envía un cero. Las dos formas de onda tienen la misma energía,
 
 $$
-E_1 = E_2 = V^2 T
+E_1 = E_2 = V^2 T,
 $$
 
 resultado de integrar el cuadrado de la amplitud a lo largo del período de símbolo. Esa
@@ -204,7 +204,7 @@ T_b$. La constelación habitual es el conjunto de niveles impares simétricos re
 origen,
 
 $$
-a \in \lbrace -3, -1, +1, +3 \rbrace
+a \in \lbrace -3, -1, +1, +3 \rbrace,
 $$
 
 y la correspondencia entre pares de bits y niveles es la que recoge la tabla siguiente.
@@ -220,7 +220,7 @@ La generalización a un alfabeto de $M$ niveles conserva el mismo patrón. Los s
 son
 
 $$
-a_i = 2i - 1 - M, \quad i = 1, 2, \ldots, M
+a_i = 2i - 1 - M, \quad i = 1, 2, \ldots, M,
 $$
 
 expresión que para $M = 2$ devuelve $\lbrace -1, +1 \rbrace$ y para $M = 4$ el conjunto
@@ -250,7 +250,7 @@ camino entre puntos consecutivos. Para una constelación de cuatro niveles el re
 el siguiente, expresado en función de la energía de pulso $E_p$, que es la escala en que
 aparecen los símbolos a la entrada del decisor.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     R1["q menor que -2Ep<br/>decide -3"] --- U1(("-2Ep"))
     U1 --- R2["entre -2Ep y 0<br/>decide -1"]
@@ -278,7 +278,7 @@ asignación descuidada hace que un error entre vecinos arrastre varios bits a la
 La **energía de pulso** es la energía de la forma de onda básica,
 
 $$
-E_p = \int_{-\infty}^{\infty} p^2(t) \, dt
+E_p = \int_{-\infty}^{\infty} p^2(t) \, dt,
 $$
 
 que para un pulso rectangular de amplitud $V$ y duración $T$ vale $E_p = V^2 T$. La
@@ -287,20 +287,20 @@ símbolo escala la amplitud del pulso. Promediando sobre la constelación con s�
 equiprobables se obtiene la **energía media de símbolo**,
 
 $$
-E_s = \frac{1}{M} \sum_{i=1}^{M} a_i^2 \, E_p
+E_s = \frac{1}{M} \sum_{i=1}^{M} a_i^2 \, E_p,
 $$
 
 y sustituyendo los niveles equiespaciados resulta una expresión cerrada,
 
 $$
-E_s = \frac{M^2 - 1}{3} \, E_p
+E_s = \frac{M^2 - 1}{3} \, E_p,
 $$
 
 donde $M$ es el tamaño de la constelación y $E_p$ la energía del pulso. La **energía
 media de bit** reparte la energía del símbolo entre los bits que transporta,
 
 $$
-E_b = \frac{E_s}{k} = \frac{E_s}{\log_2 M}
+E_b = \frac{E_s}{k} = \frac{E_s}{\log_2 M}.
 $$
 
 Ambas magnitudes se relacionan con la potencia media transmitida a través del período de
@@ -324,7 +324,7 @@ igualarse para que la comparación sea justa.
     energía del pulso rectangular vale
 
     $$
-    E_p = V^2 T = 2 \cdot 10^{-4} \; \text{V}^2\text{s}
+    E_p = V^2 T = 2 \cdot 10^{-4} \; \text{V}^2\text{s}.
     $$
 
     La energía media de símbolo se obtiene promediando los cuadrados de los cuatro
@@ -332,7 +332,7 @@ igualarse para que la comparación sea justa.
 
     $$
     E_s = \frac{(-3)^2 + (-1)^2 + (+1)^2 + (+3)^2}{4} \, E_p = 5 E_p
-    = 10^{-3} \; \text{V}^2\text{s}
+    = 10^{-3} \; \text{V}^2\text{s},
     $$
 
     resultado que coincide con la expresión general $(M^2 - 1)/3 = 5$ para $M = 4$. La
@@ -347,7 +347,7 @@ maximizar la fiabilidad de una decisión. Esa diferencia de objetivo conduce a u
 estructura muy concreta, un filtro seguido de un muestreador y un umbral, que es óptima
 para el canal AWGN en el sentido de minimizar la probabilidad de error.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     R["r(t)"] --> H["Filtro adaptado<br/>h(t) = p(T - t)"]
     H --> Q["q(t)"]
@@ -370,7 +370,7 @@ El bloque que calcula esa correlación es el **filtro adaptado**, cuya respuesta
 impulsiva es la forma de pulso invertida y desplazada,
 
 $$
-h(t) = p(T - t)
+h(t) = p(T - t).
 $$
 
 Para un pulso rectangular, el filtro adaptado vuelve a ser rectangular, ya que la
@@ -379,7 +379,7 @@ convolución de la señal recibida con esa respuesta, que en ausencia de ruido y
 reproduce la función de autocorrelación del pulso desplazada al instante $T$,
 
 $$
-q(t) = \pm R_p(t - T)
+q(t) = \pm R_p(t - T),
 $$
 
 donde $R_p$ es la autocorrelación de $p(t)$. Esa función alcanza su máximo en el origen,
@@ -387,7 +387,7 @@ por lo que la salida presenta un máximo en $t = T$ cuyo valor es la energía de
 Al muestrear en ese instante se obtiene
 
 $$
-q = q(T) = \pm E_p
+q = q(T) = \pm E_p,
 $$
 
 con el signo que corresponde al símbolo transmitido. El muestreador reduce así la señal
@@ -399,7 +399,7 @@ filtrado,
 
 $$
 P_N = \int_{-\infty}^{\infty} \frac{N_0}{2}
-\lvert H(f) \rvert^2 \, df = \frac{N_0}{2} E_p
+\lvert H(f) \rvert^2 \, df = \frac{N_0}{2} E_p,
 $$
 
 igualdad que se sigue de que el módulo de la respuesta en frecuencia del filtro adaptado
@@ -407,7 +407,7 @@ coincide con el de la transformada del pulso, de modo que la integral de su cuad
 la energía del pulso. La muestra de decisión es por tanto una variable gaussiana,
 
 $$
-q = \pm E_p + n, \quad n \sim \mathcal{N}\!\left(0, \frac{N_0}{2} E_p\right)
+q = \pm E_p + n, \quad n \sim \mathcal{N}\!\left(0, \frac{N_0}{2} E_p\right),
 $$
 
 donde $n$ es la muestra de ruido a la salida del filtro. La señal útil crece con $E_p$
@@ -417,90 +417,6 @@ mayor entre el valor de la muestra útil y la dispersión del ruido en el instan
 decisión. Una consecuencia notable es que la relación señal-ruido en el decisor depende
 de la energía del pulso y no de su forma, resultado que separa el diseño frente al ruido
 del diseño frente al ancho de banda disponible.
-
-La cadena completa se simula con unas pocas líneas. El código siguiente genera bits
-equiprobables, los codifica en símbolos antipodales, construye la señal muestreada con
-pulso rectangular, le añade ruido gaussiano de densidad espectral conocida y aplica el
-filtro adaptado, el muestreador y el decisor.
-
-```python linenums="1"
-import numpy as np
-
-
-def filtra_y_muestrea(
-    recibida: np.ndarray,
-    muestras_por_simbolo: int,
-    periodo_muestreo: float,
-    amplitud: float,
-) -> np.ndarray:
-    """Aplica el filtro adaptado y muestrea en los instantes de decisión.
-
-    Args:
-        recibida: Vector de muestras de la señal a la entrada del receptor.
-        muestras_por_simbolo: Muestras que ocupa cada período de símbolo.
-        periodo_muestreo: Separación entre muestras, en segundos.
-        amplitud: Amplitud del pulso rectangular, en voltios.
-
-    Returns:
-        Vector con una muestra por símbolo a la entrada del decisor.
-    """
-    # El filtro adaptado a un pulso rectangular vuelve a ser rectangular
-    respuesta = amplitud * np.ones(muestras_por_simbolo)
-    tramos = recibida.reshape(-1, muestras_por_simbolo)
-    # Correlacionar con el pulso equivale a integrar sobre el período
-    return periodo_muestreo * (tramos @ respuesta)
-
-
-frecuencia_muestreo = 200e3
-periodo_muestreo = 1.0 / frecuencia_muestreo
-periodo_simbolo = 1e-3
-muestras_por_simbolo = int(periodo_simbolo / periodo_muestreo)
-amplitud = 1.0
-num_simbolos = 100_000
-energia_pulso = amplitud**2 * periodo_simbolo
-# Nivel de ruido elegido para una relación Eb/N0 de 6 dB
-densidad_ruido_mitad = energia_pulso / 8.0
-
-generador = np.random.default_rng(seed=0)
-bits = generador.integers(0, 2, num_simbolos)
-# La codificación antipodal traslada los bits al alfabeto {-1, +1}
-simbolos = 2.0 * bits - 1.0
-# Cada símbolo escala un pulso rectangular de duración igual al período
-pulso = amplitud * np.ones(muestras_por_simbolo)
-transmitida = np.outer(simbolos, pulso).ravel()
-# Un ruido blanco de densidad N0/2 se muestrea con esta desviación típica
-desviacion_ruido = np.sqrt(densidad_ruido_mitad * frecuencia_muestreo)
-recibida = transmitida + generador.normal(0.0, desviacion_ruido, transmitida.size)
-decision = filtra_y_muestrea(
-    recibida, muestras_por_simbolo, periodo_muestreo, amplitud
-)
-bits_estimados = (decision > 0.0).astype(int)
-errores = np.count_nonzero(bits != bits_estimados)
-relacion = energia_pulso / (2.0 * densidad_ruido_mitad)
-desviacion_estimada = np.std(decision - simbolos * energia_pulso)
-desviacion_teorica = np.sqrt(densidad_ruido_mitad * energia_pulso)
-print(f"Energía de pulso: {energia_pulso:.2e} V^2 s")
-print(f"Valor medio de |q|: {np.mean(np.abs(decision)):.2e}")
-print(f"Desviación de la muestra de ruido: {desviacion_estimada:.2e}")
-print(f"Desviación teórica: {desviacion_teorica:.2e}")
-print(f"Relación Eb/N0: {10 * np.log10(relacion):.1f} dB")
-print(f"Bits erróneos: {errores} de {num_simbolos}")
-```
-
-```plaintext title="Expected output"
-Energía de pulso: 1.00e-03 V^2 s
-Valor medio de |q|: 1.00e-03
-Desviación de la muestra de ruido: 3.52e-04
-Desviación teórica: 3.54e-04
-Relación Eb/N0: 6.0 dB
-Bits erróneos: 247 de 100000
-```
-
-Las cifras confirman el modelo. El valor medio del módulo de la muestra de decisión
-coincide con la energía de pulso, la dispersión del ruido a la salida del filtro
-reproduce la desviación típica $\sqrt{N_0 E_p / 2}$ y la fracción de bits erróneos queda
-en el orden que predice la teoría para esa relación entre energía de bit y densidad de
-ruido.
 
 ### Umbral de decisión
 
@@ -546,7 +462,7 @@ se equivoca si esa muestra resulta positiva, lo que exige que el ruido supere la
 distancia al umbral,
 
 $$
-P(e \mid b = 0) = P\lbrace q > 0 \rbrace = P\lbrace n > E_p \rbrace
+P(e \mid b = 0) = P\lbrace q > 0 \rbrace = P\lbrace n > E_p \rbrace.
 $$
 
 El ruido es una variable gaussiana de media nula y varianza $\sigma_n^2 = N_0 E_p / 2$,
@@ -556,7 +472,7 @@ por lo que la probabilidad de cola se expresa con la función Q definida en
 $$
 P(e \mid b = 0) = Q\!\left(\frac{E_p}{\sigma_n}\right)
 = Q\!\left(\frac{E_p}{\sqrt{N_0 E_p / 2}}\right)
-= Q\!\left(\sqrt{\frac{2 E_p}{N_0}}\right)
+= Q\!\left(\sqrt{\frac{2 E_p}{N_0}}\right).
 $$
 
 La simetría de la constelación hace que la probabilidad condicionada al bit uno valga lo
@@ -564,7 +480,7 @@ mismo, y al promediar con símbolos equiprobables, sustituyendo $E_p = E_b$, que
 identidad válida en este caso, se obtiene
 
 $$
-P_b = Q\!\left(\sqrt{\frac{2 E_b}{N_0}}\right)
+P_b = Q\!\left(\sqrt{\frac{2 E_b}{N_0}}\right),
 $$
 
 donde $E_b$ es la energía media de bit y $N_0$ la densidad espectral de potencia
@@ -581,7 +497,7 @@ constelación. La probabilidad de confundir dos símbolos vecinos es la de que e
 recorra la mitad de la distancia que los separa,
 
 $$
-P \approx \frac{2(M-1)}{M} \, Q\!\left(\frac{d_{\min}}{2 \sigma_n}\right)
+P \approx \frac{2(M-1)}{M} \, Q\!\left(\frac{d_{\min}}{2 \sigma_n}\right),
 $$
 
 donde $d_{\min}$ es la distancia mínima entre puntos de la constelación medida a la
@@ -600,7 +516,7 @@ resultado exacto anterior.
     $T = T_b = 15{,}6\ \mu$s, y la energía por bit es la del pulso rectangular,
 
     $$
-    E_b = E_p = V^2 T_b = 1{,}5625 \cdot 10^{-5} \; \text{V}^2\text{s}
+    E_b = E_p = V^2 T_b = 1{,}5625 \cdot 10^{-5} \; \text{V}^2\text{s}.
     $$
 
     La densidad espectral unilateral vale $N_0 = 2 \cdot 10^{-6}$ W/Hz, de modo que el
@@ -608,88 +524,13 @@ resultado exacto anterior.
     error vale
 
     $$
-    P_b = Q\!\left(\sqrt{2 \cdot 7{,}81}\right) = Q(3{,}95) \approx 3{,}9 \cdot 10^{-5}
+    P_b = Q\!\left(\sqrt{2 \cdot 7{,}81}\right) = Q(3{,}95) \approx 3{,}9 \cdot 10^{-5},
     $$
 
     es decir, unos cuatro bits erróneos por cada cien mil transmitidos. Duplicar la
     amplitud del pulso multiplicaría la energía por bit por cuatro, elevaría el cociente
     a $14{,}9$ dB y situaría la probabilidad de error en el orden de $10^{-15}$, mejora
     de diez órdenes de magnitud a cambio de $6$ dB de potencia.
-
-La expresión teórica se contrasta con una estimación por simulación. El código siguiente
-emplea el modelo discreto equivalente del sistema, en el que el filtro adaptado y el
-muestreador se resumen en una única muestra gaussiana por símbolo, y estima la tasa de
-error contando bits equivocados sobre cuatro millones de realizaciones por punto, número
-suficiente para que las dos primeras cifras significativas sean estables en todo el
-margen considerado.
-
-```python linenums="1"
-import math
-
-import numpy as np
-
-
-def funcion_q(argumento: float) -> float:
-    """Evalúa la función Q en un punto.
-
-    Args:
-        argumento: Umbral normalizado en el que se evalúa la cola.
-
-    Returns:
-        Probabilidad de que una gaussiana normalizada supere el umbral.
-    """
-    return 0.5 * math.erfc(argumento / math.sqrt(2.0))
-
-
-def simula_tasa_error(
-    relacion_db: float, num_bits: int, generador: np.random.Generator
-) -> float:
-    """Estima por Montecarlo la tasa de error de un sistema binario antipodal.
-
-    Args:
-        relacion_db: Cociente entre energía de bit y densidad de ruido, en dB.
-        num_bits: Número de bits simulados.
-        generador: Generador de números aleatorios.
-
-    Returns:
-        Fracción de bits recibidos erróneamente.
-    """
-    energia_bit = 1.0
-    densidad_ruido = energia_bit / 10.0 ** (relacion_db / 10.0)
-    # El modelo discreto equivalente entrega al decisor q = ±sqrt(Eb) + n
-    desviacion = math.sqrt(densidad_ruido * energia_bit / 2.0)
-    bits = generador.integers(0, 2, num_bits)
-    muestras = (2.0 * bits - 1.0) * math.sqrt(energia_bit)
-    muestras += generador.normal(0.0, desviacion, num_bits)
-    return np.count_nonzero((muestras > 0.0) != (bits == 1)) / num_bits
-
-
-# Número de bits por punto de la curva, fijado para que la estimación sea estable
-num_bits = 4_000_000
-generador = np.random.default_rng(seed=1)
-print("Eb/N0 (dB)  Pb simulada  Pb teórica")
-for relacion_db in (0.0, 2.0, 4.0, 6.0, 8.0):
-    estimada = simula_tasa_error(relacion_db, num_bits, generador)
-    teorica = funcion_q(math.sqrt(2.0 * 10.0 ** (relacion_db / 10.0)))
-    print(f"{relacion_db:10.0f}  {estimada:11.2e}  {teorica:10.2e}")
-```
-
-```plaintext title="Expected output"
-Eb/N0 (dB)  Pb simulada  Pb teórica
-         0     7.89e-02    7.86e-02
-         2     3.76e-02    3.75e-02
-         4     1.25e-02    1.25e-02
-         6     2.37e-03    2.39e-03
-         8     2.00e-04    1.91e-04
-```
-
-El acuerdo entre ambas columnas es completo en los primeros puntos y se degrada
-ligeramente en el último, donde apenas ocho centenares de errores contribuyen a la
-estimación y la dispersión relativa del contaje ronda el cuatro por ciento. Ese
-comportamiento es inherente al método: estimar una probabilidad de error pequeña exige
-un número de realizaciones inversamente proporcional a ella, razón por la que las curvas
-medidas rara vez descienden por debajo de $10^{-6}$ sin recurrir a técnicas de
-simulación acelerada.
 
 ## Códigos de línea
 
@@ -781,7 +622,7 @@ símbolos equiprobables, independientes entre sí y de valor medio nulo, esa den
 resulta
 
 $$
-S_X(f) = \frac{1}{T} \lvert P(f) \rvert^2
+S_X(f) = \frac{1}{T} \lvert P(f) \rvert^2,
 $$
 
 donde $P(f)$ es la transformada de Fourier de la forma de pulso y $T$ el período de
@@ -797,14 +638,14 @@ Para el pulso rectangular de amplitud $V$ y duración $T$, el módulo de la tran
 es
 
 $$
-\lvert P(f) \rvert = V T \lvert \mathrm{sinc}(f T) \rvert
+\lvert P(f) \rvert = V T \lvert \mathrm{sinc}(f T) \rvert,
 $$
 
 con $\mathrm{sinc}(x) = \sin(\pi x) / (\pi x)$, y la densidad espectral de potencia
 resulta
 
 $$
-S_X(f) = V^2 T \, \mathrm{sinc}^2(f T)
+S_X(f) = V^2 T \, \mathrm{sinc}^2(f T).
 $$
 
 Esta densidad presenta su máximo en frecuencia cero, con valor $V^2 T$, y ceros en todos
@@ -815,7 +656,7 @@ obtiene integrando la densidad, o más directamente dividiendo la energía de un
 por su duración,
 
 $$
-P_X = \frac{E_s}{T} = V^2
+P_X = \frac{E_s}{T} = V^2,
 $$
 
 resultado inmediato para una señal que permanece siempre en $\pm V$.
@@ -839,7 +680,7 @@ velocidad. Tomando como medida del ancho de banda la anchura del lóbulo princip
 señal PAM en banda base ocupa
 
 $$
-B = \frac{1}{T} = R_s
+B = \frac{1}{T} = R_s,
 $$
 
 de modo que el ancho de banda necesario iguala la velocidad de símbolo, no el régimen
@@ -889,7 +730,7 @@ torno a una portadora. El procedimiento consiste en emplear como forma de pulso 
 sinusoide truncada al período de símbolo,
 
 $$
-p(t) = V \cos(2 \pi f_c t + \phi), \quad 0 \leq t < T
+p(t) = V \cos(2 \pi f_c t + \phi), \quad 0 \leq t < T,
 $$
 
 donde $f_c$ es la frecuencia de portadora y $\phi$ su fase. Habitualmente se elige $f_c
@@ -903,7 +744,7 @@ $\pm f_c$, lo que duplica el ancho de banda ocupado. Tomando de nuevo el lóbulo
 principal,
 
 $$
-B_T = \frac{2}{T} = 2 R_s
+B_T = \frac{2}{T} = 2 R_s.
 $$
 
 Una modulación paso banda dispone de tres atributos del pulso donde depositar la
@@ -917,7 +758,7 @@ de _amplitude shift keying_, es la traslación directa de PAM a paso banda: la
 constelación actúa sobre la amplitud de la portadora,
 
 $$
-x(t) = a \, V \cos(2 \pi f_c t)
+x(t) = a \, V \cos(2 \pi f_c t).
 $$
 
 Vista desde el dominio analógico, equivale a una modulación de doble banda lateral cuya
@@ -942,7 +783,7 @@ fase de la portadora,
 
 $$
 x(t) = V \cos(2 \pi f_c t + \phi_i)
-= \cos(\phi_i) V \cos(2 \pi f_c t) - \sin(\phi_i) V \sin(2 \pi f_c t)
+= \cos(\phi_i) V \cos(2 \pi f_c t) - \sin(\phi_i) V \sin(2 \pi f_c t),
 $$
 
 donde $\phi_i$ es la fase asociada al símbolo $i$. El desarrollo de la derecha revela la
@@ -957,7 +798,7 @@ equiespaciadas,
 
 $$
 \phi_i \in \left\lbrace \frac{\pi}{4}, \frac{3\pi}{4}, \frac{5\pi}{4},
-\frac{7\pi}{4} \right\rbrace
+\frac{7\pi}{4} \right\rbrace,
 $$
 
 y transporta dos bits por símbolo situando los cuatro puntos en los vértices de un
@@ -977,7 +818,7 @@ _quadrature amplitude modulation_, emplea simultáneamente las dos componentes
 ortogonales y modula la amplitud de cada una,
 
 $$
-x(t) = a_I V \cos(2 \pi f_c t) - a_Q V \sin(2 \pi f_c t)
+x(t) = a_I V \cos(2 \pi f_c t) - a_Q V \sin(2 \pi f_c t),
 $$
 
 donde $a_I$ y $a_Q$ son los símbolos de la componente en fase y de la componente en
@@ -1022,7 +863,7 @@ La **modulación por desplazamiento de frecuencia**, designada por sus siglas in
 FSK, de _frequency shift keying_, deposita la información en la frecuencia del pulso,
 
 $$
-x(t) = V \cos(2 \pi f_i t)
+x(t) = V \cos(2 \pi f_i t),
 $$
 
 donde $f_i$ es la frecuencia asociada al símbolo $i$. La variante binaria emplea dos

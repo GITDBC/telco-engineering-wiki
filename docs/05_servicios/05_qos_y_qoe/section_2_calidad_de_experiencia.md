@@ -42,7 +42,7 @@ basarse en parámetros objetivos, como los requisitos de sincronización y compr
 requisitos de transmisión por la red y los objetivos de rendimiento en la capa de red,
 calibrados de antemano frente a un conjunto de ensayos subjetivos de referencia.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Terminal[Terminal] --> QoE[Calidad de experiencia]
     Red[Red] --> QoE
@@ -90,31 +90,6 @@ comparar, a costa de exigir una sesión de prueba más larga por cada muestra ev
     entre 3 y 5, indica que la percepción no es uniforme entre todos los participantes
     del ensayo: quien puntuó con un 3 percibió una degradación que otros participantes
     no llegaron a notar.
-
-    ```python linenums="1"
-    import numpy as np
-
-
-    def puntuacion_media_opinion(puntuaciones: list[int]) -> float:
-        """Calcula el MOS a partir de puntuaciones individuales.
-
-        Args:
-            puntuaciones: Notas otorgadas por cada participante, en la
-                escala de uno a cinco.
-
-        Returns:
-            Puntuación media de opinión.
-        """
-        valores = np.array(puntuaciones, dtype=np.float64)
-        return float(np.mean(valores))
-
-
-    mos = puntuacion_media_opinion([4, 5, 4, 3, 4, 5, 4, 3, 4, 4])
-    ```
-
-    ```plaintext title="Expected output"
-    mos == 4.0
-    ```
 
 ### Coste de los ensayos subjetivos
 
@@ -212,8 +187,8 @@ el propio modelo entrenado, no solo la fórmula de comparación.
 
     Un codificador de vídeo produce un fotograma reconstruido que se quiere comparar
     con el fotograma original para estimar la degradación introducida por la
-    compresión. Se pide una función en Python que calcule la `PSNR` entre ambos
-    fotogramas, representados como matrices de intensidad de píxel.
+    compresión. Se pide expresar la `PSNR` entre ambos fotogramas, representados como
+    matrices de intensidad de píxel, e interpretar sus valores.
 
     La `PSNR` se define como
     $\text{PSNR} = 10 \log_{10}\!\left(\dfrac{L_{\text{max}}^2}{\text{ECM}}\right)$,
@@ -221,33 +196,8 @@ el propio modelo entrenado, no solo la fórmula de comparación.
     imagen de 8 bits por canal, y $\text{ECM}$ es el error cuadrático medio entre la
     imagen original y la degradada. Un `ECM` pequeño, es decir, una imagen degradada
     muy parecida a la original, produce una `PSNR` alta; una imagen muy distinta
-    produce una `PSNR` baja.
-
-    ```python linenums="1"
-    import numpy as np
-    from numpy.typing import NDArray
-
-
-    def psnr(
-        original: NDArray[np.uint8], degradada: NDArray[np.uint8]
-    ) -> float:
-        """Calcula la relación señal a ruido de pico entre dos imágenes.
-
-        Args:
-            original: Fotograma original, en escala de 0 a 255.
-            degradada: Fotograma reconstruido tras la compresión, con las
-                mismas dimensiones que el original.
-
-        Returns:
-            PSNR en decibelios. Un valor infinito indica imágenes idénticas.
-        """
-        diferencia = original.astype(np.float64) - degradada.astype(np.float64)
-        error_cuadratico_medio = np.mean(diferencia**2)
-        if error_cuadratico_medio == 0:
-            return float("inf")
-        valor_maximo = 255.0
-        return float(10 * np.log10(valor_maximo**2 / error_cuadratico_medio))
-    ```
+    produce una `PSNR` baja. Cuando ambos fotogramas son idénticos, el `ECM` se anula y
+    la `PSNR` no está acotada.
 
 ## Relación entre calidad de servicio y calidad de experiencia
 
@@ -338,7 +288,7 @@ pueden ajustar en función de las expectativas del usuario y de las condiciones 
 sobre la que se presta el servicio, tal como se ha señalado en la sección anterior de
 este capítulo al describir el ajuste por tipo de red de acceso.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant U as Usuario
     participant B as Bufer de reproduccion
@@ -432,7 +382,7 @@ La tasa de pérdidas se calcula como la relación entre los paquetes perdidos y 
 paquetes transmitidos,
 
 $$
-\text{PLR} = \frac{N_{\text{perdidos}}}{N_{\text{transmitidos}}}
+\text{PLR} = \frac{N_{\text{perdidos}}}{N_{\text{transmitidos}}},
 $$
 
 donde $N_{\text{perdidos}}$ es el número de paquetes perdidos durante la transmisión y
@@ -441,7 +391,7 @@ retardo, o _jitter_, se calcula como la diferencia entre el retardo máximo y el
 mínimo observados en la sesión,
 
 $$
-\text{Jitter} = \text{Retardo}_{\text{max}} - \text{Retardo}_{\text{min}}
+\text{Jitter} = \text{Retardo}_{\text{max}} - \text{Retardo}_{\text{min}},
 $$
 
 expresión que coincide, en su definición, con la variación del retardo que

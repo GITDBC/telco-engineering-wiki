@@ -25,7 +25,7 @@ elegido para corregirla y una fase de verificación que comprueba, con una nueva
 medición, si la corrección ha producido el efecto esperado sin introducir una
 degradación distinta en otro punto de la red.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     M["Medicion<br/>indicadores de rendimiento"] --> D["Diagnostico<br/>identificacion de la causa"]
     D --> A["Accion<br/>ajuste de un parametro"]
@@ -159,7 +159,7 @@ un solapamiento mayor en los bordes.
     esa celda vecina antes de lo que lo harían con el margen original, redistribuyendo
     tráfico sin desplazar el límite físico de cobertura de ninguna de las dos celdas.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     S["Sintoma: tasa de bloqueo elevada"] --> Q1{"Calidad de senal e indicadores<br/>de traspaso dentro de objetivo?"}
     Q1 -->|"no, tambien degradados"| C1["Causa: cobertura o interferencia<br/>Accion: potencia, tilt o azimut"]
@@ -209,7 +209,7 @@ realmente ofrece la mejor señal en ese punto, lo que provoca un fallo inmediato
 celda destino y un traspaso de emergencia posterior hacia la celda que debería haberse
 elegido en primer lugar.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     F["Sintoma: fallo asociado a un traspaso"] --> Q2{"En que momento respecto a la<br/>ejecucion del traspaso ocurre?"}
     Q2 -->|"perdida de enlace antes<br/>de completarse el traspaso"| R1["Traspaso demasiado tardio<br/>Accion: reducir TTT o margen"]
@@ -318,7 +318,7 @@ problemas, y un ahorro de energía sin deterioro apreciable de la calidad ofreci
 Las funciones SON se agrupan en tres familias según el momento del ciclo de vida de la
 red en el que actúan.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     SON["Red autoorganizada"] --> AC["Autoconfiguracion"]
     SON --> AO["Autooptimizacion"]
@@ -444,7 +444,7 @@ parámetro como la suma de tres términos que reaccionan, respectivamente, al va
 presente del error, a su acumulación histórica y a su tendencia de cambio:
 
 $$
-u(t) = K_p\, e(t) + K_i \int_0^t e(\tau)\, d\tau + K_d\, \frac{de(t)}{dt}
+u(t) = K_p\, e(t) + K_i \int_0^t e(\tau)\, d\tau + K_d\, \frac{de(t)}{dt},
 $$
 
 donde $e(t)$ es el error entre el valor objetivo de un indicador y su valor medido en el
@@ -485,19 +485,19 @@ humano.
     cumple la primera condición incrementan el margen en
 
     $$
-    3 \cdot \Delta = 3 \cdot 2 = 6\ \text{dB}
+    3 \cdot \Delta = 3 \cdot 2 = 6\ \text{dB}.
     $$
 
     Si a continuación se cumple dos veces la condición contraria, el margen se reduce en
 
     $$
-    2 \cdot 0{,}7\Delta = 2 \cdot 0{,}7 \cdot 2 = 2{,}8\ \text{dB}
+    2 \cdot 0{,}7\Delta = 2 \cdot 0{,}7 \cdot 2 = 2{,}8\ \text{dB},
     $$
 
     de modo que, tras los cinco ciclos, el margen neto ha variado
 
     $$
-    6 - 2{,}8 = 3{,}2\ \text{dB}
+    6 - 2{,}8 = 3{,}2\ \text{dB},
     $$
 
     respecto a su valor original. Un controlador simétrico, con la misma magnitud

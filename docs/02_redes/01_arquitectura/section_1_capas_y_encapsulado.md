@@ -85,7 +85,7 @@ le ofrece la capa que tiene inmediatamente debajo. Una capa nunca accede directa
 los servicios de una capa no adyacente, ni necesita conocer cómo implementa su servicio
 la capa inferior, solo qué servicio le ofrece.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph Sistema A
         A7["Capa N + 1"]
@@ -140,7 +140,7 @@ pila. El proceso inverso, que tiene lugar en el sistema receptor, se denomina
 **desencapsulado**: cada capa retira su propia cabecera y entrega el contenido restante
 a la capa superior, hasta que la información original llega a la capa que la generó.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     D3["Datos de aplicacion"] --> D2["H3 | Datos de aplicacion"]
     D2 --> D1["H2 | H3 | Datos de aplicacion"]
@@ -191,7 +191,7 @@ soporte de usuario, porque permiten la interoperatividad entre sistemas de softw
 relacionados entre sí. El nivel de transporte ocupa una posición intermedia entre ambos
 grupos, responsable de la transmisión de datos extremo a extremo.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     N7["7. Aplicacion"]
     N6["6. Presentacion"]
@@ -527,7 +527,7 @@ con los $N-1$ restantes. Contar cada enlace una sola vez, en lugar de una vez po
 extremo, da el número total de enlaces que exige la red:
 
 $$
-N_{\text{enlaces}} = \frac{N(N-1)}{2}
+N_{\text{enlaces}} = \frac{N(N-1)}{2}.
 $$
 
 Este crecimiento cuadrático es la razón estructural por la que la malla completa no

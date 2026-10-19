@@ -85,7 +85,7 @@ gestión. Al igual que la gestión de contabilidad, las fuentes de este capítul
 detallan sus mecanismos concretos, de modo que se describe aquí únicamente su alcance
 dentro del modelo FCAPS.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     GR[Gestión de red] --> GF[Gestión de fallos]
     GR --> GC[Gestión de configuración]
@@ -103,7 +103,7 @@ entrega, a su vez, información más agregada al nivel inmediatamente superior, 
 que el detalle disminuye y el alcance de la decisión aumenta a medida que se asciende en
 la pirámide.
 
-```mermaid linenums="1"
+```mermaid
 flowchart BT
     EMS[Nivel de elemento] -->|datos agregados| NMS[Nivel de red]
     NMS -->|información de red| SM[Nivel de servicio]
@@ -149,7 +149,7 @@ el flujo en sí. Las técnicas concretas con que se ejecuta cada fase, y en part
 reajuste de parámetros de cobertura, movilidad y carga, se tratan en el capítulo
 siguiente.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     M[Monitorización] --> GF[Gestión de fallos]
     GF --> RP[Reajuste de parámetros]
@@ -190,7 +190,7 @@ entre sí en su granularidad, en su coste de obtención y en el tipo de decisió
 permiten sostener. Las cinco primeras proceden de forma directa de los elementos de red,
 y las tres últimas incorporan, en distinto grado, la perspectiva del usuario final.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     EN[Elemento de red] --> TR[Traza de conexión]
     EN --> CM[Configuración]
@@ -284,7 +284,7 @@ solicita, con independencia de lo que ocurra después de ese establecimiento. La
 como
 
 $$
-\text{CSSR} = \frac{N_{\text{establecidas}}}{N_{\text{intentos}}}
+\text{CSSR} = \frac{N_{\text{establecidas}}}{N_{\text{intentos}}},
 $$
 
 donde $N_{\text{establecidas}}$ es el número de intentos de llamada que llegan a
@@ -306,7 +306,7 @@ sobre tráfico previsto y la accesibilidad se mide en operación sobre tráfico 
     llamada de esa hora es
 
     $$
-    \text{CSSR} = \frac{11\,760}{12\,000} = 0{,}98 = 98\,\%
+    \text{CSSR} = \frac{11\,760}{12\,000} = 0{,}98 = 98\,\%.
     $$
 
     El resultado supera el objetivo del $97\,\%$, de modo que la celda cumple su
@@ -321,7 +321,7 @@ sin interrupción hasta su finalización normal. Su indicador más representativ
 tasa de llamadas caídas, que se define como
 
 $$
-\text{CDR} = \frac{N_{\text{caídas}}}{N_{\text{establecidas}}}
+\text{CDR} = \frac{N_{\text{caídas}}}{N_{\text{establecidas}}},
 $$
 
 donde $N_{\text{caídas}}$ es el número de llamadas que se interrumpen de forma anómala
@@ -338,7 +338,7 @@ accesibilidad ya dejó pasar.
     llamadas caídas del día completo es
 
     $$
-    \text{CDR}_{\text{día}} = \frac{1\,200}{100\,000} = 0{,}012 = 1{,}2\,\%
+    \text{CDR}_{\text{día}} = \frac{1\,200}{100\,000} = 0{,}012 = 1{,}2\,\%,
     $$
 
     valor por debajo del objetivo habitual del $2\,\%$, que llevaría a considerar
@@ -347,7 +347,7 @@ accesibilidad ya dejó pasar.
     llamadas y se caen $280$ de ellas, lo que da
 
     $$
-    \text{CDR}_{\text{hora cargada}} = \frac{280}{8\,000} = 0{,}035 = 3{,}5\,\%
+    \text{CDR}_{\text{hora cargada}} = \frac{280}{8\,000} = 0{,}035 = 3{,}5\,\%,
     $$
 
     casi el doble del objetivo. El promedio diario diluye el problema porque

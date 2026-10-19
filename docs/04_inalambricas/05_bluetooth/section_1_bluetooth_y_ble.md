@@ -101,7 +101,7 @@ de tecnología de acceso en general.
 La arquitectura de Bluetooth se organiza en dos partes principales, el anfitrión y el
 controlador, comunicadas mediante una interfaz estándar entre ambas.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph HOST["Anfitrión"]
         APP["Aplicacion"]
@@ -277,7 +277,7 @@ anunciante, como se cuantifica en el ejemplo siguiente.
 El proceso de conexión sigue una secuencia de cuatro pasos entre el dispositivo
 anunciante y el dispositivo que busca conectarse:
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant D1 as Dispositivo anunciante
     participant D2 as Dispositivo escaner
@@ -352,7 +352,7 @@ cada conexión establecida mediante el procedimiento descrito arriba vincula dir
 al dispositivo que inició la conexión con el dispositivo anunciante, sin el límite fijo
 de siete esclavos propio de Bluetooth clásico.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     M["Dispositivo maestro"] --> E1["Esclavo 1"]
     M --> E2["Esclavo 2"]
@@ -366,7 +366,7 @@ flowchart TD
     que participan en la _piconet_, maestro incluido, es por tanto de
 
     $$
-    N_\text{piconet} = 1 + 7 = 8\ \text{dispositivos}
+    N_\text{piconet} = 1 + 7 = 8\ \text{dispositivos}.
     $$
 
     Ese límite de siete esclavos por maestro es una propiedad de la canalización de
@@ -381,7 +381,7 @@ cada uno de sus maestros en un canal físico separado, lo que le permite partici
 más de una _piconet_ sin que ambas interfieran entre sí, a costa de tener que repartir
 su tiempo de radio entre los distintos canales físicos en los que participa.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     M1["Maestro A"] --> E1["Esclavo 1"]
     M1 --> E2["Esclavo compartido"]
@@ -398,7 +398,7 @@ flowchart TD
 
     $$
     N_\text{scatternet} = \underbrace{2}_\text{maestros} +
-    \underbrace{(7 + 7 - 1)}_\text{esclavos, uno compartido} = 15\ \text{dispositivos}
+    \underbrace{(7 + 7 - 1)}_\text{esclavos, uno compartido} = 15\ \text{dispositivos},
     $$
 
     frente a los 8 dispositivos que sostiene una única _piconet_ aislada. La

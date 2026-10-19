@@ -126,7 +126,7 @@ cada punto del escenario. Una celda vecina se considera relevante en un punto cu
 nivel de señal en ese punto queda por encima de un umbral de diferencia respecto al
 nivel de la celda servidora, no por el mero hecho de estar geográficamente próxima.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     A["Nivel de senal de la celda servidora<br/>en un punto del escenario"] --> B["Comparar con el nivel<br/>de cada celda circundante"]
     B --> C["Celdas dentro del umbral de diferencia<br/>= celdas vecinas relevantes"]
@@ -209,7 +209,7 @@ se emplea durante la planificación nominal para ajustar la configuración de
 emplazamientos antes de que exista tráfico real sobre el que medir.
 
 $$
-G = \frac{P_{\text{deseada}}}{\sum_{i} P_{\text{interferente},i}}
+G = \frac{P_{\text{deseada}}}{\sum_{i} P_{\text{interferente},i}},
 $$
 
 donde $P_{\text{deseada}}$ es la potencia recibida de la celda servidora en el punto
@@ -515,7 +515,7 @@ asignar un color, es decir, un canal de frecuencia, un código o un identificado
 vértice, de forma que dos vértices unidos por una arista de peso alto reciban colores
 distintos siempre que sea posible.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     C1["Celda 1"] ---|peso alto| C2["Celda 2"]
     C2 ---|peso bajo| C3["Celda 3"]
@@ -687,7 +687,7 @@ puntos de partida, en un ciclo de realimentación hacia la planificación que ci
 ciclo de vida introducido en
 [herramientas de planificación y dimensionado](section_1_herramientas_y_dimensionado.md#ciclo-de-vida-de-una-red-celular).
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     MED["Medidas de terminales<br/>geolocalizados y de la OSS"] --> MAPA["Mapa de perdidas<br/>por intervalo geografico"]
     MAPA --> AJUSTE["Ajuste de constantes<br/>del modelo de propagacion"]
@@ -735,7 +735,7 @@ necesita asumir.
 
     $$
     L_b\ \lbrack \text{dB}\rbrack \approx 136{,}19 + 35{,}23 \log_{10}\lbrack
-    d_{\text{km}} \rbrack
+    d_{\text{km}} \rbrack,
     $$
 
     y se dispone de cuatro medidas de campo tomadas por terminales geolocalizados a
@@ -754,7 +754,7 @@ necesita asumir.
 
     $$
     L_b\ \lbrack \text{dB}\rbrack \approx 140{,}27 + 35{,}23 \log_{10}\lbrack
-    d_{\text{km}} \rbrack
+    d_{\text{km}} \rbrack,
     $$
 
     y el error cuadrático medio de este modelo recalibrado frente a las mismas cuatro

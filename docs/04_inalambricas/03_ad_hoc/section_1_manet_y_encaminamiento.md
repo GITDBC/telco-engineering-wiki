@@ -107,7 +107,7 @@ control constante. Entre ambos extremos, algunos protocolos recurren a la posici
 geográfica de los nodos en lugar de a la topología de la red para decidir la ruta, una
 tercera familia que este capítulo trata en su último bloque.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     ENC["Protocolos de encaminamiento en MANETs"] --> REA["Reactivos"]
     ENC --> PRO["Proactivos"]
@@ -140,7 +140,7 @@ para cada destino.
     de ruta por minuto, el _overhead_ reactivo por minuto es aproximadamente
 
     $$
-    O_{reactivo} \approx R \cdot N
+    O_{reactivo} \approx R \cdot N,
     $$
 
     donde $R$ es el número de descubrimientos de ruta iniciados por minuto y $N$ es el
@@ -152,7 +152,7 @@ para cada destino.
     proactivo por minuto es aproximadamente
 
     $$
-    O_{proactivo} \approx N \cdot \frac{60}{T}
+    O_{proactivo} \approx N \cdot \frac{60}{T},
     $$
 
     donde $T$ es el periodo, en segundos, entre mensajes de control sucesivos de un
@@ -237,7 +237,7 @@ S siguiendo esa misma ruta invertida.
     A y C, entre B y C, y entre C y D. Ningún otro par de nodos se encuentra dentro de
     alcance mutuo. El nodo S necesita enviar un paquete a D y no conoce ninguna ruta.
 
-    ```mermaid linenums="1"
+    ```mermaid
     graph LR
         S["S"] --- A["A"]
         S --- B["B"]
@@ -266,7 +266,7 @@ S siguiendo esa misma ruta invertida.
     reenvía el paquete: construye un `RREP` con la ruta completa `[S, A, C, D]` y lo
     envía de vuelta invirtiendo esa ruta.
 
-    ```mermaid linenums="1"
+    ```mermaid
     sequenceDiagram
         participant S
         participant A

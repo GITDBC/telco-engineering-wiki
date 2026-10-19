@@ -133,21 +133,7 @@ nav = [
             "06_trafico/01_colas/section_1_teoria_de_colas.md",
             "06_trafico/01_colas/section_2_erlang_y_dimensionado.md"
         ]}
-    ]},
-    {"Virtualización" = [
-        {"Virtualización y contenedores" = [
-            "07_virtualizacion/01_virtualizacion/section_1_tipos_de_virtualizacion.md",
-            "07_virtualizacion/01_virtualizacion/section_2_contenedores_y_orquestacion.md"
-        ]},
-        {"SDN y NFV" = [
-            "07_virtualizacion/02_sdn_y_nfv/section_1_sdn.md",
-            "07_virtualizacion/02_sdn_y_nfv/section_2_nfv_y_mano.md",
-            "07_virtualizacion/02_sdn_y_nfv/section_3_ran_virtualizada_y_edge.md"
-        ]},
-        {"Software de comunicaciones" = [
-            "07_virtualizacion/03_software_de_comunicaciones/section_1_desarrollo_de_software.md"
-        ]}
-    ]},
+    ]}
 ]
 extra_css = ["assets/stylesheets/extra.css"]
 extra_javascript = [

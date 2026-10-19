@@ -48,7 +48,7 @@ equiprobables.
 La señal transmitida resulta de multiplicar la señal de datos por esa secuencia de chip,
 
 $$
-x(t) = a\lbrack n \rbrack \, p(t - nT) \, c(t)
+x(t) = a\lbrack n \rbrack \, p(t - nT) \, c(t),
 $$
 
 donde $a\lbrack n \rbrack$ es el símbolo de datos del intervalo $n$, $p(t)$ el pulso de
@@ -68,7 +68,7 @@ señal de datos original no tenía. La magnitud que cuantifica esa expansión es
 período de símbolo,
 
 $$
-SF = \frac{T}{T_c} = \frac{R_c}{R_s}
+SF = \frac{T}{T_c} = \frac{R_c}{R_s},
 $$
 
 donde $T$ es el período de símbolo, $T_c$ el período de chip, $R_c = 1/T_c$ el **ritmo
@@ -96,7 +96,7 @@ de ensanchamiento distintos a servicios de voz y de datos sobre el mismo sistema
 
     $$
     SF = \frac{T}{T_c} = \frac{R_c}{R_b} = \frac{3{,}84 \cdot 10^6}{12{,}2 \cdot 10^3}
-    \approx 315
+    \approx 315,
     $$
 
     valor que en la práctica se redondea a la potencia de dos inmediatamente inferior o
@@ -115,7 +115,7 @@ rectangular, presentada en el capítulo de modulaciones digitales, pero evaluada
 duración de chip en lugar de con la duración de símbolo,
 
 $$
-S_X(f) \approx P_x \, T_c \, \mathrm{sinc}^2(f T_c)
+S_X(f) \approx P_x \, T_c \, \mathrm{sinc}^2(f T_c),
 $$
 
 donde $P_x$ es la potencia media de la señal transmitida y $\mathrm{sinc}(u) = \sin(\pi
@@ -138,7 +138,7 @@ $c(t)$ toma el valor $\pm 1$, se cumple $c(t)^2 = 1$ en todo instante, de modo q
 segunda multiplicación deshace exactamente la primera,
 
 $$
-r(t) \, c(t) = a\lbrack n \rbrack \, p(t - nT) \, c(t)^2 = a\lbrack n \rbrack \, p(t - nT)
+r(t) \, c(t) = a\lbrack n \rbrack \, p(t - nT) \, c(t)^2 = a\lbrack n \rbrack \, p(t - nT),
 $$
 
 y la señal recuperada vuelve a ocupar el ancho de banda estrecho de la señal de datos
@@ -156,73 +156,7 @@ multiplicación y conserva su densidad espectral de potencia baja. El filtro ada
 el integrador que siguen a la multiplicación concentran, en cambio, toda la energía de
 la señal deseada en el ancho de banda estrecho de símbolo, de modo que la relación entre
 la potencia útil y la potencia de cualquier interferencia no correlada mejora en un
-factor igual al de ensanchamiento, la **ganancia de proceso**. El siguiente fragmento
-comprueba numéricamente esa ganancia comparando la relación entre señal e interferencia
-antes y después de desensanchar una señal contaminada por otra señal de código distinto.
-
-```python linenums="1"
-import numpy as np
-
-
-def relacion_senal_interferencia(
-    senal: np.ndarray, interferencia: np.ndarray
-) -> float:
-    """Calcula la relación entre potencia de señal e interferencia, en dB.
-
-    Args:
-        senal: Muestras de la componente de señal deseada.
-        interferencia: Muestras de la componente interferente.
-
-    Returns:
-        Relación señal a interferencia, en decibelios.
-    """
-    potencia_senal = np.mean(senal**2)
-    potencia_interferencia = np.mean(interferencia**2)
-    return 10 * np.log10(potencia_senal / potencia_interferencia)
-
-
-factor_ensanchamiento = 64
-num_simbolos = 2000
-generador = np.random.default_rng(seed=2)
-
-# Cada usuario emplea una secuencia de chip pseudoaleatoria de valores +-1
-codigo_deseado = generador.choice([-1.0, 1.0], size=factor_ensanchamiento)
-codigo_interferente = generador.choice([-1.0, 1.0], size=factor_ensanchamiento)
-
-simbolos_deseados = generador.choice([-1.0, 1.0], size=num_simbolos)
-simbolos_interferentes = generador.choice([-1.0, 1.0], size=num_simbolos)
-
-# Ensanchar repite el código de chip para cada símbolo y lo escala por el símbolo
-ensanchada_deseada = np.outer(simbolos_deseados, codigo_deseado)
-ensanchada_interferente = np.outer(simbolos_interferentes, codigo_interferente)
-recibida = ensanchada_deseada + ensanchada_interferente
-
-# Antes de desensanchar, ambas componentes ocupan el mismo ancho de banda
-sir_antes = relacion_senal_interferencia(ensanchada_deseada, ensanchada_interferente)
-
-# Desensanchar multiplica por el código propio e integra sobre el símbolo
-desensanchada = recibida * codigo_deseado
-muestra_senal = simbolos_deseados * factor_ensanchamiento
-muestra_interferencia = desensanchada.sum(axis=1) - muestra_senal
-sir_despues = relacion_senal_interferencia(muestra_senal, muestra_interferencia)
-
-print(f"SIR antes de desensanchar: {sir_antes:.2f} dB")
-print(f"SIR después de desensanchar: {sir_despues:.2f} dB")
-print(f"Ganancia de proceso teórica: {10 * np.log10(factor_ensanchamiento):.2f} dB")
-```
-
-```plaintext title="Expected output"
-SIR antes de desensanchar: -0.06 dB
-SIR después de desensanchar: 17.83 dB
-Ganancia de proceso teórica: 18.06 dB
-```
-
-La simulación confirma el resultado teórico: antes de desensanchar, la señal deseada y
-la interferente tienen una potencia comparable porque ambas ocupan el mismo ancho de
-banda, pero tras multiplicar por el código propio e integrar sobre el símbolo la señal
-deseada se recompone íntegra mientras que la interferencia, modulada por un código
-distinto y no correlado, solo se acumula parcialmente, y la relación entre ambas mejora
-en un valor próximo al factor de ensanchamiento expresado en decibelios.
+factor igual al de ensanchamiento, la **ganancia de proceso**.
 
 ## Multiplexación de señales ensanchadas
 
@@ -253,7 +187,7 @@ misma. Cuando las secuencias empleadas son estrictamente ortogonales y los trans
 están sincronizados, esta interferencia se anula en el caso ideal, lo que es
 precisamente la situación que se explota en el enlace descendente de un sistema celular.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     BITS["Simbolos de datos"] --> MUL1["Multiplicacion por la secuencia de chip propia"]
     MUL1 --> X["Señal ensanchada"]
@@ -337,7 +271,7 @@ tasa de error observada a más largo plazo, de modo que el sistema converge haci
 punto de operación que mantiene la calidad exigida con el mínimo consumo de potencia
 posible.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     EB["Estimacion inicial de perdidas de propagacion"] --> LA["Lazo abierto<br/>potencia de transmision inicial"]
     LA --> TX["Terminal transmite"]
@@ -373,7 +307,7 @@ sobrevive al desensanchado, la relación señal a interferencia de un usuario en
 de $K$ usuarios activos con potencia similar en el receptor se aproxima por
 
 $$
-\mathrm{SIR} \approx \frac{SF}{K - 1}
+\mathrm{SIR} \approx \frac{SF}{K - 1},
 $$
 
 donde $SF$ es el factor de ensanchamiento del usuario y $K - 1$ el número de usuarios
@@ -398,7 +332,7 @@ degrada.
     Con $K = 32$ usuarios, la relación señal a interferencia es
 
     $$
-    \mathrm{SIR} \approx \frac{128}{32 - 1} = \frac{128}{31} \approx 4{,}13
+    \mathrm{SIR} \approx \frac{128}{32 - 1} = \frac{128}{31} \approx 4{,}13,
     $$
 
     equivalente a $6{,}16$ dB. Al duplicar el número de usuarios activos a $K = 64$, la
@@ -423,7 +357,7 @@ doble, construidos concatenando el código del nodo padre consigo mismo y con su
 complemento, de modo que dos códigos de la misma generación del árbol son siempre
 mutuamente ortogonales.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     RAIZ["SF=1<br/>codigo raiz"] --> A1["SF=2<br/>codigo A"]
     RAIZ --> A2["SF=2<br/>codigo B"]
@@ -465,7 +399,7 @@ estructura del sistema.
     que cada generación duplica el número de códigos,
 
     $$
-    \frac{256}{4} = 64
+    \frac{256}{4} = 64,
     $$
 
     de modo que asignar ese único código de $SF = 4$ bloquea $64$ códigos de
@@ -491,7 +425,7 @@ mínimo $\mathrm{SIR}_{\text{req}}$, lo que impone un número máximo de usuario
 simultáneos
 
 $$
-K_{\max} = 1 + \frac{SF}{\mathrm{SIR}_{\text{req}}}
+K_{\max} = 1 + \frac{SF}{\mathrm{SIR}_{\text{req}}},
 $$
 
 expresión que se obtiene despejando $K$ de la relación señal a interferencia presentada

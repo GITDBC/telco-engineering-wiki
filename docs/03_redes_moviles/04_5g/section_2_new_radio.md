@@ -112,7 +112,7 @@ Cada numerología se identifica mediante un índice entero $\mu$, y determina la
 separación entre subportadoras según:
 
 $$
-\Delta f_\mu = 2^\mu \times 15\ \text{kHz}
+\Delta f_\mu = 2^\mu \times 15\ \text{kHz},
 $$
 
 donde $\Delta f_\mu$ es la separación entre subportadoras de la numerología $\mu$ y $15\
@@ -122,7 +122,7 @@ condición de ortogonalidad de OFDM, $\Delta f = 1/T_S$, deducida en
 liga esa separación con la duración útil del símbolo:
 
 $$
-T_{u,\mu} = \frac{1}{\Delta f_\mu} = \frac{T_{u,0}}{2^\mu}
+T_{u,\mu} = \frac{1}{\Delta f_\mu} = \frac{T_{u,0}}{2^\mu},
 $$
 
 donde $T_{u,\mu}$ es la duración útil del símbolo de la numerología $\mu$, sin prefijo
@@ -158,7 +158,7 @@ milisegundo, heredada de LTE, e incluye siempre 14 símbolos con prefijo cíclic
 de modo que la duración total de cada símbolo, prefijo incluido, resulta:
 
 $$
-T_{\text{símb},\mu} = \frac{T_{\text{ranura},\mu}}{14} = \frac{1\ \text{ms}}{2^\mu \times 14}
+T_{\text{símb},\mu} = \frac{T_{\text{ranura},\mu}}{14} = \frac{1\ \text{ms}}{2^\mu \times 14},
 $$
 
 donde $T_{\text{ranura},\mu}$ es la duración de la ranura de la numerología $\mu$,
@@ -166,7 +166,7 @@ introducida en el apartado siguiente, y $T_{\text{símb},\mu}$ es la duración d
 símbolo con su prefijo. La duración del prefijo se obtiene por diferencia:
 
 $$
-T_{G,\mu} = T_{\text{símb},\mu} - T_{u,\mu}
+T_{G,\mu} = T_{\text{símb},\mu} - T_{u,\mu}.
 $$
 
 Al duplicarse $\mu$, tanto $T_{\text{símb},\mu}$ como $T_{u,\mu}$ se reducen a la mitad
@@ -192,7 +192,7 @@ particular $\mu = 0$ de esta misma familia.
     presupuesto de la aplicación. Su duración de símbolo con prefijo resulta
 
     $$
-    T_{\text{símb},2} = \frac{0{,}25\ \text{ms}}{14} = 17{,}86\ \mu\text{s}
+    T_{\text{símb},2} = \frac{0{,}25\ \text{ms}}{14} = 17{,}86\ \mu\text{s},
     $$
 
     de donde el prefijo cíclico mide
@@ -229,7 +229,7 @@ de espectro asignadas a cada numerología, en un compromiso similar al que ya re
 prefijo cíclico frente a los ecos del canal, pero aplicado en el dominio de la
 coexistencia entre configuraciones en lugar de entre símbolos consecutivos.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     N0["mu=0: 15 kHz, 66,67 us"] --> N1["mu=1: 30 kHz, 33,33 us"]
     N1 --> N2["mu=2: 60 kHz, 16,67 us"]
@@ -244,7 +244,7 @@ prefijo cíclico normal, de modo que su duración se deriva directamente de la d
 del símbolo con prefijo:
 
 $$
-T_{\text{ranura},\mu} = \frac{1\ \text{ms}}{2^\mu}
+T_{\text{ranura},\mu} = \frac{1\ \text{ms}}{2^\mu}.
 $$
 
 Esta relación es la generalización directa de la subtrama de LTE, que en los términos de
@@ -307,7 +307,7 @@ enlace descendente y, tras un breve periodo de conmutación, ceda el resto de su
 símbolos al enlace ascendente, sin necesidad de esperar al límite de la siguiente
 ranura.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     S0["Simbolo 0<br/>DL"] --> S1["Simbolo 1<br/>DL"]
     S1 --> S2["Simbolo 2<br/>Flexible"]
@@ -566,7 +566,7 @@ terminal continúa verificando de forma periódica que esa dirección sigue sien
 favorable, y notifica a la red cuando deja de serlo para que se reasigne otra dirección
 si el despliegue lo permite.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant GNB as Estacion base
     participant UE as Equipo de usuario
@@ -628,7 +628,7 @@ simultáneos.
 
     $$
     N_\text{RE} = N_\text{RB} \times 12 \times 14 \times 2 = 273 \times 12 \times 28
-    = 91\,728
+    = 91\,728.
     $$
 
     Con una modulación de 256-QAM, $\bar{B} = 8$ bits por símbolo, y una tasa de
@@ -641,7 +641,7 @@ simultáneos.
 
     $$
     R_B = N_\text{RE}\, \bar{B}\, R \times 1000\ \text{subtramas/s}
-    = 91\,728 \times 7{,}41 \times 1000 \approx 679\ \text{Mbit/s}
+    = 91\,728 \times 7{,}41 \times 1000 \approx 679\ \text{Mbit/s}.
     $$
 
     Esta cifra es una cota superior por capa espacial, sin descontar los elementos de

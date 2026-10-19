@@ -105,7 +105,7 @@ distribución transporta el tráfico entre los distintos puntos de acceso y haci
 externa, típicamente cableada, de modo que dos estaciones asociadas a puntos de acceso
 distintos pueden comunicarse a través de él sin alcance radioeléctrico directo entre sí.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph DS["Sistema de distribucion"]
         AP1["Punto de acceso 1"]
@@ -136,7 +136,7 @@ la capa física, como el canal en uso y la potencia de transmisión. Estos tres 
 comunican entre sí mediante primitivas de gestión y son comunes a cualquier variante de
 capa física del estándar.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     LLC["Subcapa de control<br/>de enlace logico, LLC"]
     subgraph MAC["Capa MAC"]
@@ -235,13 +235,13 @@ en particular la QAM y su compromiso entre régimen binario y probabilidad de er
 
     $$
     \bar{B}\, N_u\, R_c = 6 \times 48 \times \frac{3}{4} = 216\ \text{bits de
-    informacion}
+    informacion}.
     $$
 
     Dividiendo por la duración total del símbolo OFDM se obtiene el régimen binario:
 
     $$
-    R_B = \frac{216\ \text{bits}}{4\ \mu\text{s}} = 54\ \text{Mbit/s}
+    R_B = \frac{216\ \text{bits}}{4\ \mu\text{s}} = 54\ \text{Mbit/s}.
     $$
 
     El resultado coincide exactamente con la tasa máxima de 54 Mbit/s que el estándar
@@ -307,14 +307,14 @@ detalla el ejemplo siguiente.
 
     $$
     \bar{B}\, N_u\, R_c = 6 \times 108 \times \frac{5}{6} = 540\ \text{bits por
-    simbolo OFDM}
+    simbolo OFDM}.
     $$
 
     Con los 4 flujos espaciales que MIMO permite multiplexar de forma simultánea sobre
     el mismo canal, el régimen binario resulta:
 
     $$
-    R_B = \frac{540 \times 4\ \text{bits}}{3{,}6\ \mu\text{s}} = 600\ \text{Mbit/s}
+    R_B = \frac{540 \times 4\ \text{bits}}{3{,}6\ \mu\text{s}} = 600\ \text{Mbit/s}.
     $$
 
     El resultado reproduce con exactitud la cifra de 600 Mbit/s que el estándar atribuye
@@ -345,13 +345,13 @@ comercial Wi-Fi 6E.
 
     $$
     \bar{B}\, N_u\, R_c = 10 \times 1960 \times \frac{5}{6} \approx 16\,333{,}3\
-    \text{bits por simbolo HE}
+    \text{bits por simbolo HE}.
     $$
 
     Dividiendo por la duración del símbolo se obtiene la tasa por flujo espacial:
 
     $$
-    \frac{16\,333{,}3\ \text{bits}}{13{,}6\ \mu\text{s}} \approx 1{,}20\ \text{Gbit/s}
+    \frac{16\,333{,}3\ \text{bits}}{13{,}6\ \mu\text{s}} \approx 1{,}20\ \text{Gbit/s}.
     $$
 
     Con los 8 flujos espaciales que MIMO permite multiplexar de forma simultánea, la
@@ -441,7 +441,7 @@ que transporta la trama MAC recibida desde la capa superior, y bits de cola y de
 que ajustan la longitud del PPDU a un múltiplo entero de símbolos de la capa física
 subyacente.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     PRE["Preambulo"] --> HDR["Cabecera"]
     HDR --> PSDU["PSDU<br/>trama MAC"]

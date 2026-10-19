@@ -33,7 +33,7 @@ interconexión de las estaciones base a través de la red troncal permite que un
 usuario se comunique desde cualquier punto cubierto por el sistema, sin que la
 comunicación quede confinada al área de una sola celda.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     UE["Equipo de usuario"] --> BS1["Estacion base de la celda A"]
     UE --> BS2["Estacion base de la celda B"]
@@ -114,7 +114,7 @@ se denomina **clúster** (_cluster_). El número de celdas que componen un clús
 completo se cubre repitiendo el mismo patrón de clúster de forma contigua, de modo que
 cada celda cocanal de una celda dada pertenece a un clúster distinto.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     subgraph ClusterA["Cluster 1"]
         A1["Celda 1"]
@@ -142,14 +142,14 @@ encaje sin huecos ni solapamientos alrededor de una celda central. La geometría
 hexagonal solo admite valores de $N$ de la forma
 
 $$
-N = i^{2} + i j + j^{2}
+N = i^{2} + i j + j^{2},
 $$
 
 donde $i$ y $j$ son enteros no negativos, no simultáneamente nulos. Esta expresión
 genera la secuencia de tamaños de agrupación admisibles
 
 $$
-N \in \lbrace 1, 3, 4, 7, 9, 12, 13, 16, 19, 21, 25, 27, 28, \ldots \rbrace
+N \in \lbrace 1, 3, 4, 7, 9, 12, 13, 16, 19, 21, 25, 27, 28, \ldots \rbrace,
 $$
 
 de la que los sistemas celulares reales emplean con mayor frecuencia $N = 3$, $N = 4$,
@@ -161,7 +161,7 @@ centros de dos celdas cocanal más próximas, la distancia de reutilización $D$
 obtiene de la geometría del empaquetado hexagonal como
 
 $$
-D = R\sqrt{3N}
+D = R\sqrt{3N},
 $$
 
 donde $R$ es el radio de la celda, definido como la distancia del centro de la celda al
@@ -180,7 +180,7 @@ interferencia** (_carrier-to-interference ratio_, $C/I$) en el punto más desfav
 del borde de la celda, a distancia $R$ de su propia estación base, resulta
 
 $$
-\frac{C}{I} = \frac{1}{6}\left(\frac{D}{R}\right)^{\gamma} = \frac{1}{6}(3N)^{\gamma/2}
+\frac{C}{I} = \frac{1}{6}\left(\frac{D}{R}\right)^{\gamma} = \frac{1}{6}(3N)^{\gamma/2},
 $$
 
 donde $\gamma$ es el exponente de pérdidas del medio, introducido en
@@ -199,19 +199,19 @@ celda, a costa de reducir el número de canales que le corresponde a cada celda.
     La razón de reutilización de canales cocanal es
 
     $$
-    Q = \sqrt{3N} = \sqrt{21} \approx 4,58
+    Q = \sqrt{3N} = \sqrt{21} \approx 4,58,
     $$
 
     y la relación portadora a interferencia en el punto más desfavorable resulta
 
     $$
-    \frac{C}{I} = \frac{1}{6}(3 \cdot 7)^{4/2} = \frac{441}{6} = 73,5
+    \frac{C}{I} = \frac{1}{6}(3 \cdot 7)^{4/2} = \frac{441}{6} = 73,5,
     $$
 
     que en decibelios equivale a
 
     $$
-    10\log_{10}(73,5) \approx 18,66\ \text{dB}
+    10\log_{10}(73,5) \approx 18,66\ \text{dB}.
     $$
 
     Este valor supera, con un margen ajustado de aproximadamente $0,66\ \text{dB}$, el
@@ -221,7 +221,7 @@ celda, a costa de reducir el número de canales que le corresponde a cada celda.
 
     $$
     \frac{C}{I} = \frac{1}{6}(3 \cdot 3)^{4/2} = \frac{81}{6} = 13,5 \Rightarrow
-    10\log_{10}(13,5) \approx 11,30\ \text{dB}
+    10\log_{10}(13,5) \approx 11,30\ \text{dB},
     $$
 
     que incumple el requisito con un margen de más de $6\ \text{dB}$, y confirma que la
@@ -234,7 +234,7 @@ de cada celda y la calidad de la señal recibida. Si el sistema dispone de un n�
 total de canales $C_{\text{total}}$, cada celda de un clúster de tamaño $N$ recibe
 
 $$
-c = \frac{C_{\text{total}}}{N}
+c = \frac{C_{\text{total}}}{N},
 $$
 
 canales, suponiendo un reparto homogéneo. Un valor de $N$ pequeño concentra más canales
@@ -279,7 +279,7 @@ uno servido por una antena direccional distinta en el mismo emplazamiento, en lu
 una única antena omnidireccional. El esquema más habitual reparte los $360°$ de la celda
 en tres sectores de $120°$, con una antena por sector.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     SITIO["Emplazamiento"] --> S1["Sector 1, 0 a 120 grados"]
     SITIO --> S2["Sector 2, 120 a 240 grados"]
@@ -304,7 +304,7 @@ Las celdas de un sistema celular no tienen todas el mismo tamaño ni el mismo pa
 y del entorno en que se despliega, y sistemas de distintas generaciones combinan celdas
 de tamaños muy diferentes dentro de la misma red.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     MACRO["Macrocelda, hasta 20 km"] --> MICRO["Microcelda, hasta pocos kilometros"]
     MICRO --> PICO["Picocelda, pocas centenas de metros"]
@@ -415,7 +415,7 @@ del área, se multiplica aproximadamente por cuatro.
     potencia transmitida por cada nueva estación base debe reducirse en un factor
 
     $$
-    \left(\frac{R/2}{R}\right)^{\gamma} = \left(\frac{1}{2}\right)^{4} = \frac{1}{16}
+    \left(\frac{R/2}{R}\right)^{\gamma} = \left(\frac{1}{2}\right)^{4} = \frac{1}{16},
     $$
 
     que en decibelios equivale a una reducción de $10\log_{10}(1/16) \approx

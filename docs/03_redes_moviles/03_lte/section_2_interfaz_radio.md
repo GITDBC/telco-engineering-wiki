@@ -106,7 +106,7 @@ La **trama de radio** tiene una duración $T_f = 10\ \text{ms}$ y se divide en d
 subtramas de 1 milisegundo cada una, coincidiendo cada subtrama con un `TTI`. Cada
 subtrama se divide a su vez en dos _slots_ de 0,5 milisegundos.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     F["Trama de radio, 10 ms"] --> SF0["Subtrama 0<br/>1 ms"]
     F --> SF1["Subtrama 1<br/>1 ms"]
@@ -140,13 +140,13 @@ adaptación de enlace trabajan con una granularidad menor que un `PRB` completo.
 extensión en frecuencia es fija:
 
 $$
-B_\text{PRB} = 12 \times \Delta f = 12 \times 15\ \text{kHz} = 180\ \text{kHz}
+B_\text{PRB} = 12 \times \Delta f = 12 \times 15\ \text{kHz} = 180\ \text{kHz},
 $$
 
 y su extensión en tiempo coincide con un _slot_, 0,5 milisegundos, de modo que un par de
 `PRB` consecutivos en el mismo par de subportadoras cubre una subtrama completa.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     subgraph PRB["PRB: 12 subportadoras x 1 slot"]
         direction TB
@@ -169,7 +169,7 @@ flowchart LR
     del número de bloques, las subportadoras por bloque y los símbolos por subtrama:
 
     $$
-    N_\text{RE} = N_\text{RB} \times 12 \times 14 = 100 \times 12 \times 14 = 16\,800
+    N_\text{RE} = N_\text{RB} \times 12 \times 14 = 100 \times 12 \times 14 = 16\,800.
     $$
 
     Con una modulación de 64-QAM, $\bar{B} = 6$ bits por símbolo, y una tasa de
@@ -179,7 +179,7 @@ flowchart LR
     cada elemento de recurso transporta
 
     $$
-    b_\text{RE} = \bar{B}\, R = 6 \times 0{,}75 = 4{,}5\ \text{bit}
+    b_\text{RE} = \bar{B}\, R = 6 \times 0{,}75 = 4{,}5\ \text{bit},
     $$
 
     de información útil. El régimen binario resulta de repartir esos bits entre la
@@ -187,7 +187,7 @@ flowchart LR
 
     $$
     R_B = N_\text{RE}\, b_\text{RE} \times 1000\ \text{subtramas/s}
-    = 16\,800 \times 4{,}5 \times 1000 = 75{,}6\ \text{Mbit/s}
+    = 16\,800 \times 4{,}5 \times 1000 = 75{,}6\ \text{Mbit/s}.
     $$
 
     Esta cifra es una cota superior teórica sobre los recursos de datos: no descuenta los
@@ -244,13 +244,13 @@ referencia.
     reducir la eficiencia del prefijo de
 
     $$
-    \eta_\text{normal} = \frac{2048}{2048 + 144} = 0{,}9343
+    \eta_\text{normal} = \frac{2048}{2048 + 144} = 0{,}9343,
     $$
 
     a
 
     $$
-    \eta_\text{extendida} = \frac{2048}{2048 + 512} = 0{,}8
+    \eta_\text{extendida} = \frac{2048}{2048 + 512} = 0{,}8.
     $$
 
     Esa caída de casi trece puntos porcentuales en la eficiencia es el precio que paga
@@ -453,7 +453,7 @@ distintas con propagación distinta.
     al producto de sus doce subportadoras por los catorce símbolos:
 
     $$
-    N_\text{RE,PRB} = 12 \times 14 = 168
+    N_\text{RE,PRB} = 12 \times 14 = 168,
     $$
 
     y cada elemento de recurso transporta $\bar{B}\, R = 4 \times 0{,}5 = 2\ \text{bit}$
@@ -461,7 +461,7 @@ distintas con propagación distinta.
     recurso resulta:
 
     $$
-    R_\text{PRB} = 168 \times 2 \times 1000\ \text{subtramas/s} = 336\ \text{kbit/s}
+    R_\text{PRB} = 168 \times 2 \times 1000\ \text{subtramas/s} = 336\ \text{kbit/s}.
     $$
 
     El número de bloques de recurso necesarios para alcanzar los 10 Mbit/s exigidos se
@@ -469,7 +469,7 @@ distintas con propagación distinta.
 
     $$
     N_\text{RB} = \left\lceil \frac{10\ \text{Mbit/s}}{336\ \text{kbit/s}} \right\rceil
-    = \lceil 29{,}76 \rceil = 30\ \text{bloques de recurso}
+    = \lceil 29{,}76 \rceil = 30\ \text{bloques de recurso}.
     $$
 
     Treinta bloques de recurso entregan 10,08 Mbit/s, ligeramente por encima del

@@ -78,7 +78,7 @@ tecnologías de acceso completamente distintas, y una misma tecnología de acces
 verá en el eje siguiente, puede en ocasiones dar servicio a más de un ámbito de
 cobertura.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     COB["Clasificacion por area de cobertura"] --> PAN["Red de area personal, PAN"]
     COB --> LAN["Red de area local, LAN"]
@@ -310,7 +310,7 @@ detalle en el
 [concepto celular](../../03_redes_moviles/01_fundamentos_celulares/section_1_concepto_celular.md),
 que este capítulo no repite.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     subgraph INFRA["Red basada en infraestructura"]
         BS["Estacion base u operador"] --> UE1["Equipo de usuario"]
@@ -360,7 +360,7 @@ cuanto mayor es la altitud, mayor es el retardo y mayor la cobertura, lo que exp
 los sistemas de comunicaciones en tiempo real prefieran órbitas bajas y los sistemas de
 difusión y navegación prefieran órbitas altas o geoestacionarias.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     ORB["Orbitas de los sistemas por satelite"] --> LEO["LEO, orbita baja"]
     ORB --> MEO["MEO, orbita media"]
@@ -379,7 +379,7 @@ flowchart TD
 
     $$
     t_{prop} = \frac{35\,786 \times 10^{3}\ \text{m}}{3 \times 10^{8}\ \text{m/s}}
-    \approx 119{,}3\ \text{ms}
+    \approx 119{,}3\ \text{ms}.
     $$
 
     Un enlace completo entre dos estaciones terrenas que solo pueden comunicarse a

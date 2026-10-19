@@ -117,7 +117,7 @@ previa, lo que lo hace extremadamente sencillo de implementar, pero sobrecarga l
 con copias redundantes del mismo paquete si no se limita de alguna manera su
 propagación.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant S as Nodo origen
     participant B as Vecino B
@@ -350,7 +350,7 @@ directamente del número de vecinos que tenga cada nodo, mientras que todos los 
 distancia de una misma red comparten siempre la misma longitud, igual al número total de
 nodos.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant S as Nodo S
     participant B as Vecino B

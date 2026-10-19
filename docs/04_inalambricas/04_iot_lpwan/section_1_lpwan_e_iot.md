@@ -52,13 +52,13 @@ espectral de potencia a temperatura ambiente es un valor estándar de la ingenie
 comunicaciones,
 
 $$
-N_0 = -174\ \text{dBm/Hz}
+N_0 = -174\ \text{dBm/Hz},
 $$
 
 de modo que la potencia de ruido total en un receptor de ancho de banda $B$ resulta
 
 $$
-N = N_0 + 10 \log_{10}(B)
+N = N_0 + 10 \log_{10}(B),
 $$
 
 con $N_0$ expresado en $\text{dBm/Hz}$, $B$ en hercios y $N$ en $\text{dBm}$. Cuanto más
@@ -72,7 +72,7 @@ sensibilidad implica mayor alcance, es el argumento físico central de toda la f
 LPWAN, y el motivo por el que reducir la tasa de datos, que exige un ancho de banda
 menor, es el precio que estas tecnologías pagan por su alcance.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Alcance -- una banda mas estrecha reduce el ruido y mejora la sensibilidad --> Consumo
     Consumo -- una tasa menor acorta el tiempo de emision y el gasto energetico --> Tasa
@@ -91,7 +91,7 @@ flowchart LR
 
     $$
     \Delta N = 10 \log_{10}\left(\frac{200\,000\ \text{Hz}}{100\ \text{Hz}}\right)
-    = 10 \log_{10}(2000) \approx 33{,}0\ \text{dB}
+    = 10 \log_{10}(2000) \approx 33{,}0\ \text{dB}.
     $$
 
     Esos $33\ \text{dB}$ de menor ruido se traducen directamente en $33\ \text{dB}$ de
@@ -100,7 +100,7 @@ flowchart LR
     década de distancia, de modo que el factor de alcance adicional resulta
 
     $$
-    \frac{d_2}{d_1} = 10^{\Delta N / 20} = 10^{33{,}0/20} \approx 44{,}7
+    \frac{d_2}{d_1} = 10^{\Delta N / 20} = 10^{33{,}0/20} \approx 44{,}7.
     $$
 
     El canal de banda ultraestrecha alcanza, solo por este efecto, casi $45$ veces más
@@ -127,14 +127,14 @@ espectro sin licencia en esa región, LoRaWAN y Sigfox incluidas.
     día completo es
 
     $$
-    T_{emision} = 0{,}01 \times 86\,400\ \text{s} = 864\ \text{s por día}
+    T_{emision} = 0{,}01 \times 86\,400\ \text{s} = 864\ \text{s por día},
     $$
 
     y el número máximo de tramas que ese presupuesto permite es
 
     $$
     n_{max} = \frac{T_{emision}}{t_{trama}} = \frac{864\ \text{s}}{0{,}4\ \text{s}}
-    = 2160\ \text{tramas por día}
+    = 2160\ \text{tramas por día}.
     $$
 
     Esta cifra es una cota impuesta únicamente por la regulación del ciclo de trabajo,
@@ -154,7 +154,7 @@ duración de la batería de un dispositivo LPWAN.
 
     $$
     E_{bateria} = 2\ \text{Ah} \times 3{,}6\ \text{V} \times 3600\
-    \text{s/h} = 25\,920\ \text{J}
+    \text{s/h} = 25\,920\ \text{J}.
     $$
 
     El dispositivo transmite una trama de $400\ \text{ms}$ cada $15$ minutos, es decir
@@ -163,7 +163,7 @@ duración de la batería de un dispositivo LPWAN.
 
     $$
     E_{tx} = 3{,}6\ \text{V} \times 0{,}03\ \text{A} \times 0{,}4\ \text{s}
-    \approx 0{,}0432\ \text{J}
+    \approx 0{,}0432\ \text{J},
     $$
 
     y la energía diaria de transmisión resulta $96 \times 0{,}0432\ \text{J} \approx
@@ -172,7 +172,7 @@ duración de la batería de un dispositivo LPWAN.
 
     $$
     E_{reposo} = 3{,}6\ \text{V} \times 5 \times 10^{-6}\ \text{A} \times 86\,362\
-    \text{s} \approx 1{,}55\ \text{J}
+    \text{s} \approx 1{,}55\ \text{J}.
     $$
 
     La energía diaria total es $E_{dia} \approx 4{,}15 + 1{,}55 = 5{,}70\ \text{J}$, y la
@@ -180,7 +180,7 @@ duración de la batería de un dispositivo LPWAN.
 
     $$
     t_{vida} = \frac{E_{bateria}}{E_{dia}} = \frac{25\,920\ \text{J}}{5{,}70\
-    \text{J/día}} \approx 4547\ \text{días} \approx 12{,}5\ \text{años}
+    \text{J/día}} \approx 4547\ \text{días} \approx 12{,}5\ \text{años}.
     $$
 
     El resultado ignora la autodescarga de la batería y la tensión de corte del
@@ -199,7 +199,7 @@ la aplicación, criterios que particularizan, para esta familia, los
 [criterios de elección](../01_panorama/section_1_taxonomia_y_arquitecturas.md#criterios-de-eleccion)
 generales de tecnología de acceso ya presentados en la taxonomía inalámbrica.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     LPWAN["Tecnologias LPWAN"] --> SL["Espectro sin licencia"]
     LPWAN --> CL["Espectro con licencia"]
@@ -295,7 +295,7 @@ _estación base_ o _gateway_ que retransmite el tráfico de radio; un servidor d
 gestiona el acceso y las claves de los dispositivos; y un servidor de aplicación que
 entrega los datos a la aplicación final.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     DEV["Dispositivo final"] --> GW["Estacion base o gateway"]
     GW --> NS["Servidor de red"]

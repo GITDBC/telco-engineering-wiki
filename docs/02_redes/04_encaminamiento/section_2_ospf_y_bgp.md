@@ -113,7 +113,7 @@ contenido solicitado. Este intercambio es especialmente útil cuando un encamina
 activa con la base de datos vacía y necesita ponerse al día con rapidez a partir de sus
 vecinos, que se asumen ya sincronizados con el resto de la red.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant R1 as Encaminador R1
     participant R2 as Encaminador R2
@@ -147,7 +147,7 @@ demás áreas deben conectarse. Con esta jerarquía, un cambio de topología den
 esa misma área, mientras que el resto de la red solo percibe el resumen agregado que
 publica el encaminador de frontera.
 
-```mermaid linenums="1"
+```mermaid
 graph TB
     subgraph "Area 0 (backbone)"
         ABR1["Encaminador de frontera de area 1"]
@@ -270,7 +270,7 @@ rutas igualadas por esos dos criterios previos, se prefiere la de menor valor de
     de `AS-PATH`, el encaminador instala la ruta anunciada por el vecino Y, sin llegar
     siquiera a evaluar la longitud del camino de sistemas autónomos.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     A["Varios anuncios para el mismo destino"] --> B{"LOCAL_PREF mas alto"}
     B -->|"Unico maximo"| Z["Ruta instalada"]

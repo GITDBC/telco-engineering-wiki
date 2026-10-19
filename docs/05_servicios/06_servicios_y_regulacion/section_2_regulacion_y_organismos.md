@@ -58,7 +58,7 @@ que perpetuaría su posición dominante con independencia de la eficiencia relat
 red. La obligación de interconexión, que se detalla más adelante en este capítulo, es la
 respuesta regulatoria directa a esta tercera propiedad.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     ME[Monopolio natural de la infraestructura] --> R1[Obligaciones de acceso mayorista]
     EE[Espectro como recurso escaso] --> R2[Atribucion y licencias de espectro]
@@ -198,7 +198,7 @@ El reparto de competencias entre estos organismos no es jerárquico sino funcion
 `ETSI`, `3GPP`, `IETF` e `IEEE 802` normalizan, cada uno dentro de su ámbito
 tecnológico, cómo se implementa un sistema concreto dentro de las bandas ya atribuidas.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph Internacional[Ambito internacional]
         UIT[UIT: cooperacion internacional]
@@ -340,7 +340,7 @@ asignación puede condicionarse a obligaciones de cobertura que el operador adju
 debe cumplir con independencia del precio pagado en la subasta, o resolverse mediante
 concurso público que valore, además del precio ofertado, el compromiso de despliegue.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     A[Atribucion internacional en la ITU-R<br/>Conferencia Mundial de Radiocomunicaciones] --> B[Adjudicacion nacional<br/>Cuadro Nacional de Atribucion de Frecuencias]
     B --> C{Forma de asignacion}
@@ -426,7 +426,7 @@ servicio de conectividad `IP` ya activado por el incumbente sobre su propia red 
 acceso, lo que exige una inversión inicial mucho menor pero deja al operador alternativo
 con menos control sobre las prestaciones y sobre la diferenciación técnica de su oferta.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Cliente[Domicilio del cliente] --> Bucle[Bucle de abonado]
     Bucle --> Central[Central local del operador incumbente]
@@ -517,19 +517,19 @@ debe ser aprobado por el regulador tras una auditoría previa.
     50\,\%$, aporta
 
     $$
-    A_1 = 0{,}50 \times 40 = 20\ \text{millones de euros}
+    A_1 = 0{,}50 \times 40 = 20\ \text{millones de euros},
     $$
 
     el segundo operador, con una cuota del $2500/8000 = 31{,}25\,\%$, aporta
 
     $$
-    A_2 = 0{,}3125 \times 40 = 12{,}5\ \text{millones de euros}
+    A_2 = 0{,}3125 \times 40 = 12{,}5\ \text{millones de euros},
     $$
 
     y el tercer operador, con una cuota del $1500/8000 = 18{,}75\,\%$, aporta
 
     $$
-    A_3 = 0{,}1875 \times 40 = 7{,}5\ \text{millones de euros}
+    A_3 = 0{,}1875 \times 40 = 7{,}5\ \text{millones de euros}.
     $$
 
     El reparto proporcional a los ingresos brutos traslada la carga del servicio

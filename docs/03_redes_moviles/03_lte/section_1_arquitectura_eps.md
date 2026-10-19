@@ -146,7 +146,7 @@ aparece descrita en ocasiones como una función del `PCRF` y en otras como una f
 del `P-GW`: ambas descripciones son correctas porque se refieren a fases distintas del
 mismo mecanismo.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     UE[Equipo de usuario] --> ENB[eNodeB]
     ENB --> SGW[Pasarela de servicio S-GW]
@@ -310,7 +310,7 @@ terminal y el `eNodeB` como entre el `eNodeB` y la pasarela de servicio, y se ac
 cuando es necesario entregar datos de enlace descendente a un terminal que hasta ese
 momento permanecía inactivo.
 
-```mermaid linenums="1"
+```mermaid
 stateDiagram-v2
     [*] --> EMM_DEREGISTERED
     EMM_DEREGISTERED --> EMM_REGISTERED: solicitud de acceso aleatorio
@@ -354,7 +354,7 @@ terminal se autenticaba frente a la red.
     recibir datos de usuario a través de la pasarela de servicio y, más allá de
     ella, de la pasarela de datos por paquetes.
 
-    ```mermaid linenums="1"
+    ```mermaid
     sequenceDiagram
         participant UE as Terminal
         participant ENB as eNodeB

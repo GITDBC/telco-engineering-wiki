@@ -98,7 +98,7 @@ un servicio suplementario de telefonía. La calidad prioritaria, que marca ciert
 tráficos para recibir tratamiento preferente en la red cuando hay congestión, es un
 servicio suplementario que aplica a varios servicios básicos simultáneamente.
 
-```mermaid linenums="1"
+```mermaid
 graph TD
     ST[Servicios de telecomunicacion] --> POR[Portadores]
     ST --> TEL[Teleservicios]
@@ -203,7 +203,7 @@ capítulo dedicado a
     equivalentes a
 
     $$
-    R_{G.711} = \frac{200 \times 8}{0{,}02} = 80\,000\ \text{bit/s} = 80\ \text{kbit/s}
+    R_{G.711} = \frac{200 \times 8}{0{,}02} = 80\,000\ \text{bit/s} = 80\ \text{kbit/s},
     $$
 
     por llamada. El enlace de 2048 kbit/s admite entonces $2048 / 80 = 25{,}6$, es decir,
@@ -212,7 +212,7 @@ capítulo dedicado a
     60 bytes cada 20 ms, equivalentes a
 
     $$
-    R_{G.729} = \frac{60 \times 8}{0{,}02} = 24\,000\ \text{bit/s} = 24\ \text{kbit/s}
+    R_{G.729} = \frac{60 \times 8}{0{,}02} = 24\,000\ \text{bit/s} = 24\ \text{kbit/s},
     $$
 
     por llamada, lo que eleva la capacidad del mismo enlace a $2048/24 = 85{,}3$, es
@@ -369,7 +369,7 @@ destinatario: el `SMSC` retiene el mensaje hasta que confirma que el destino est
 disponible, y solo entonces lo reenvía, sin que el mensaje consuma en ningún momento
 recursos del canal de tráfico de voz.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant A as Terminal emisor
     participant RAN as Red de acceso radio de origen
@@ -399,7 +399,7 @@ sequenceDiagram
     de relleno entre caracteres, lo que permite
 
     $$
-    N_{7\ \text{bits}} = \frac{1120}{7} = 160\ \text{caracteres}
+    N_{7\ \text{bits}} = \frac{1120}{7} = 160\ \text{caracteres}.
     $$
 
     Si el mismo cuerpo se codificara con un alfabeto de 8 bits por carácter, como exige
@@ -407,7 +407,7 @@ sequenceDiagram
     disponibles se reduce a
 
     $$
-    N_{8\ \text{bits}} = \frac{1120}{8} = 140\ \text{caracteres}
+    N_{8\ \text{bits}} = \frac{1120}{8} = 140\ \text{caracteres}.
     $$
 
     La diferencia de 20 caracteres, un 14 % más de capacidad con el alfabeto de 7 bits,
@@ -565,7 +565,7 @@ el [subsistema IP multimedia](../03_ims_y_voz/section_1_ims.md), capaz de ofrece
 mismo catálogo de servicios con independencia de la tecnología de acceso concreta que
 emplee el terminal en cada momento.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph Fijo[Acceso fijo]
         CPE[Equipo del cliente] --> RedFija[Red de acceso fija]
@@ -626,13 +626,13 @@ manual.
     estándar tolera una indisponibilidad máxima de
 
     $$
-    T_{99{,}5\%} = (1 - 0{,}995) \times 43\,200 = 216\ \text{minutos}
+    T_{99{,}5\%} = (1 - 0{,}995) \times 43\,200 = 216\ \text{minutos},
     $$
 
     es decir, 3 horas y 36 minutos al mes, mientras que el nivel prémium tolera
 
     $$
-    T_{99{,}95\%} = (1 - 0{,}9995) \times 43\,200 = 21{,}6\ \text{minutos}
+    T_{99{,}95\%} = (1 - 0{,}9995) \times 43\,200 = 21{,}6\ \text{minutos}.
     $$
 
     La diferencia entre ambos niveles es de un orden de magnitud, diez veces menos
@@ -662,7 +662,7 @@ priorizan zonas geográficas. Nuevas tecnologías (`5G`, fibra óptica), la regu
 precios o los cambios en el comportamiento del usuario pueden alterar esta ecuación,
 requiriendo una revisión del portafolio y de las inversiones de red.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Demanda[Segmentacion de la demanda] --> Catalogo[Catalogo comercial de servicios]
     Catalogo --> Requisitos[Requisitos de calidad por servicio]

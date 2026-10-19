@@ -51,7 +51,7 @@ existe un mecanismo explícito, ya sea una estación coordinadora o un testigo q
 entre los terminales, que determina en cada instante quién tiene derecho a transmitir,
 de modo que las colisiones quedan excluidas por construcción.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     ACC["Técnicas de acceso al medio"] --> ALE["Acceso aleatorio<br/>(por contienda)"]
     ACC --> CTRL["Acceso controlado"]
@@ -99,7 +99,7 @@ intervalo, de duración $2 t_{tx}$, se denomina **periodo vulnerable** del paque
 margen de tiempo durante el cual la aparición de un segundo transmisor arruina la
 transmisión en curso.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant A as Terminal A
     participant M as Medio compartido
@@ -156,11 +156,11 @@ mide $2t_{tx}$, es decir, dos periodos de transmisión, y para Aloha ranurado mi
 $t_{tx}$, un único periodo, lo que conduce a las expresiones clásicas:
 
 $$
-S_{\text{puro}} = G \, e^{-2G}
+S_{\text{puro}} = G \, e^{-2G},
 $$
 
 $$
-S_{\text{ranurado}} = G \, e^{-G}
+S_{\text{ranurado}} = G \, e^{-G}.
 $$
 
 En ambas expresiones, $G$ es la carga ofrecida normalizada definida arriba y $S$ es el
@@ -170,35 +170,6 @@ variante: $G = 0{,}5$ para Aloha puro, con un _throughput_ máximo de $S_{\text{
 1/(2e) \approx 0{,}184$, y $G = 1$ para Aloha ranurado, con $S_{\text{máx}} = 1/e
 \approx 0{,}368$. Aloha ranurado duplica exactamente el _throughput_ máximo de Aloha
 puro, consecuencia directa de que su periodo vulnerable mide la mitad.
-
-```python linenums="1"
-import numpy as np
-
-
-def throughput_aloha(
-    carga_ofrecida: np.ndarray, ranurado: bool
-) -> np.ndarray:
-    """Calcula el throughput normalizado de un canal Aloha.
-
-    Args:
-        carga_ofrecida: Valores de carga ofrecida normalizada, G.
-        ranurado: Si es True, aplica el modelo de Aloha ranurado. Si es
-            False, aplica el modelo de Aloha puro.
-
-    Returns:
-        Throughput normalizado, S, para cada valor de carga ofrecida.
-    """
-    exponente = -carga_ofrecida if ranurado else -2 * carga_ofrecida
-    return carga_ofrecida * np.exp(exponente)
-
-
-carga = np.linspace(0, 3, 301)
-s_puro = throughput_aloha(carga, ranurado=False)
-s_ranurado = throughput_aloha(carga, ranurado=True)
-# El maximo de cada curva se alcanza en G=0.5 (puro) y G=1 (ranurado)
-g_optimo_puro = carga[np.argmax(s_puro)]
-g_optimo_ranurado = carga[np.argmax(s_ranurado)]
-```
 
 Ambas curvas comparten la misma forma cualitativa: con carga ofrecida baja, apenas hay
 competencia por el canal y el _throughput_ crece casi linealmente con la carga, porque
@@ -314,7 +285,7 @@ tiempo de propagación entre los dos terminales más alejados y el tiempo de tra
 de un paquete, $a = t_{prop}/t_{tx}$:
 
 $$
-S_{\text{máx}} \approx \frac{1}{1 + 6{,}44\,a}
+S_{\text{máx}} \approx \frac{1}{1 + 6{,}44\,a}.
 $$
 
 Esta expresión confirma, de forma cuantitativa, que cuanto mayor es el tiempo de
@@ -393,7 +364,7 @@ independiente entre terminales rompe la sincronía que, de otro modo, llevaría 
 mismos terminales a colisionar de nuevo en el instante inmediatamente posterior a la
 colisión anterior.
 
-```mermaid linenums="1"
+```mermaid
 stateDiagram-v2
     [*] --> Escucha
     Escucha --> Transmision: medio detectado libre
@@ -443,7 +414,7 @@ reservan y transmiten un paquete en cada ciclo y con un tiempo de propagación
 despreciable, es:
 
 $$
-S_{\text{máx}} = \frac{t_{tx}}{t_{tx} + t_{mr}}
+S_{\text{máx}} = \frac{t_{tx}}{t_{tx} + t_{mr}},
 $$
 
 donde $t_{tx}$ es el tiempo de transmisión de un paquete de datos y $t_{mr}$ es la
@@ -474,7 +445,7 @@ rendimiento máximo del ciclo completo, de nuevo con todos los terminales transm
 un paquete y tiempo de propagación despreciable, resulta:
 
 $$
-S_{\text{máx}} = \frac{t_{tx}}{t_{tx} + 2{,}72 \, t_{mr}}
+S_{\text{máx}} = \frac{t_{tx}}{t_{tx} + 2{,}72 \, t_{mr}},
 $$
 
 con $t_{tx}$ y $t_{mr}$ definidos igual que en el protocolo de reserva básico. El factor
@@ -531,7 +502,7 @@ confirmaciones asociadas, el rendimiento máximo, para $N$ terminales que transm
 uno un paquete de tiempo de transmisión $t_{tx}$, resulta:
 
 $$
-S_{\text{máx}} = \frac{t_{tx}}{t_{tx} + \tau}
+S_{\text{máx}} = \frac{t_{tx}}{t_{tx} + \tau}.
 $$
 
 Cuanto menor es el tiempo de tránsito en relación con el tiempo de transmisión de datos,
@@ -559,7 +530,7 @@ físicas entre la estación primaria y los terminales son reducidas.
 
     $$
     \tau = t_{\text{sondeo}} + t_{\text{ACK}} + 3\,t_{prop}
-    \approx 9{,}6 + 6{,}4 + 0{,}01 = 16{,}01 \text{ ms}
+    \approx 9{,}6 + 6{,}4 + 0{,}01 = 16{,}01 \text{ ms},
     $$
 
     y el rendimiento máximo resulta
@@ -580,7 +551,7 @@ límite de tiempo o de número de paquetes por posesión. Cuando un terminal ter
 turno de transmisión, cede el testigo al siguiente terminal del anillo lógico, que
 repite el mismo procedimiento.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant T1 as Terminal 1
     participant T2 as Terminal 2
@@ -639,7 +610,7 @@ Para $N$ terminales que transmiten cada uno un paquete de tiempo de transmisión
 por ciclo completo del testigo, el rendimiento máximo resulta:
 
 $$
-S_{\text{máx}} = \frac{N \, t_{tx}}{N \, t_{tx} + \tau}
+S_{\text{máx}} = \frac{N \, t_{tx}}{N \, t_{tx} + \tau},
 $$
 
 expresión equivalente, definiendo la latencia del anillo normalizada $a' = \tau /

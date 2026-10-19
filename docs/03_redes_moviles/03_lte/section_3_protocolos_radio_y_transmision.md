@@ -27,7 +27,7 @@ entre ambos: el plano de control añade una capa adicional, el control de recurs
 que no existe en el plano de usuario y que configura el resto de capas inferiores de
 ambos planos.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TB
     subgraph PU["Plano de usuario"]
         direction TB
@@ -224,7 +224,7 @@ el canal de aviso de llamada para detectar si la red intenta localizarlo. En
 `RRC_CONNECTED`, el terminal informa a la red de la asignación de recursos que necesita
 y de la celda en la que se encuentra, en preparación de un eventual traspaso.
 
-```mermaid linenums="1"
+```mermaid
 stateDiagram-v2
     [*] --> RRC_IDLE
     RRC_IDLE --> RRC_CONNECTED: establecimiento de conexion RRC
@@ -257,7 +257,7 @@ este finalmente hacia un **canal físico** en la capa física. La información d
 y el aviso de llamada, que no dependen de un portador dedicado a un terminal concreto,
 se mapean directamente a canales lógicos comunes.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     BCCH["BCCH (logico)"] --> BCH["BCH (transporte)"] --> PBCH_F["PBCH (fisico)"]
     PCCH["PCCH (logico)"] --> PCH["PCH (transporte)"] --> PDSCH_F["PDSCH (fisico)"]
@@ -342,14 +342,14 @@ requisitos de calidad de servicio de cada portador radio configurado.
     entregan en esa subtrama
 
     $$
-    b_A = 30 \times 168 \times 4{,}5 = 22\,680\ \text{bit}
+    b_A = 30 \times 168 \times 4{,}5 = 22\,680\ \text{bit}.
     $$
 
     Para el terminal B, cada elemento transporta $\bar{B}\, R = 2 \times 0{,}5 =
     1\ \text{bit}$, de modo que sus 20 bloques entregan
 
     $$
-    b_B = 20 \times 168 \times 1 = 3\,360\ \text{bit}
+    b_B = 20 \times 168 \times 1 = 3\,360\ \text{bit}.
     $$
 
     Si esa asignación se mantuviera de forma sostenida, el terminal A alcanzaría un
@@ -372,7 +372,7 @@ equidad de Jain** cuantifica ese reparto con un único número, sin necesidad de
 la distribución completa de tasas:
 
 $$
-J(x_1, \dots, x_n) = \frac{\left( \sum_{i=1}^{n} x_i \right)^2}{n \sum_{i=1}^{n} x_i^2}
+J(x_1, \dots, x_n) = \frac{\left( \sum_{i=1}^{n} x_i \right)^2}{n \sum_{i=1}^{n} x_i^2},
 $$
 
 donde $x_i$ es la magnitud repartida entre el usuario $i$, por ejemplo el _throughput_
@@ -409,7 +409,7 @@ estricto.
 
     $$
     J = \frac{(22{,}68 + 3{,}36)^2}{2 \cdot (22{,}68^2 + 3{,}36^2)} =
-    \frac{26{,}04^2}{2 \times 526{,}12} = 0{,}645
+    \frac{26{,}04^2}{2 \times 526{,}12} = 0{,}645.
     $$
 
     Un reparto alternativo que mantuviera el mismo _throughput_ agregado de
@@ -720,7 +720,7 @@ comunican de forma directa, el traspaso sobre `S1` señaliza a través de las en
 gestión de movilidad de origen y de destino, precisamente porque no existe entre las
 estaciones base ningún enlace directo sobre el que negociar el traspaso.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant UE as Terminal
     participant ENBO as eNodeB origen

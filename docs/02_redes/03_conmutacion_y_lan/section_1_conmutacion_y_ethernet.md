@@ -42,7 +42,7 @@ deciden por qué camino avanza cada unidad de información. Se distinguen dos pa
 principales según cómo se reserva la capacidad del enlace para una comunicación: la
 conmutación de circuitos y la conmutación de paquetes.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     CONM["Conmutación"] --> CIRC["Conmutación de circuitos<br/>camino dedicado"]
     CONM --> PAQ["Conmutación de paquetes<br/>paquetes independientes"]
@@ -182,7 +182,7 @@ segmento de la red para una velocidad de transmisión dada.
 
     $$
     L_{\text{máx}} = t_{prop} \cdot v = 25{,}6 \times 10^{-6} \cdot 2 \times 10^8 =
-    5120 \text{ m}
+    5120 \text{ m}.
     $$
 
     Este valor teórico no tiene en cuenta los retardos adicionales que introducen los
@@ -241,7 +241,7 @@ capacidad agregada asciende a 200 Mbit/s a costa de reducir el alcance a 100 km.
 empleó sobre todo como red troncal de campus, papel que Ethernet sobre fibra absorbió
 después.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     E1["Estacion 1"] -->|testigo| E2["Estacion 2"]
     E2 -->|testigo| E3["Estacion 3"]
@@ -299,7 +299,7 @@ dirección MAC de destino: si la conoce, reenvía la trama únicamente por ese p
 no la conoce todavía, o si la dirección de destino es de difusión o de multidifusión, la
 reenvía por todos los puertos salvo por el que la recibió.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant A as Estacion A (puerto 1)
     participant SW as Conmutador
@@ -404,7 +404,7 @@ que deba gestionar el tráfico de varias redes virtuales a la vez, porque es pre
 en esos enlaces donde conviven tramas de redes virtuales distintas que deben
 distinguirse al llegar al otro extremo.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     subgraph SW1["Conmutador 1"]
         P1["Puerto acceso, VLAN 10"]
@@ -457,11 +457,7 @@ difusión.
 
 El límite de 4094 identificadores de `802.1Q` resulta insuficiente para segmentar los
 inquilinos de un centro de datos a gran escala o para extender una `VLAN` más allá de
-los límites de una única red física. La extensión de esa segmentación mediante una red
-superpuesta que encapsula la trama Ethernet completa, `VXLAN`, se trata en
-[virtualización de almacenamiento y de red](../../07_virtualizacion/01_virtualizacion/section_1_tipos_de_virtualizacion.md#virtualizacion-de-almacenamiento-y-de-red),
-en el contexto de la interconexión de máquinas virtuales entre las que tiene sentido
-práctico esa extensión.
+los límites de una única red física.
 
 El acceso físico que conecta al abonado con la red del operador, situado por debajo de
 la conmutación y la segmentación lógica que ocupan este capítulo, se retoma en

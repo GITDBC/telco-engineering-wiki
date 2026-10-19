@@ -31,7 +31,7 @@ antena en al menos uno de los dos extremos del enlace, y se reserva el nombre de
 extremo, que es el caso particular sobre el que se construyen los modelos de canal y de
 modulación de los capítulos anteriores.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     subgraph SISO["SISO"]
         direction LR
@@ -85,7 +85,7 @@ vector de señales recibidas $\mathbf{y}$, de dimensión $N_R \times 1$, se rela
 el vector de señales transmitidas $\mathbf{x}$, de dimensión $N_T \times 1$, mediante
 
 $$
-\mathbf{y} = \mathbf{H}\, \mathbf{x} + \mathbf{n}
+\mathbf{y} = \mathbf{H}\, \mathbf{x} + \mathbf{n},
 $$
 
 donde $\mathbf{n}$ es el vector de ruido en recepción, también de dimensión $N_R \times
@@ -98,7 +98,7 @@ columna $j$ recoge cómo se reparte la señal de la antena transmisora $j$ entre
 antenas receptoras. El número total de subcanales, y por tanto el número de elementos de
 $\mathbf{H}$, es $N_T \times N_R$.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     X1["x1"] -->|"h11"| Y1["y1"]
     X1 -->|"h21"| Y2["y2"]
@@ -152,7 +152,7 @@ $\bar{\gamma}$ y se combinan de forma que la relación señal-ruido resultante e
 de las relaciones señal-ruido individuales, la relación señal-ruido combinada promedia a
 
 $$
-\bar{\gamma}_{\text{comb}} = \sum_{i=1}^{N_R} \bar{\gamma}_i = N_R\, \bar{\gamma}
+\bar{\gamma}_{\text{comb}} = \sum_{i=1}^{N_R} \bar{\gamma}_i = N_R\, \bar{\gamma},
 $$
 
 de modo que la ganancia de array, expresada como el cociente entre la relación
@@ -171,7 +171,7 @@ ganancia de array propiamente dicha.
     resulta
 
     $$
-    \bar{\gamma}_{\text{comb}} = 4 \times 3{,}16 \approx 12{,}64
+    \bar{\gamma}_{\text{comb}} = 4 \times 3{,}16 \approx 12{,}64,
     $$
 
     equivalente a $10 \log_{10}(12{,}64) \approx 11{,}0\ \text{dB}$. La ganancia de
@@ -202,7 +202,7 @@ desvanecimiento, decrece de forma proporcional a la potencia $-d$ de esa relaci�
 relaciones señal-ruido suficientemente altas,
 
 $$
-P_b \sim \frac{1}{\bar{\gamma}^{\,d}}
+P_b \sim \frac{1}{\bar{\gamma}^{\,d}}.
 $$
 
 Esta relación de proporcionalidad es asintótica, válida en el régimen de relación
@@ -242,7 +242,7 @@ independientes que pueden separarse en recepción, denominado $N_S$, está limit
 menor de los dos números de antenas,
 
 $$
-N_S = \min(N_T, N_R)
+N_S = \min(N_T, N_R).
 $$
 
 Aunque los flujos se interfieren entre sí en cada antena receptora, esa interferencia
@@ -277,7 +277,7 @@ combinan las $N_R$ ramas recibidas determina si se obtiene solo ganancia de dive
 también ganancia de array, y qué información del canal necesita conocer el receptor para
 llevarla a cabo.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     B1["Rama 1<br/>h1, γ1"] --> COMB{"Combinador"}
     B2["Rama 2<br/>h2, γ2"] --> COMB
@@ -321,7 +321,7 @@ de cada rama de recepción para una única antena transmisora, la combinación M
 muestra de decisión
 
 $$
-q = \mathbf{h}^{H} \mathbf{y}
+q = \mathbf{h}^{H} \mathbf{y},
 $$
 
 donde $\mathbf{h}^{H}$ es el vector fila conjugado transpuesto de $\mathbf{h}$. Esta
@@ -380,7 +380,7 @@ ortogonalidad de toda la familia. Dos símbolos consecutivos $s_1$ y $s_2$ se tr
 en dos intervalos de símbolo sobre las dos antenas siguiendo la matriz de codificación
 
 $$
-\mathbf{X} = \begin{pmatrix} s_1 & -s_2^{*} \\ s_2 & s_1^{*} \end{pmatrix}
+\mathbf{X} = \begin{pmatrix} s_1 & -s_2^{*} \\ s_2 & s_1^{*} \end{pmatrix},
 $$
 
 donde cada fila de $\mathbf{X}$ corresponde a una antena transmisora y cada columna a un
@@ -388,7 +388,7 @@ intervalo de símbolo, de modo que en el primer intervalo la antena 1 emite $s_1
 antena 2 emite $s_2$, y en el segundo intervalo la antena 1 emite $-s_2^{_}$ y la antena
 2 emite $s_1^{_}$.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant COD as Codificador espacio-temporal
     participant A1 as Antena 1
@@ -409,21 +409,21 @@ coherencia del canal, las dos señales recibidas por la antena única del recept
 
 $$
 r_1 = h_1 s_1 + h_2 s_2 + n_1, \qquad
-r_2 = -h_1 s_2^{*} + h_2 s_1^{*} + n_2
+r_2 = -h_1 s_2^{*} + h_2 s_1^{*} + n_2.
 $$
 
 El receptor forma dos combinaciones lineales de $r_1$ y del conjugado de $r_2$,
 
 $$
 \hat{s}_1 = h_1^{*} r_1 + h_2 r_2^{*}, \qquad
-\hat{s}_2 = h_2^{*} r_1 - h_1 r_2^{*}
+\hat{s}_2 = h_2^{*} r_1 - h_1 r_2^{*}.
 $$
 
 Sustituyendo las expresiones de $r_1$ y de $r_2^{*}$ en la primera combinación,
 
 $$
 \hat{s}_1 = \bigl(\lvert h_1 \rvert^{2} + \lvert h_2 \rvert^{2}\bigr)\, s_1
-+ h_1^{*} n_1 + h_2 n_2^{*}
++ h_1^{*} n_1 + h_2 n_2^{*},
 $$
 
 los términos que mezclan $s_1$ con $s_2$ se cancelan exactamente entre las dos

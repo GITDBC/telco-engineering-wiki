@@ -185,7 +185,7 @@ Un flujo `RTP` no siempre viaja sin cambios entre la fuente y el destino: dos ti
 sistemas intermedios pueden modificarlo por el camino, según si su función es adaptar el
 formato de un único flujo o combinar varios flujos en uno.
 
-```mermaid linenums="1"
+```mermaid
 graph LR
     F1[Fuente 1] --> MEZ[Mezclador]
     F2[Fuente 2] --> MEZ
@@ -382,7 +382,7 @@ propio de métodos orientados al control de una sesión de reproducción.
 | `GET_PARAMETER` | Consulta el valor de un parámetro de la sesión o de la presentación.       |
 | `SET_PARAMETER` | Fija el valor de un parámetro de la sesión o de la presentación.           |
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant C as Cliente
     participant S as Servidor de flujo

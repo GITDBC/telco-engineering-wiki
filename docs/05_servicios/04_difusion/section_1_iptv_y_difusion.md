@@ -121,7 +121,7 @@ Una plataforma de `IPTV` se organiza en un conjunto de bloques funcionales, cada
 una responsabilidad concreta dentro de la selección, la preparación, la protección, el
 control y la entrega de los contenidos.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     PROV[Funciones de gestion y de proveedor de contenido] --> PREP[Funciones de preparacion de contenido]
     PREP --> SCP[Funciones de proteccion de servicio y contenido]
@@ -328,7 +328,7 @@ a la calidad de servicio y de experiencia de esta misma área.
 Para acceder a la televisión digital existen cuatro vías de distribución, cada una con
 un estándar europeo propio y un alcance geográfico distinto.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     CONTENIDO[Centro emisor] --> TDT[Difusion terrestre DVB-T]
     CONTENIDO --> SAT[Difusion por satelite DVB-S]
@@ -392,7 +392,7 @@ televisión lineal sobre una infraestructura de acceso cuya capacidad, de otro m
 podría sostener un flujo íntegro por cada abonado conectado de forma simultánea al mismo
 canal.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     subgraph Unicast
         O1[Origen] --> A1[Usuario 1]
@@ -428,32 +428,6 @@ flowchart TD
     consumen el mismo canal en el mismo instante, lo que explica por qué ningún
     operador de `IPTV` a gran escala distribuye su programación lineal replicando un
     flujo unicast por suscriptor.
-
-    El siguiente fragmento calcula ese mismo ahorro de forma genérica, en función del
-    número de receptores simultáneos y de la tasa del canal:
-
-    ```python linenums="1"
-    def ahorro_multidifusion(
-        tasa_canal_mbps: float, num_receptores: int
-    ) -> float:
-        """Calcula el factor de ahorro de la multidifusion frente a unicast.
-
-        Args:
-            tasa_canal_mbps: Tasa binaria constante del canal, en Mbit/s.
-            num_receptores: Numero de receptores simultaneos del mismo canal.
-
-        Returns:
-            Factor de ahorro de capacidad en el tramo de red compartido.
-        """
-        capacidad_unicast_mbps = tasa_canal_mbps * num_receptores
-        capacidad_multidifusion_mbps = tasa_canal_mbps
-        return capacidad_unicast_mbps / capacidad_multidifusion_mbps
-    ```
-
-    ```plaintext title="Expected output"
-    >>> ahorro_multidifusion(tasa_canal_mbps=8, num_receptores=500)
-    500.0
-    ```
 
 Las cuatro vías de distribución descritas en esta sección no son mutuamente excluyentes:
 un mismo operador puede ofrecer simultáneamente difusión terrestre para su cobertura más

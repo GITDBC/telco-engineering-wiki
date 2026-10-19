@@ -141,7 +141,7 @@ función en los apartados que siguen.
 | Selección de segmento          | `NSSF` | Selecciona el segmento de red que atiende a cada terminal.                |
 | Función de aplicación          | `AF`   | Servicio externo o interno que solicita capacidades de red al núcleo.     |
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     UE[Equipo de usuario] --- AMF[AMF]
     AMF --- SMF[SMF]
@@ -310,7 +310,7 @@ en que una instancia se despliega por primera vez.
     segmento atiende al terminal, y el `NRF` resuelve, dentro de ese segmento ya
     decidido, qué instancia concreta de `SMF` va a gestionarlo.
 
-    ```mermaid linenums="1"
+    ```mermaid
     sequenceDiagram
         participant UE as Terminal
         participant AMF as AMF
@@ -420,7 +420,7 @@ capítulo no desarrolla.
     el resto del tiempo, ni desplegar dos infraestructuras físicas separadas para
     conseguirlo.
 
-    ```mermaid linenums="1"
+    ```mermaid
     flowchart TB
         subgraph INFRA[Infraestructura fisica compartida]
             AMF1[AMF]

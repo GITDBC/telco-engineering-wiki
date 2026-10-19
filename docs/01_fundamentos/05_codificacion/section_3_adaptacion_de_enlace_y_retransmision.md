@@ -46,7 +46,7 @@ transmitido y lo recibido: cada símbolo se ve escalado por una única ganancia 
 que varía lentamente de un símbolo a otro,
 
 $$
-r\lbrack n \rbrack = g\lbrack n \rbrack \, x\lbrack n \rbrack + w\lbrack n \rbrack
+r\lbrack n \rbrack = g\lbrack n \rbrack \, x\lbrack n \rbrack + w\lbrack n \rbrack,
 $$
 
 donde $x\lbrack n \rbrack$ es el símbolo transmitido, $g\lbrack n \rbrack$ es la
@@ -59,7 +59,7 @@ muestra recibida por su inversa,
 
 $$
 \hat{x}\lbrack n \rbrack = r\lbrack n \rbrack \, g^{-1}\lbrack n \rbrack
-= x\lbrack n \rbrack + w\lbrack n \rbrack \, g^{-1}\lbrack n \rbrack
+= x\lbrack n \rbrack + w\lbrack n \rbrack \, g^{-1}\lbrack n \rbrack,
 $$
 
 de modo que, salvo el ruido, la muestra ecualizada recupera el símbolo transmitido. El
@@ -78,7 +78,7 @@ ecualizado crece en la misma proporción y la relación señal-ruido instantáne
 desploma. Definiendo la relación señal-ruido instantánea como
 
 $$
-\gamma\lbrack n \rbrack = \bar{\gamma} \, \lvert g\lbrack n \rbrack \rvert^2
+\gamma\lbrack n \rbrack = \bar{\gamma} \, \lvert g\lbrack n \rbrack \rvert^2,
 $$
 
 donde $\bar{\gamma}$ es la relación señal-ruido media del enlace, la probabilidad de
@@ -95,7 +95,7 @@ exponencial de media $\bar{\gamma}$, promediar la expresión $P_b = Q(\sqrt{2\ga
 sobre esa distribución tiene forma cerrada,
 
 $$
-\bar{P}_b = \frac{1}{2}\left(1 - \sqrt{\frac{\bar{\gamma}}{1+\bar{\gamma}}}\right)
+\bar{P}_b = \frac{1}{2}\left(1 - \sqrt{\frac{\bar{\gamma}}{1+\bar{\gamma}}}\right),
 $$
 
 donde $\bar{P}_b$ es la probabilidad de error de bit media y $\bar{\gamma}$ la relación
@@ -113,7 +113,7 @@ profundamente, aunque sean poco frecuentes.
     error de bit es
 
     $$
-    P_b = Q\!\left(\sqrt{2 \cdot 10}\right) = Q(4{,}47) \approx 3{,}9 \cdot 10^{-6}
+    P_b = Q\!\left(\sqrt{2 \cdot 10}\right) = Q(4{,}47) \approx 3{,}9 \cdot 10^{-6}.
     $$
 
     Sobre un canal con desvanecimiento de Rayleigh y la misma relación señal-ruido
@@ -121,7 +121,7 @@ profundamente, aunque sean poco frecuentes.
 
     $$
     \bar{P}_b = \frac{1}{2}\left(1 - \sqrt{\frac{10}{11}}\right) \approx 2{,}3 \cdot
-    10^{-2}
+    10^{-2},
     $$
 
     unas cuatro órdenes de magnitud peor que sin desvanecimiento, a pesar de que la
@@ -147,7 +147,7 @@ asociado a un tamaño de constelación de la familia M-QAM descrita en
 un modo de ausencia de transmisión para la relación señal-ruido más desfavorable, en la
 que ni la constelación binaria ofrece una probabilidad de error tolerable.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     G["Estimación de la calidad del canal"] --> D{"¿Umbral superado?"}
     D -->|"Ninguno"| M0["Sin transmisión"]
@@ -169,7 +169,7 @@ Partiendo de la probabilidad de error de símbolo de una constelación M-QAM cua
 
 $$
 P_s \approx 4\left(1 - \frac{1}{\sqrt{M}}\right)
-Q\!\left(\sqrt{\frac{3 \gamma_s}{M-1}}\right)
+Q\!\left(\sqrt{\frac{3 \gamma_s}{M-1}}\right),
 $$
 
 donde $\gamma_s$ es la relación señal-ruido por símbolo y aproximando la probabilidad de
@@ -181,7 +181,7 @@ símbolo del modo de tamaño $M$,
 $$
 \gamma_{s,\text{th}}(M) = \frac{M-1}{3}
 \left\lbrack Q^{-1}\!\left(\frac{k \, \text{BER}_{\text{obj}}}{4\left(1 -
-1/\sqrt{M}\right)}\right) \right\rbrack^2
+1/\sqrt{M}\right)}\right) \right\rbrack^2,
 $$
 
 donde $Q^{-1}(\cdot)$ es la inversa de la función Q empleada en
@@ -192,48 +192,13 @@ para la misma relación señal-ruido nominal, y mantener la tasa de error objeti
 elevar los umbrales por encima del valor anterior con un margen adicional, tanto mayor
 cuanto peor es la calidad de la estimación de canal.
 
-```python linenums="1"
-import math
-from statistics import NormalDist
-
-
-def umbral_snr_simbolo(
-    tamano_constelacion: int, ber_objetivo: float
-) -> float:
-    """Calcula el umbral de SNR por símbolo de un modo M-QAM.
-
-    Args:
-        tamano_constelacion: Número de símbolos de la constelación M-QAM.
-        ber_objetivo: Tasa de error de bit objetivo del sistema.
-
-    Returns:
-        Umbral de relación señal-ruido por símbolo, en unidades lineales.
-    """
-    k = math.log2(tamano_constelacion)
-    argumento = (k * ber_objetivo) / (4 * (1 - 1 / math.sqrt(tamano_constelacion)))
-    x = NormalDist().inv_cdf(1 - argumento)
-    return (tamano_constelacion - 1) / 3 * x**2
-
-
-ber_objetivo = 1e-3
-for tamano in (4, 16, 64):
-    umbral = umbral_snr_simbolo(tamano, ber_objetivo)
-    print(f"M={tamano}: umbral = {umbral:.2f} ({10 * math.log10(umbral):.1f} dB)")
-```
-
-```plaintext title="Expected output"
-M=4: umbral = 9.55 (9.8 dB)
-M=16: umbral = 45.11 (16.5 dB)
-M=64: umbral = 179.85 (22.5 dB)
-```
-
 ???+ example "Elección de modulación que maximiza el rendimiento a una SNR dada"
 
     Un sistema dispone de tres modos de transmisión, con constelaciones de 4, 16 y 64
     símbolos, y una tasa de error objetivo $\text{BER}_{\text{obj}} = 10^{-3}$.
-    Aplicando la expresión de umbrales con estimación de canal ideal se obtienen los
-    valores de la tabla anterior: 9,8 dB para la constelación de 4 símbolos, 16,5 dB
-    para la de 16 y 22,5 dB para la de 64.
+    Aplicando la expresión de umbrales con estimación de canal ideal se obtienen
+    umbrales de $9{,}55$ unidades lineales (9,8 dB) para la constelación de 4 símbolos,
+    $45{,}11$ (16,5 dB) para la de 16 y $179{,}85$ (22,5 dB) para la de 64.
 
     El canal presenta en un instante dado una relación señal-ruido por símbolo de 15 dB
     (unas 31,6 unidades lineales). Ese valor supera el umbral de la constelación de 4
@@ -275,7 +240,7 @@ El ajuste es deliberadamente lento y de paso pequeño, porque su función es cor
 sesgo sistemático de los umbrales, no reaccionar a la variación instantánea del canal,
 que ya gestiona la selección de modo descrita en la sección anterior.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     EST["Estimación de la SNR instantánea"] --> SEL["Selección del modo de<br/>transmisión según umbrales"]
     SEL --> TX["Transmisión del bloque"]
@@ -318,14 +283,14 @@ y de las medidas anteriores.
     $\lambda = c/f_c \approx 0{,}0857$ m. El desplazamiento Doppler máximo es
 
     $$
-    f_{d,\text{máx}} = \frac{v}{\lambda} \approx 972\ \text{Hz}
+    f_{d,\text{máx}} = \frac{v}{\lambda} \approx 972\ \text{Hz},
     $$
 
     y el tiempo de coherencia correspondiente, aplicando la relación de orden de
     magnitud $T_c \sim 1/f_{d,\text{máx}}$ del capítulo de desvanecimiento, resulta
 
     $$
-    T_c \sim \frac{1}{972\ \text{Hz}} \approx 1{,}0\ \text{ms}
+    T_c \sim \frac{1}{972\ \text{Hz}} \approx 1{,}0\ \text{ms}.
     $$
 
     Si el bucle de adaptación, sumando el tiempo de procesado en el receptor, la
@@ -409,7 +374,7 @@ aspecto que se trata en los capítulos dedicados a cada tecnología de red móvi
 interesa aquí es únicamente la función que cumple, cerrar el bucle de adaptación
 proporcionando al transmisor la información que solo el receptor puede medir.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     RX["Receptor: mide SNR<br/>y calcula el indicador"] -->|"Canal de<br/>retroalimentación"| TX["Transmisor: consulta<br/>la tabla de correspondencia"]
     TX --> SEL["Selecciona esquema de<br/>modulación y codificación"]
@@ -468,7 +433,7 @@ esquema híbrido de la sección siguiente.
 
     $$
     E\lbrack N \rbrack = \sum_{j=1}^{N_{\text{máx}}-1} j \, \text{PER}^{j-1}
-    (1-\text{PER}) + N_{\text{máx}} \, \text{PER}^{N_{\text{máx}}-1}
+    (1-\text{PER}) + N_{\text{máx}} \, \text{PER}^{N_{\text{máx}}-1},
     $$
 
     donde el primer término suma los casos en que el bloque se entrega en el intento
@@ -476,7 +441,7 @@ esquema híbrido de la sección siguiente.
     el último intento tiene garantía de éxito. Sustituyendo los valores numéricos,
 
     $$
-    E\lbrack N \rbrack = 1{,}111
+    E\lbrack N \rbrack = 1{,}111.
     $$
 
     Cada retransmisión ocupa un intervalo de canal adicional sin aportar información
@@ -484,7 +449,7 @@ esquema híbrido de la sección siguiente.
     ocupado es el inverso de $E\lbrack N \rbrack$,
 
     $$
-    R_{\text{ef}} = \frac{1}{E\lbrack N \rbrack} \approx 0{,}90
+    R_{\text{ef}} = \frac{1}{E\lbrack N \rbrack} \approx 0{,}90.
     $$
 
     Con una probabilidad de error de bloque del 10 %, el protocolo ARQ básico consume
@@ -509,7 +474,7 @@ de codificación efectiva de forma progresiva a medida que se acumulan intentos,
 permite al receptor aprovechar la información suave de las versiones anteriores en lugar
 de descartarlas al recibir una nueva.
 
-```mermaid linenums="1"
+```mermaid
 sequenceDiagram
     participant Transmisor
     participant Receptor
@@ -535,7 +500,7 @@ máxima verosimilitud cuya relación señal-ruido efectiva es la suma de las rel
 señal-ruido individuales,
 
 $$
-\gamma_{\text{ef}} = \sum_{i=1}^{N} \gamma_i
+\gamma_{\text{ef}} = \sum_{i=1}^{N} \gamma_i,
 $$
 
 donde $\gamma_i$ es la relación señal-ruido de la versión $i$-ésima. Esa suma es la

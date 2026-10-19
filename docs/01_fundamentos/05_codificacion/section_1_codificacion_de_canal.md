@@ -75,7 +75,7 @@ al cierre del capítulo.
 Ante un error detectado, el sistema dispone de dos estrategias posibles, que pueden
 combinarse pero responden a necesidades distintas.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     E["Error detectado en el receptor"] --> D{"¿Existe canal de<br/>retorno con poco retardo?"}
     D -->|Sí| ARQ["Retransmisión<br/>ARQ"]
@@ -121,7 +121,7 @@ La **tasa de codificación**, denotada $R$, mide qué fracción de cada palabra 
 transporta información,
 
 $$
-R = \frac{k}{n}
+R = \frac{k}{n},
 $$
 
 y cumple siempre $R \leq 1$, con igualdad solo en el caso trivial sin redundancia. Un
@@ -162,7 +162,7 @@ secuencia recibida no puede coincidir con otra palabra válida, porque cualquier
 palabras válidas está separado por al menos $d$ posiciones.
 
 $$
-e_{\text{detecta}} = d - 1
+e_{\text{detecta}} = d - 1,
 $$
 
 donde $e_{\text{detecta}}$ es el número máximo de errores que el código garantiza
@@ -171,7 +171,7 @@ poder decidir sin ambigüedad cuál era la palabra correcta más próxima a la r
 condición es
 
 $$
-e_{\text{corrige}} = \left\lfloor \frac{d - 1}{2} \right\rfloor
+e_{\text{corrige}} = \left\lfloor \frac{d - 1}{2} \right\rfloor,
 $$
 
 donde $e_{\text{corrige}}$ es el número máximo de errores que el código garantiza
@@ -204,7 +204,7 @@ en función del tamaño del alfabeto de código, mide la fracción de informaci�
 bit transmitido,
 
 $$
-\eta = \frac{k}{n} = \frac{\log_2 \lvert C \rvert}{n}
+\eta = \frac{k}{n} = \frac{\log_2 \lvert C \rvert}{n},
 $$
 
 donde $\lvert C \rvert$ es el número de palabras válidas del código, igual a $2^k$
@@ -224,7 +224,7 @@ corregir se obtiene sumando la probabilidad de todas las combinaciones de más d
 errores sobre $n$ posiciones,
 
 $$
-\text{PER} = \sum_{j = e+1}^{n} \binom{n}{j} \, \text{BER}^{j} \, (1 - \text{BER})^{n-j}
+\text{PER} = \sum_{j = e+1}^{n} \binom{n}{j} \, \text{BER}^{j} \, (1 - \text{BER})^{n-j},
 $$
 
 donde $\text{PER}$ es la probabilidad de error de palabra tras la decodificación,
@@ -244,7 +244,7 @@ codificar para cuantificar la ganancia que aporta el código.
 
     $$
     \text{PER} = \sum_{j=2}^{7} \binom{7}{j} (10^{-2})^{j} (1 - 10^{-2})^{7-j}
-    \approx 2{,}03 \cdot 10^{-3}
+    \approx 2{,}03 \cdot 10^{-3}.
     $$
 
     Sin codificar, la probabilidad de que ese mismo bloque de $7$ bits contuviera al
@@ -298,7 +298,7 @@ dimensiones $k \times n$, produce cada palabra de código a partir de su mensaje
 un producto matricial en aritmética módulo dos,
 
 $$
-\mathbf{c} = \mathbf{m} \, \mathbf{G}
+\mathbf{c} = \mathbf{m} \, \mathbf{G},
 $$
 
 donde $\mathbf{m}$ es el vector fila de $k$ bits del mensaje y $\mathbf{c}$ la palabra
@@ -306,7 +306,7 @@ de código de $n$ bits resultante. Cuando el código es **sistemático**, la mat
 generadora se escribe en la forma
 
 $$
-\mathbf{G} = \lbrack \mathbf{I}_k \mid \mathbf{P} \rbrack
+\mathbf{G} = \lbrack \mathbf{I}_k \mid \mathbf{P} \rbrack,
 $$
 
 donde $\mathbf{I}_k$ es la matriz identidad de orden $k$ y $\mathbf{P}$ es una matriz de
@@ -320,13 +320,13 @@ A partir de $\mathbf{P}$ se construye la **matriz de comprobación** $\mathbf{H}
 dimensiones $(n-k) \times n$,
 
 $$
-\mathbf{H} = \lbrack \mathbf{P}^{T} \mid \mathbf{I}_{n-k} \rbrack
+\mathbf{H} = \lbrack \mathbf{P}^{T} \mid \mathbf{I}_{n-k} \rbrack,
 $$
 
 que cumple, para toda palabra de código válida, la relación fundamental
 
 $$
-\mathbf{c} \, \mathbf{H}^{T} = \mathbf{0}
+\mathbf{c} \, \mathbf{H}^{T} = \mathbf{0}.
 $$
 
 Esta identidad es la que permite al decodificador comprobar la validez de una palabra
@@ -338,7 +338,7 @@ recibida sin necesidad de compararla una a una con las $2^k$ palabras del códig
     $n=6$ bits mediante la matriz de paridad
 
     $$
-    \mathbf{P} = \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix}
+    \mathbf{P} = \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix},
     $$
 
     de modo que la matriz generadora resulta
@@ -349,14 +349,14 @@ recibida sin necesidad de compararla una a una con las $2^k$ palabras del códig
     1 & 0 & 0 & 1 & 1 & 0 \\
     0 & 1 & 0 & 0 & 1 & 1 \\
     0 & 0 & 1 & 1 & 0 & 1
-    \end{pmatrix}
+    \end{pmatrix}.
     $$
 
     Para codificar el mensaje $\mathbf{m} = (1, 0, 1)$ se suman en módulo dos la primera
     y la tercera fila de $\mathbf{G}$,
 
     $$
-    \mathbf{c} = (1,0,0,1,1,0) \oplus (0,0,1,1,0,1) = (1,0,1,0,1,1)
+    \mathbf{c} = (1,0,0,1,1,0) \oplus (0,0,1,1,0,1) = (1,0,1,0,1,1),
     $$
 
     donde $\oplus$ denota la suma bit a bit sin acarreo. Recorriendo los ocho mensajes
@@ -371,7 +371,7 @@ recibida sin necesidad de compararla una a una con las $2^k$ palabras del códig
     1 & 0 & 1 & 1 & 0 & 0 \\
     1 & 1 & 0 & 0 & 1 & 0 \\
     0 & 1 & 1 & 0 & 0 & 1
-    \end{pmatrix}
+    \end{pmatrix},
     $$
 
     y se verifica que $\mathbf{c} \, \mathbf{H}^{T} = (0,0,0)$ para la palabra
@@ -383,7 +383,7 @@ El **síndrome** de un vector recibido $\mathbf{r}$ es el resultado de aplicarle
 matriz de comprobación,
 
 $$
-\mathbf{s} = \mathbf{r} \, \mathbf{H}^{T}
+\mathbf{s} = \mathbf{r} \, \mathbf{H}^{T}.
 $$
 
 Si $\mathbf{r}$ es una palabra válida, el síndrome es el vector nulo, de acuerdo con la
@@ -394,7 +394,7 @@ error,
 $$
 \mathbf{s} = (\mathbf{c} \oplus \mathbf{e}) \, \mathbf{H}^{T}
 = \mathbf{c} \, \mathbf{H}^{T} \oplus \mathbf{e} \, \mathbf{H}^{T}
-= \mathbf{e} \, \mathbf{H}^{T}
+= \mathbf{e} \, \mathbf{H}^{T},
 $$
 
 porque el primer término se anula al ser $\mathbf{c}$ una palabra válida. Esta propiedad
@@ -418,67 +418,6 @@ con esa tabla para identificar y corregir el error.
     decodificador declara el error en la segunda posición y corrige el bit invertido,
     recuperando $\mathbf{c} = (1,0,1,0,1,1)$ y, tras descartar los tres bits de
     redundancia, el mensaje original $\mathbf{m} = (1,0,1)$.
-
-    ```python linenums="1"
-    def codifica(mensaje: list[int], generadora: list[list[int]]) -> list[int]:
-        """Codifica un mensaje multiplicándolo por la matriz generadora en módulo 2.
-
-        Args:
-            mensaje: Bits del mensaje, de longitud k.
-            generadora: Matriz generadora de dimensiones k por n.
-
-        Returns:
-            Palabra de código de longitud n.
-        """
-        n = len(generadora[0])
-        palabra = [0] * n
-        for fila, bit in enumerate(mensaje):
-            if bit:
-                for columna in range(n):
-                    palabra[columna] ^= generadora[fila][columna]
-        return palabra
-
-
-    def sindrome(recibido: list[int], comprobacion: list[list[int]]) -> list[int]:
-        """Calcula el síndrome de un vector recibido.
-
-        Args:
-            recibido: Vector recibido, de longitud n.
-            comprobacion: Matriz de comprobación de dimensiones (n-k) por n.
-
-        Returns:
-            Vector síndrome de longitud n-k.
-        """
-        return [
-            sum(fila[j] & recibido[j] for j in range(len(recibido))) % 2
-            for fila in comprobacion
-        ]
-
-
-    # Matrices del código (6,3) sistemático con G = [I_3 | P]
-    G = [
-        [1, 0, 0, 1, 1, 0],
-        [0, 1, 0, 0, 1, 1],
-        [0, 0, 1, 1, 0, 1],
-    ]
-    H = [
-        [1, 0, 1, 1, 0, 0],
-        [1, 1, 0, 0, 1, 0],
-        [0, 1, 1, 0, 0, 1],
-    ]
-
-    palabra = codifica([1, 0, 1], G)
-    recibido = [palabra[i] ^ (1 if i == 1 else 0) for i in range(6)]
-    print(f"Palabra transmitida: {palabra}")
-    print(f"Vector recibido:     {recibido}")
-    print(f"Síndrome:            {sindrome(recibido, H)}")
-    ```
-
-    ```plaintext title="Expected output"
-    Palabra transmitida: [1, 0, 1, 0, 1, 1]
-    Vector recibido:     [1, 1, 1, 0, 1, 1]
-    Síndrome:            [0, 1, 1]
-    ```
 
 Cuando el número de columnas de $\mathbf{H}$ que suman el vector nulo se conoce, ese
 número mínimo de columnas coincide con la distancia mínima del código, resultado
@@ -513,7 +452,7 @@ posibles de tres bits repartidas entre sus siete posiciones.
     $$
     \mathbf{P} = \begin{pmatrix}
     1 & 1 & 0 \\ 1 & 0 & 1 \\ 0 & 1 & 1 \\ 1 & 1 & 1
-    \end{pmatrix}
+    \end{pmatrix}.
     $$
 
     Para el mensaje $\mathbf{m} = (1,0,1,1)$ la palabra de código resulta
@@ -544,7 +483,7 @@ dentro del propio código. La codificación de un mensaje $m(x)$ es entonces un 
 producto polinómico,
 
 $$
-c(x) = m(x) \cdot g(x)
+c(x) = m(x) \cdot g(x),
 $$
 
 donde $c(x)$ es el polinomio asociado a la palabra de código, de grado menor que $n$. El
@@ -564,7 +503,7 @@ corresponde a tomar $m(x) = 1$, el mensaje más simple posible distinto del nulo
     $c(x) = m(x) \cdot (x+1)$ se obtiene
 
     $$
-    C(3,2) = \lbrace 000,\ 011,\ 110,\ 101 \rbrace
+    C(3,2) = \lbrace 000,\ 011,\ 110,\ 101 \rbrace,
     $$
 
     correspondientes a los mensajes $00$, $01$, $10$ y $11$ respectivamente. Cualquier
@@ -614,7 +553,7 @@ longitud de la ráfaga. Como $g(x)$ no puede dividir a un polinomio de grado men
 suyo salvo que ese polinomio sea nulo, toda ráfaga de longitud
 
 $$
-L \leq n - k
+L \leq n - k,
 $$
 
 se detecta sin excepción, porque el grado de $d(x)$ queda entonces por debajo del grado
@@ -634,7 +573,7 @@ pequeña frente al total.
 
     $$
     1101 \oplus 1011 = 0110, \quad 1100 \oplus 1011 = 0111, \quad
-    1110 \oplus 1011 = 0101, \quad 1010 \oplus 1011 = 0001
+    1110 \oplus 1011 = 0101, \quad 1010 \oplus 1011 = 0001,
     $$
 
     donde cada paso alinea el generador con el bit más significativo aún activo del
@@ -642,39 +581,6 @@ pequeña frente al total.
     final de tres bits es $001$, que constituyen la redundancia. La palabra transmitida
     es entonces $1101001$, y dividir esta palabra completa entre $g(x)$ produce resto
     nulo, confirmando que es múltiplo exacto del generador.
-
-    ```python linenums="1"
-    def resto_crc(mensaje: list[int], generador: list[int]) -> list[int]:
-        """Calcula el resto de la división modulo 2 usada en la CRC.
-
-        Args:
-            mensaje: Bits del mensaje, bit mas significativo primero.
-            generador: Coeficientes del polinomio generador, bit mas
-                significativo primero.
-
-        Returns:
-            Bits de redundancia, en igual numero que el grado del generador.
-        """
-        grado = len(generador) - 1
-        registro = mensaje + [0] * grado
-        for posicion in range(len(mensaje)):
-            if registro[posicion] == 1:
-                for desplazamiento in range(len(generador)):
-                    registro[posicion + desplazamiento] ^= generador[desplazamiento]
-        return registro[-grado:]
-
-
-    mensaje = [1, 1, 0, 1]
-    generador = [1, 0, 1, 1]
-    redundancia = resto_crc(mensaje, generador)
-    print(f"Bits de redundancia: {redundancia}")
-    print(f"Palabra código transmitida: {mensaje + redundancia}")
-    ```
-
-    ```plaintext title="Expected output"
-    Bits de redundancia: [0, 0, 1]
-    Palabra código transmitida: [1, 1, 0, 1, 0, 0, 1]
-    ```
 
 Un generador de referencia habitual en implementaciones reales es $g(x) = x^{16} +
 x^{15} + x^2 + 1$, que factoriza como $(x+1)(x^{15}+x+1)$: el factor $(x+1)$ garantiza
@@ -733,7 +639,7 @@ correspondan a posiciones distantes dentro de cada palabra de código, de forma 
 ráfaga del canal, al deshacerse el entrelazado en recepción, se reparte entre varias
 palabras distintas como errores aislados dentro de cada una.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     M["Mensajes"] --> COD["Codificador<br/>de bloque"]
     COD --> ENT["Entrelazador"]
@@ -746,7 +652,7 @@ flowchart LR
 La técnica habitual organiza varias palabras de código en una matriz, escribiendo cada
 palabra en una fila, y transmite el contenido leyendo la matriz por columnas.
 
-```mermaid linenums="1"
+```mermaid
 flowchart TD
     subgraph Matriz["Matriz de entrelazado, R filas por C columnas"]
     direction LR
@@ -763,7 +669,7 @@ símbolos transmitidos de cada columna pertenecen ya a $R$ filas distintas. El
 al menos igual a la longitud de ráfaga que se quiere neutralizar,
 
 $$
-R \geq L
+R \geq L,
 $$
 
 de modo que la ráfaga, que el canal físico ve como contigua, llegue al decodificador de
@@ -784,42 +690,6 @@ sin necesidad de que ese código haya sido diseñado para tolerar ráfagas por s
     más de un símbolo erróneo. Cada palabra de código ve la ráfaga como un único error
     aislado, corregible por un código con distancia mínima $d_{\min} = 3$ como el del
     ejemplo de matriz generadora anterior.
-
-    ```python linenums="1"
-    def orden_de_transmision(filas: int, columnas: int) -> list[int]:
-        """Calcula el orden de transmisión de una matriz de entrelazado por columnas.
-
-        Args:
-            filas: Numero de filas de la matriz, una por palabra de código.
-            columnas: Numero de columnas de la matriz, una por símbolo de cada
-                palabra.
-
-        Returns:
-            Lista con la fila de origen de cada símbolo, en orden de
-            transmisión.
-        """
-        return [fila for columna in range(columnas) for fila in range(filas)]
-
-
-    filas, columnas = 4, 5
-    orden = orden_de_transmision(filas, columnas)
-    inicio_rafaga = 6
-    longitud_rafaga = 4
-    filas_afectadas = orden[inicio_rafaga : inicio_rafaga + longitud_rafaga]
-    print(f"Orden de transmisión (fila de origen): {orden}")
-    print(f"Filas afectadas por la ráfaga: {filas_afectadas}")
-    print(f"Filas distintas afectadas: {len(set(filas_afectadas))}")
-    ```
-
-    ```plaintext title="Expected output"
-    Orden de transmisión (fila de origen): [0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3, 0, 1, 2, 3]
-    Filas afectadas por la ráfaga: [2, 3, 0, 1]
-    Filas distintas afectadas: 4
-    ```
-
-    Las cuatro filas afectadas son todas distintas, lo que confirma que una ráfaga de
-    longitud igual al número de filas del entrelazador nunca deja más de un error por
-    palabra, independientemente de en qué columna comience.
 
 El precio del entrelazado es el retardo que introduce, porque el receptor debe esperar a
 recibir la matriz completa antes de poder deshacer el entrelazado y entregar cualquier

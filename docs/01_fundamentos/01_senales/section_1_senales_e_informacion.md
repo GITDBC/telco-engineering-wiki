@@ -40,17 +40,17 @@ Además de por su naturaleza física, una señal se clasifica según cómo se co
 amplitud. Si la amplitud puede tomar cualquier valor dentro de un rango continuo, la
 señal es continua en amplitud, y también se dice que no está cuantificada. Si, por el
 contrario, la amplitud solo puede tomar un conjunto finito de valores, la señal es
-discreta en amplitud, o cuantificada. Esta distinción resulta clave más adelante, cuando
-se describe el proceso de cuantificación dentro de la conversión analógico-digital.
+discreta en amplitud, o cuantificada.
 
 ### Comparación de medios de transmisión guiados
 
 Dentro de la naturaleza eléctrica y óptica de la tabla anterior, tres medios guiados
 concentran la práctica totalidad de los enlaces cableados: el cable de pares, el cable
-coaxial y la fibra óptica. Los tres transportan la señal confinada dentro de una
-estructura física continua entre transmisor y receptor, a diferencia del medio radio, no
-confinado, que se trata en detalle en
-[propagación y pérdidas](../02_canal/section_1_propagacion_y_perdidas.md). Se
+coaxial y la fibra óptica.
+
+Los tres transportan la señal confinada dentro de una estructura física continua entre
+transmisor y receptor, a diferencia del medio radio, no confinado, que se trata en
+detalle en [propagación y pérdidas](../02_canal/section_1_propagacion_y_perdidas.md). Se
 diferencian, sin embargo, en el ancho de banda que admiten, en cómo crece su atenuación
 con la distancia, en su inmunidad frente a interferencias electromagnéticas externas y,
 como consecuencia de ambos factores, en el alcance que pueden cubrir sin regeneración de
@@ -64,15 +64,14 @@ la señal.
 
 El cable de pares es el medio más económico y sencillo de instalar, pero su capacidad y
 su alcance son los más limitados de los tres, y su naturaleza eléctrica no apantallada
-lo expone a la diafonía entre pares adyacentes y a la interferencia de campos externos.
-El cable coaxial mejora la inmunidad frente a interferencias gracias a su conductor
-externo, que actúa como apantallado del conductor central, y admite un ancho de banda
-sustancialmente mayor, lo que explica su uso histórico en redes de área local y en
-distribución de televisión por cable. La fibra óptica transporta la señal como luz en
-lugar de como corriente eléctrica, por lo que no se ve afectada por ninguna
-interferencia electromagnética, presenta una atenuación muy inferior a la de los dos
-medios eléctricos y admite el mayor ancho de banda de los tres, a costa de un coste de
-despliegue y de terminación superior.
+lo expone a la interferencia de campos externos. El cable coaxial mejora la inmunidad
+frente a interferencias gracias a su conductor externo, que actúa como apantallado del
+conductor central, y admite un ancho de banda sustancialmente mayor, lo que explica su
+uso histórico en redes de área local y en distribución de televisión por cable. La fibra
+óptica transporta la señal como luz en lugar de como corriente eléctrica, por lo que no
+se ve afectada por ninguna interferencia electromagnética, presenta una atenuación muy
+inferior a la de los dos medios eléctricos y admite el mayor ancho de banda de los tres,
+a costa de un coste de despliegue y de terminación superior.
 
 ### Señales de tiempo continuo y de tiempo discreto
 
@@ -80,9 +79,11 @@ El tiempo es la otra variable fundamental en la caracterización de una señal. 
 señal puede tomar un valor en cualquier instante de tiempo, se trata de una señal de
 tiempo continuo. Si, en cambio, la señal solo está definida en un conjunto discreto de
 instantes, separados entre sí por un intervalo regular, se trata de una señal de tiempo
-discreto. Una señal analógica es, por tanto, continua tanto en tiempo como en amplitud,
-mientras que una señal digital resulta de discretizar ambas variables a partir de una
-señal de partida.
+discreto.
+
+Una señal analógica es, por tanto, continua tanto en tiempo como en amplitud, mientras
+que una señal digital resulta de discretizar ambas variables a partir de una señal de
+partida.
 
 ### Modelo de un sistema de telecomunicación
 
@@ -94,7 +95,7 @@ procesado en recepción, que deshace las modificaciones introducidas por el cana
 facilita la recuperación de la información, y un destino, que consume la información
 recibida.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Fuente[Fuente] --> Transmisor[Procesado en transmision]
     Transmisor --> Canal[Canal]
@@ -105,11 +106,11 @@ flowchart LR
 El conjunto formado por el procesado en transmisión, el canal y el procesado en
 recepción constituye el enlace. El procesado en transmisión persigue minimizar los
 efectos negativos que el canal introduce sobre la señal, y esos efectos son
-fundamentalmente tres. El retardo es el tiempo que la señal tarda en recorrer el canal.
-La distorsión es el cambio en la forma de la señal a medida que se propaga. El ruido son
-las señales no deseadas que se suman a la señal de información durante su recorrido.
-Sobre el canal actúa también la atenuación, que reduce la energía de la señal a medida
-que aumenta la distancia recorrida.
+fundamentalmente tres: 1) el **retardo**, es el tiempo que la señal tarda en recorrer el
+canal, 2) la **distorsión**, es el cambio en la forma de la señal a medida que se
+propaga, y 3) el **ruido**, son las señales no deseadas que se suman a la señal de
+información durante su recorrido. Sobre el canal actúa también la atenuación, que reduce
+la energía de la señal a medida que aumenta la distancia recorrida.
 
 ## Caracterización de señales analógicas
 
@@ -124,7 +125,7 @@ periodo, $T$, y su fase, $\varphi$. Para un tono sinusoidal, estas magnitudes ap
 en la expresión
 
 $$
-x(t) = A \cos(2\pi f t + \varphi)
+x(t) = A \cos(2\pi f t + \varphi),
 $$
 
 donde $A$ es la amplitud máxima que alcanza la señal, $f$ es el número de ciclos que
@@ -135,10 +136,11 @@ completo, y se relaciona con la frecuencia mediante $f = 1/T$.
 ### Ancho de banda
 
 El ancho de banda de una señal, $B_s$, es el intervalo de frecuencias donde se concentra
-la mayor parte de la potencia de la señal. Una señal cuyo espectro está centrado en el
-origen de frecuencias se denomina señal en banda base, mientras que una señal cuyo
-espectro está centrado alrededor de una frecuencia portadora se denomina señal en banda
-de paso.
+la mayor parte de la potencia de la señal.
+
+Una señal cuyo espectro está centrado en el origen de frecuencias se denomina señal en
+banda base, mientras que una señal cuyo espectro está centrado alrededor de una
+frecuencia portadora se denomina señal en banda de paso.
 
 Para delimitar de forma precisa el ancho de banda de un sistema o de un filtro se
 recurre habitualmente al criterio de caída del 70 % de la amplitud máxima, equivalente a
@@ -171,7 +173,7 @@ es la duración de cada bit, y el tiempo de símbolo, $T_{\text{simb}}$, es la d
 cada símbolo, que se relaciona con el tiempo de bit mediante
 
 $$
-T_{\text{simb}} = n \cdot T_b
+T_{\text{simb}} = n \cdot T_b,
 $$
 
 donde $n$ es el número de bits que agrupa cada símbolo.
@@ -183,7 +185,7 @@ expresa en bits por segundo (bit/s). Para una señal de dos niveles, en la que c
 símbolo coincide con un bit, el régimen binario se calcula como
 
 $$
-R = \frac{1}{T_b}
+R = \frac{1}{T_b}.
 $$
 
 Una señal multinivel permite representar más de un bit por símbolo. Si la señal utiliza
@@ -192,7 +194,7 @@ binario se obtiene a partir del régimen de símbolo, $R_{\text{simb}} =
 1/T_{\text{simb}}$, mediante
 
 $$
-R = n \cdot R_{\text{simb}}
+R = n \cdot R_{\text{simb}}.
 $$
 
 La figura siguiente compara una señal binaria, en la que cada bit se representa con dos
@@ -217,13 +219,13 @@ tratarla con las técnicas propias de las señales digitales.
 
 ### Muestreo, cuantificación y codificación
 
-La conversión de una señal analógica a una señal digital sigue una cadena de pasos: a
+La conversión de una señal analógica a una señal digital sigue una cadena de pasos. A
 partir de la señal analógica de entrada, un bloque de muestreo la convierte en una
 secuencia de muestras discretas en el tiempo, un cuantificador asigna a cada muestra uno
 de un número finito de niveles de amplitud y, por último, un codificador traduce cada
 nivel cuantificado en una secuencia de bits.
 
-```mermaid linenums="1"
+```mermaid
 flowchart LR
     Analogica[Senal analogica] --> Muestreo[Muestreo]
     Muestreo --> Cuantificador[Cuantificador]
@@ -235,34 +237,7 @@ El muestreo toma el valor de la señal analógica a intervalos regulares de tiem
 una frecuencia de muestreo suficientemente alta para que la secuencia de muestras
 conserve la información relevante de la señal original. La cuantificación sustituye cada
 muestra, que en principio puede tomar cualquier valor dentro de un rango continuo, por
-el nivel discreto más próximo de entre un conjunto finito de niveles disponibles. El
-siguiente cuantificador uniforme ilustra este paso, asignando cada muestra al nivel más
-cercano dentro del rango dinámico de la señal.
-
-```python linenums="1"
-import numpy as np
-
-
-def cuantificar_uniforme(
-    muestras: np.ndarray, niveles: int, amplitud_maxima: float
-) -> np.ndarray:
-    """Cuantifica un vector de muestras con un cuantificador uniforme.
-
-    Args:
-        muestras: Valores muestreados de la señal analógica.
-        niveles: Número de niveles de cuantificación disponibles.
-        amplitud_maxima: Valor absoluto máximo que puede tomar la señal.
-
-    Returns:
-        Vector con los valores cuantificados, cada uno de los `niveles` posibles.
-    """
-    # El escalon de cuantificacion reparte el rango dinamico entre los niveles
-    escalon = 2 * amplitud_maxima / niveles
-    # Cada muestra se asigna al nivel mas cercano dentro del rango dinamico
-    indices = np.round(muestras / escalon)
-    return indices * escalon
-```
-
+el nivel discreto más próximo de entre un conjunto finito de niveles disponibles.
 Finalmente, la codificación asigna a cada nivel cuantificado una palabra de bits
 distinta, de modo que la salida del conjunto es ya una secuencia binaria lista para su
 transmisión o su procesado posterior.
@@ -273,7 +248,7 @@ Frente a la señal analógica equivalente, la señal digital ofrece varias venta
 degrada con la misma facilidad durante la transmisión, porque un receptor solo necesita
 distinguir entre un número finito de niveles y no reconstruir una forma de onda
 continua. Admite técnicas de compresión que reducen el volumen de información a
-transmitir. Permite aplicar técnicas de encriptación para proteger la información. Y
+transmitir, permite aplicar técnicas de encriptación para proteger la información, y
 sostiene transmisiones a mayores distancias sin pérdida de calidad, porque la señal
 puede regenerarse en puntos intermedios en lugar de simplemente amplificarse.
 
@@ -284,42 +259,6 @@ error irreversible respecto a la señal analógica original, ya que sustituye ca
 por el nivel discreto más próximo. Por último, una señal digital puede necesitar más
 ancho de banda que la señal analógica de la que procede, en particular cuando se opta
 por un número de niveles de cuantificación elevado para reducir ese error.
-
-## Señales de imagen y de vídeo
-
-Las imágenes fijas y las secuencias de vídeo son un caso particular de información
-susceptible de digitalizarse siguiendo la misma cadena de muestreo, cuantificación y
-codificación, aplicada esta vez sobre una rejilla espacial de puntos en lugar de sobre
-una señal temporal.
-
-### Resolución y profundidad de color
-
-La resolución de una imagen fija se expresa como el número de píxeles en su dimensión
-vertical por el número de píxeles en su dimensión horizontal. La variedad de color que
-puede representar cada píxel depende del número de bits por píxel, $\text{bpp}$, que se
-le asignan: con $\text{bpp}$ bits por píxel es posible representar $2^{\text{bpp}}$
-colores distintos. Para una imagen en color con tres componentes, roja, verde y azul, el
-número de bits por píxel resulta de multiplicar por tres el número de bits que se
-dedican a cada componente por separado.
-
-### Régimen binario de una secuencia de vídeo
-
-Una secuencia de vídeo añade a la imagen fija una tercera dimensión, el tiempo,
-caracterizada por el número de fotogramas por segundo, $\text{fps}$. El régimen binario
-que exige transmitir una secuencia de vídeo sin comprimir se obtiene multiplicando el
-número de fotogramas por segundo por la resolución de cada fotograma y por el número de
-bits por píxel:
-
-$$
-R_{\text{video}} = \text{fps} \cdot \text{resolución} \cdot \text{bpp}
-$$
-
-Por ejemplo, una secuencia con una resolución de 1920 por 1080 píxeles, una profundidad
-de color de 24 bits por píxel, repartidos en 8 bits por cada componente roja, verde y
-azul, y una tasa de 30 fotogramas por segundo exige un régimen binario sin comprimir de
-aproximadamente $1920 \cdot 1080 \cdot 24 \cdot 30 \approx 1{,}49$ Gbit/s, lo que
-justifica la importancia de las técnicas de compresión de vídeo en cualquier sistema que
-transporte este tipo de contenido.
 
 ## Energía y potencia de una señal
 
@@ -336,7 +275,7 @@ un único periodo. El operador de promedio temporal es lineal, de modo que el pr
 la suma de dos señales es igual a la suma de sus promedios individuales:
 
 $$
-\langle x(t) + y(t) \rangle = \langle x(t) \rangle + \langle y(t) \rangle
+\langle x(t) + y(t) \rangle = \langle x(t) \rangle + \langle y(t) \rangle.
 $$
 
 Una propiedad particular de este operador, que resulta útil más adelante al estudiar la
@@ -347,13 +286,13 @@ A partir del promedio temporal se definen la energía y la potencia de una seña
 una señal continua en el tiempo, la energía se calcula como
 
 $$
-E_x = \int_{-\infty}^{\infty} |x(t)|^2 \, dt
+E_x = \int_{-\infty}^{\infty} |x(t)|^2 \, dt,
 $$
 
 y la potencia, como el promedio temporal del cuadrado de la señal,
 
 $$
-P_x = \left\langle |x(t)|^2 \right\rangle
+P_x = \left\langle |x(t)|^2 \right\rangle.
 $$
 
 Si la energía de una señal es finita, la señal se denomina señal de energía, y su
@@ -368,11 +307,11 @@ Las señales discretas en el tiempo admiten definiciones análogas, sustituyendo
 integral por una suma sobre el índice de las muestras:
 
 $$
-E_x = \sum_{n=-\infty}^{\infty} |x[n]|^2
+E_x = \sum_{n=-\infty}^{\infty} |x[n]|^2,
 $$
 
 $$
-P_x = \left\langle |x[n]|^2 \right\rangle
+P_x = \left\langle |x[n]|^2 \right\rangle.
 $$
 
 ### Densidad espectral y teorema de Parseval
@@ -385,7 +324,7 @@ energía calculada en el dominio del tiempo coincide con la energía calculada e
 dominio de la frecuencia:
 
 $$
-E_x = \int_{-\infty}^{\infty} |x(t)|^2 \, dt = \int_{-\infty}^{\infty} S_x(f) \, df
+E_x = \int_{-\infty}^{\infty} |x(t)|^2 \, dt = \int_{-\infty}^{\infty} S_x(f) \, df,
 $$
 
 lo que permite calcular qué fracción de la energía total de una señal cae dentro de un
@@ -412,7 +351,7 @@ La correlación entre dos señales, $x(t)$ e $y(t)$, mide su grado de parecido y
 como el promedio temporal de su producto desplazado en el tiempo:
 
 $$
-R_{x,y}(\tau) = \langle x(t) \, y(t - \tau) \rangle
+R_{x,y}(\tau) = \langle x(t) \, y(t - \tau) \rangle.
 $$
 
 El grado de parecido entre dos señales sin desplazamiento relativo, es decir,
@@ -420,7 +359,7 @@ $R_{x,y}(0)$, se relaciona con la diferencia entre ambas señales. En efecto,
 desarrollando el promedio temporal del cuadrado de la diferencia se obtiene
 
 $$
-\langle [x(t) - y(t)]^2 \rangle = P_x + P_y - 2 \, R_{x,y}(0)
+\langle [x(t) - y(t)]^2 \rangle = P_x + P_y - 2 \, R_{x,y}(0),
 $$
 
 de modo que cuanto mayor es $R_{x,y}(0)$, menor es la diferencia media entre ambas
@@ -434,7 +373,7 @@ La autocorrelación es el caso particular de correlación de una señal consigo 
 desplazada en el tiempo:
 
 $$
-R_{x,x}(\tau) = \langle x(t) \, x(t - \tau) \rangle
+R_{x,x}(\tau) = \langle x(t) \, x(t - \tau) \rangle,
 $$
 
 y mide el grado de parecido de una señal con una versión retardada de ella misma, lo que
@@ -448,7 +387,7 @@ $z(t) = x(t) + y(t)$. La potencia de la señal suma se obtiene desarrollando el 
 de la suma y aplicando la linealidad del promedio temporal:
 
 $$
-P_z = P_x + P_y + 2 \, R_{x,y}(0)
+P_z = P_x + P_y + 2 \, R_{x,y}(0).
 $$
 
 Si las dos señales son ortogonales, el término cruzado se anula y la potencia de la suma
