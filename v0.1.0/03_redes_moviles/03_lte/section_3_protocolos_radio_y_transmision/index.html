@@ -1,0 +1,6897 @@
+
+<!doctype html>
+<html lang="es" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Pila de protocolos de la red de acceso, planificación de recursos, codificación y técnicas MIMO específicas de LTE.">
+      
+      
+        <meta name="author" content="Daniel Bazo Correa">
+      
+      
+        <link rel="canonical" href="https://gitdbc.github.io/telco-engineering-wiki/v0.1.0/03_redes_moviles/03_lte/section_3_protocolos_radio_y_transmision/">
+      
+      
+      
+        <link rel="prev" href="../section_2_interfaz_radio/">
+      
+      
+        <link rel="next" href="../../04_5g/section_1_arquitectura_5gc/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/img/branding/logo.ico">
+      <meta name="generator" content="zensical-0.0.71">
+    
+    
+      
+        <title>Protocolos radio y transmisión en LTE - Daniel Bazo Correa</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.e442bf79.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Saltar a contenido
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabecera">
+    <a href="https://www.linkedin.com/in/daniel-bazo-correa/" title="Daniel Bazo Correa" class="md-header__button md-logo" aria-label="Daniel Bazo Correa" data-md-component="logo">
+      
+  <img src="../../../assets/img/branding/white_logo.svg" alt="Daniel Bazo Correa">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navegación">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Daniel Bazo Correa
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Protocolos radio y transmisión en LTE
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="orange"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="orange"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Buscar">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Buscar">
+  <button type="button" class="md-search__button">
+    Buscar
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/GITDBC/telco-engineering-wiki" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5v52c0 15 12.5 23.5 27.5 17.5C441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5v-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GITDBC/telco-engineering-wiki
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Pestañas" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+  Inicio
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../01_fundamentos/01_senales/section_1_senales_e_informacion/" class="md-tabs__link">
+          
+  
+  Fundamentos
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+  
+  
+    
+      
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../02_redes/01_arquitectura/section_1_capas_y_encapsulado/" class="md-tabs__link">
+          
+  
+  Redes
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+  
+    
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../01_fundamentos_celulares/section_1_concepto_celular/" class="md-tabs__link">
+          
+  
+  Redes móviles
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+  
+  
+    
+      
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../04_inalambricas/01_panorama/section_1_taxonomia_y_arquitecturas/" class="md-tabs__link">
+          
+  
+  Redes inalámbricas
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+  
+  
+    
+      
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../05_servicios/01_multimedia/section_1_servicios_multimedia/" class="md-tabs__link">
+          
+  
+  Servicios
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../06_trafico/01_colas/section_1_teoria_de_colas/" class="md-tabs__link">
+          
+  
+  Tráfico
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      
+  
+  
+  
+  
+    
+      
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../07_virtualizacion/01_virtualizacion/section_1_tipos_de_virtualizacion/" class="md-tabs__link">
+          
+  
+  Virtualización
+
+        </a>
+      </li>
+    
+  
+
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navegación" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://www.linkedin.com/in/daniel-bazo-correa/" title="Daniel Bazo Correa" class="md-nav__button md-logo" aria-label="Daniel Bazo Correa" data-md-component="logo">
+      
+  <img src="../../../assets/img/branding/white_logo.svg" alt="Daniel Bazo Correa">
+
+    </a>
+    Daniel Bazo Correa
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/GITDBC/telco-engineering-wiki" title="Ir al repositorio" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M216.5 362.5c-66-8-112.5-55.5-112.5-117 0-25 9-52 24-70-6.5-16.5-5.5-51.5 2-66 20-2.5 47 8 63 22.5 19-6 39-9 63.5-9s44.5 3 62.5 8.5c15.5-14 43-24.5 63-22 7 13.5 8 48.5 1.5 65.5 16 19 24.5 44.5 24.5 70.5 0 61.5-46.5 108-113.5 116.5 17 11 28.5 35 28.5 62.5v52c0 15 12.5 23.5 27.5 17.5C441 459.5 512 369 512 257 512 115.5 397 0 255.5 0S0 115.5 0 257c0 111 70.5 203 165.5 237.5 13.5 5 26.5-4 26.5-17.5v-40c-7 3-16 5-24 5-33 0-52.5-18-66.5-51.5-5.5-13.5-11.5-21.5-23-23-6-.5-8-3-8-6 0-6 10-10.5 20-10.5 14.5 0 27 9 40 27.5 10 14.5 20.5 21 33 21s20.5-4.5 32-16c8.5-8.5 15-16 21-21"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GITDBC/telco-engineering-wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-house" viewBox="0 0 24 24"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Inicio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Fundamentos
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Fundamentos
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Señales
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2_1">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Señales
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/01_senales/section_1_senales_e_informacion/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-audio-waveform" viewBox="0 0 24 24"><path d="M2 13a2 2 0 0 0 2-2V7a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0V4a2 2 0 0 1 4 0v13a2 2 0 0 0 4 0v-4a2 2 0 0 1 2-2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Señales e información
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/01_senales/section_2_senales_aleatorias_y_ruido/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-dices" viewBox="0 0 24 24"><rect width="12" height="12" x="2" y="10" rx="2" ry="2"/><path d="m17.92 14 3.5-3.5a2.24 2.24 0 0 0 0-3l-5-4.92a2.24 2.24 0 0 0-3 0L10 6M6 18h.01M10 14h.01M15 6h.01M18 9h.01"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Señales aleatorias y ruido
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Canal radio
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Canal radio
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/02_canal/section_1_propagacion_y_perdidas/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-signal-low" viewBox="0 0 24 24"><path d="M2 20h.01M7 20v-4"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Propagación y pérdidas
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/02_canal/section_2_desvanecimiento_y_respuesta_del_canal/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-chart-spline" viewBox="0 0 24 24"><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M7 16c.5-2 1.5-7 4-7 2 0 2 3 4 3 2.5 0 4.5-5 5-7"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Desvanecimiento y respuesta del canal
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Modulación
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Modulación
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/03_modulacion/section_1_modulaciones_analogicas/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-audio-lines" viewBox="0 0 24 24"><path d="M2 10v3M6 6v11M10 3v18M14 8v7M18 5v13M22 10v3"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Modulaciones analógicas
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/03_modulacion/section_2_modulaciones_digitales/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-binary" viewBox="0 0 24 24"><rect width="4" height="6" x="14" y="14" rx="2"/><rect width="4" height="6" x="6" y="4" rx="2"/><path d="M6 20h4M14 10h4M6 14h2v6M14 4h2v6"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Modulaciones digitales
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Acceso al medio
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Acceso al medio
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/04_acceso_al_medio/section_1_multiplexacion/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-merge" viewBox="0 0 24 24"><path d="m8 6 4-4 4 4"/><path d="M12 2v10.3a4 4 0 0 1-1.172 2.872L4 22M20 22l-5-5"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Multiplexación
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/04_acceso_al_medio/section_2_acceso_multiple/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M16 3.128a4 4 0 0 1 0 7.744M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Acceso múltiple al medio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/04_acceso_al_medio/section_3_espectro_ensanchado_y_cdma/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-expand" viewBox="0 0 24 24"><path d="m15 15 6 6M15 9l6-6M21 16v5h-5M21 8V3h-5M3 16v5h5M3 21l6-6M3 8V3h5M9 9 3 3"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Espectro ensanchado y CDMA
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/04_acceso_al_medio/section_4_ofdm_y_sc_fdm/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-align-vertical-distribute-center" viewBox="0 0 24 24"><path d="M22 17h-3M22 7h-5M5 17H2M7 7H2"/><rect width="14" height="6" x="5" y="14" rx="2"/><rect width="10" height="6" x="7" y="4" rx="2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  OFDM y SC-FDM
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Codificación
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Codificación
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/05_codificacion/section_1_codificacion_de_canal/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Codificación de canal
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/05_codificacion/section_2_codigos_convolucionales/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-git-merge" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Códigos convolucionales y decodificación
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/05_codificacion/section_3_adaptacion_de_enlace_y_retransmision/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-refresh-cw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Adaptación de enlace y retransmisión
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_6" id="__nav_2_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  MIMO
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_6_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2_6">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  MIMO
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/06_mimo/section_1_fundamentos_mimo/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-antenna" viewBox="0 0 24 24"><path d="M2 12 7 2M7 12l5-10M12 12l5-10M17 12l5-10M4.5 7h15M12 16v6"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Fundamentos de los sistemas MIMO
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../01_fundamentos/06_mimo/section_2_multiplexacion_espacial/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-split" viewBox="0 0 24 24"><path d="M16 3h5v5M8 3H3v5"/><path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3M15 9l6-6"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Multiplexación espacial y MIMO multiusuario
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Redes
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Redes
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Arquitectura
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3_1">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Arquitectura
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02_redes/01_arquitectura/section_1_capas_y_encapsulado/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-layers" viewBox="0 0 24 24"><path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Arquitectura en capas y encapsulado
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  IP y transporte
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  IP y transporte
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02_redes/02_ip/section_1_protocolo_ip_y_direccionamiento/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Protocolo IP y direccionamiento
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02_redes/02_ip/section_2_protocolos_de_transporte/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2M15 18H9M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Protocolos de transporte
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Conmutación y redes locales
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Conmutación y redes locales
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02_redes/03_conmutacion_y_lan/section_1_conmutacion_y_ethernet/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-ethernet-port" viewBox="0 0 24 24"><path d="M10 8v1M14 8v1M18 8v1M19 17a2 2 0 0 0-1.765 1.059l-.47.882A2 2 0 0 1 15 20H9a2 2 0 0 1-1.765-1.059l-.47-.882A2 2 0 0 0 5 17H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2zM6 8v1"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Conmutación y redes de área local
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02_redes/03_conmutacion_y_lan/section_2_redes_de_acceso_fijo/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-cable" viewBox="0 0 24 24"><path d="M17 19a1 1 0 0 1-1-1v-2a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2a1 1 0 0 1-1 1zM17 21v-2"/><path d="M19 14V6.5a1 1 0 0 0-7 0v11a1 1 0 0 1-7 0V10M21 21v-2M3 5V3"/><path d="M4 10a2 2 0 0 1-2-2V6a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a2 2 0 0 1-2 2zM7 5V3"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Redes de acceso fijo
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Encaminamiento
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Encaminamiento
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02_redes/04_encaminamiento/section_1_fundamentos_de_encaminamiento/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Fundamentos de encaminamiento
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02_redes/04_encaminamiento/section_2_ospf_y_bgp/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-signpost" viewBox="0 0 24 24"><path d="M12 13v8M12 3v3M2.354 10.354a1.207 1.207 0 0 1 0-1.708l2.06-2.06A2 2 0 0 1 5.828 6h12.344a2 2 0 0 1 1.414.586l2.06 2.06a1.207 1.207 0 0 1 0 1.708l-2.06 2.06a2 2 0 0 1-1.414.586H5.828a2 2 0 0 1-1.414-.586z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  OSPF y BGP
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02_redes/04_encaminamiento/section_3_interconexion_de_redes/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-handshake" viewBox="0 0 24 24"><path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3M3 4h8"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Interconexión de redes y de operadores
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Redes de operador
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Redes de operador
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../02_redes/05_redes_de_operador/section_1_convergencia_y_ngn/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-combine" viewBox="0 0 24 24"><path d="M14 3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1M19 3a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1M7 15l3 3M7 21l3-3H5a2 2 0 0 1-2-2v-2"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="3" rx="1"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Convergencia de redes y redes de nueva generación
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Redes móviles
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Redes móviles
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_1" id="__nav_4_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Fundamentos celulares
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_1_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4_1">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Fundamentos celulares
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_fundamentos_celulares/section_1_concepto_celular/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-hexagon" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Concepto celular y reutilización de frecuencias
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01_fundamentos_celulares/section_2_movilidad_y_recursos_radio/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-smartphone" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Movilidad y gestión de recursos radio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  GSM y UMTS
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  GSM y UMTS
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_gsm_y_umts/section_1_gsm/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-phone" viewBox="0 0 24 24"><path d="M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  GSM
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02_gsm_y_umts/section_2_gprs_umts_y_hspa/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-smartphone-nfc" viewBox="0 0 24 24"><rect width="7" height="12" x="2" y="6" rx="1"/><path d="M13 8.32a7.43 7.43 0 0 1 0 7.36M16.46 6.21a11.76 11.76 0 0 1 0 11.58M19.91 4.1a15.91 15.91 0 0 1 .01 15.8"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  GPRS, UMTS y HSPA
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  LTE
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_4_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  LTE
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../section_1_arquitectura_eps/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-network" viewBox="0 0 24 24"><rect width="6" height="6" x="16" y="16" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="9" y="2" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Arquitectura del sistema de paquetes evolucionado
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../section_2_interfaz_radio/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-radio-tower" viewBox="0 0 24 24"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9M7.8 4.7a6.14 6.14 0 0 0-.8 7.5"/><circle cx="12" cy="9" r="2"/><path d="M16.2 4.8c2 2 2.26 5.11.8 7.47M19.1 1.9a9.96 9.96 0 0 1 0 14.1M9.5 18h5M8 22l4-11 4 11"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Interfaz radio de LTE
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-radio" viewBox="0 0 24 24"><path d="M16.247 7.761a6 6 0 0 1 0 8.478M19.075 4.933a10 10 0 0 1 0 14.134M4.925 19.067a10 10 0 0 1 0-14.134M7.753 16.239a6 6 0 0 1 0-8.478"/><circle cx="12" cy="12" r="2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Protocolos radio y transmisión en LTE
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-radio" viewBox="0 0 24 24"><path d="M16.247 7.761a6 6 0 0 1 0 8.478M19.075 4.933a10 10 0 0 1 0 14.134M4.925 19.067a10 10 0 0 1 0-14.134M7.753 16.239a6 6 0 0 1 0-8.478"/><circle cx="12" cy="12" r="2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Protocolos radio y transmisión en LTE
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Introducción
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plano-de-usuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Plano de usuario
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plano de usuario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#protocolo-de-convergencia-de-datos-de-paquetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Protocolo de convergencia de datos de paquetes
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-de-enlace-radio" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Control de enlace radio
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modos-transparente-sin-confirmacion-y-con-confirmacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Modos transparente, sin confirmación y con confirmación
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#segmentacion-concatenacion-y-reordenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Segmentación, concatenación y reordenamiento
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-de-acceso-al-medio" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Control de acceso al medio
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plano-de-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Plano de control
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plano de control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-de-recursos-radio" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Control de recursos radio
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estados-inactivo-y-conectado" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Estados inactivo y conectado
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portadores-de-senalizacion-y-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Portadores de señalización y de datos
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#procedimientos-del-estrato-de-no-acceso" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Procedimientos del estrato de no acceso
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planificacion-de-recursos" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Planificación de recursos
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Planificación de recursos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#informacion-que-utiliza-el-planificador" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Información que utiliza el planificador
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice-de-equidad-de-jain" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Índice de equidad de Jain
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recepcion-discontinua" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Recepción discontinua
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alineacion-temporal-del-enlace-ascendente" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alineación temporal del enlace ascendente
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#codificacion-y-adaptacion-de-enlace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Codificación y adaptación de enlace
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Codificación y adaptación de enlace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comprobacion-de-redundancia-por-bloque-de-transporte" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Comprobación de redundancia por bloque de transporte
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turbocodificacion-y-ajuste-de-tasa" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Turbocodificación y ajuste de tasa
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bufer-circular-y-versiones-de-redundancia" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Búfer circular y versiones de redundancia
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicador-de-calidad-de-canal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Indicador de calidad de canal
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retransmision-hibrida" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Retransmisión híbrida
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tecnicas-mimo-en-lte" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Técnicas MIMO en LTE
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Técnicas MIMO en LTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diversidad-en-transmision-con-codificacion-espacio-frecuencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Diversidad en transmisión con codificación espacio-frecuencia
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diversidad-con-conmutacion-de-frecuencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Diversidad con conmutación de frecuencia
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiplexacion-con-precodificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Multiplexación con precodificación
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#libros-de-codigos-e-indicadores-de-matriz-y-de-rango" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Libros de códigos e indicadores de matriz y de rango
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diversidad-de-retardo-ciclico" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Diversidad de retardo cíclico
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#beamforming-con-senales-de-referencia-especificas" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Beamforming con señales de referencia específicas
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mimo-multiusuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        MIMO multiusuario
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#movilidad-intra-lte" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Movilidad intra-LTE
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Movilidad intra-LTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#traspaso-sobre-x2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Traspaso sobre X2
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traspaso-sobre-s1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Traspaso sobre S1
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preparacion-multiple-y-liberacion-de-recursos" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Preparación múltiple y liberación de recursos
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_4" id="__nav_4_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5G
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  5G
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_5g/section_1_arquitectura_5gc/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-network" viewBox="0 0 24 24"><rect width="6" height="6" x="16" y="16" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="9" y="2" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Arquitectura del núcleo 5G
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04_5g/section_2_new_radio/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-radio-tower" viewBox="0 0 24 24"><path d="M4.9 16.1C1 12.2 1 5.8 4.9 1.9M7.8 4.7a6.14 6.14 0 0 0-.8 7.5"/><circle cx="12" cy="9" r="2"/><path d="M16.2 4.8c2 2 2.26 5.11.8 7.47M19.1 1.9a9.96 9.96 0 0 1 0 14.1M9.5 18h5M8 22l4-11 4 11"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Interfaz radio 5G New Radio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_5" id="__nav_4_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Planificación
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Planificación
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_planificacion/section_1_herramientas_y_dimensionado/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-ruler" viewBox="0 0 24 24"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0ZM14.5 12.5l2-2M11.5 9.5l2-2M8.5 6.5l2-2M17.5 15.5l2-2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Herramientas de planificación y dimensionado
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05_planificacion/section_2_planificacion_nominal_y_detallada/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-map" viewBox="0 0 24 24"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0zM15 5.764v15M9 3.236v15"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Planificación nominal y detallada
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+          
+          
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_6" id="__nav_4_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Optimización
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_6_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4_6">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Optimización
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_optimizacion/section_1_gestion_de_red_y_kpis/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Gestión de red e indicadores
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06_optimizacion/section_2_optimizacion_y_son/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sliders-horizontal" viewBox="0 0 24 24"><path d="M10 5H3M12 19H3M14 3v4M16 17v4M21 12h-9M21 19h-5M21 5h-7M8 10v4M8 12H3"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Optimización y redes autoorganizadas
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Redes inalámbricas
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Redes inalámbricas
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Panorama
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5_1">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Panorama
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../04_inalambricas/01_panorama/section_1_taxonomia_y_arquitecturas/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-network" viewBox="0 0 24 24"><rect width="6" height="6" x="16" y="16" rx="1"/><rect width="6" height="6" x="2" y="16" rx="1"/><rect width="6" height="6" x="9" y="2" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Taxonomía y arquitecturas inalámbricas
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  WLAN
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  WLAN
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../04_inalambricas/02_wlan/section_1_802_11_arquitectura_y_capa_fisica/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-wifi" viewBox="0 0 24 24"><path d="M12 20h.01M2 8.82a15 15 0 0 1 20 0M5 12.859a10 10 0 0 1 14 0M8.5 16.429a5 5 0 0 1 7 0"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Arquitectura y capa física de IEEE 802.11
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../04_inalambricas/02_wlan/section_2_802_11_acceso_al_medio/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-wifi-cog" viewBox="0 0 24 24"><path d="m14.305 19.53.923-.382M15.228 16.852l-.923-.383M16.852 15.228l-.383-.923M16.852 20.772l-.383.924M19.148 15.228l.383-.923M19.53 21.696l-.382-.924M2 8.82a15 15 0 0 1 20 0M20.772 16.852l.924-.383M20.772 19.148l.924.383M5 12.859a10 10 0 0 1 10.18-2.342M8.5 16.429a5 5 0 0 1 1.998-1.2"/><circle cx="18" cy="18" r="3"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Acceso al medio y calidad de servicio en IEEE 802.11
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Redes ad hoc
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Redes ad hoc
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../04_inalambricas/03_ad_hoc/section_1_manet_y_encaminamiento/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-share-2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.59 13.51 6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Redes ad hoc y encaminamiento
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../04_inalambricas/03_ad_hoc/section_2_localizacion/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Sistemas y servicios de localización
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  IoT y LPWAN
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  IoT y LPWAN
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../04_inalambricas/04_iot_lpwan/section_1_lpwan_e_iot/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-cpu" viewBox="0 0 24 24"><path d="M12 20v2M12 2v2M17 20v2M17 2v2M2 12h2M2 17h2M2 7h2M20 12h2M20 17h2M20 7h2M7 20v2M7 2v2"/><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="8" height="8" x="8" y="8" rx="1"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  LPWAN e Internet de las cosas
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_5" id="__nav_5_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Bluetooth
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Bluetooth
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../04_inalambricas/05_bluetooth/section_1_bluetooth_y_ble/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-bluetooth" viewBox="0 0 24 24"><path d="m7 7 10 10-5 5V2l5 5L7 17"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Bluetooth y Bluetooth de bajo consumo
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Servicios
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_6">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Servicios
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_1" id="__nav_6_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Multimedia
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_1_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_6_1">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Multimedia
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/01_multimedia/section_1_servicios_multimedia/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-clapperboard" viewBox="0 0 24 24"><path d="m12.296 3.464 3.02 3.956M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3zM3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2zM6.18 5.276l3.1 3.899"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Servicios multimedia y su tráfico
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_2" id="__nav_6_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Protocolos multimedia
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_6_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Protocolos multimedia
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/02_protocolos/section_1_sip_y_sdp/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-phone-call" viewBox="0 0 24 24"><path d="M13 2a9 9 0 0 1 9 9M13 6a5 5 0 0 1 5 5M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Señalización multimedia, H.323, SIP y SDP
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/02_protocolos/section_2_rtp_rtcp_y_rtsp/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-play" viewBox="0 0 24 24"><path d="M9 9.003a1 1 0 0 1 1.517-.859l4.997 2.997a1 1 0 0 1 0 1.718l-4.997 2.997A1 1 0 0 1 9 14.996z"/><circle cx="12" cy="12" r="10"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  RTP, RTCP y RTSP
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_3" id="__nav_6_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  IMS y voz
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_6_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  IMS y voz
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/03_ims_y_voz/section_1_ims/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-server" viewBox="0 0 24 24"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><path d="M6 6h.01M6 18h.01"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Subsistema IP multimedia
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/03_ims_y_voz/section_2_voz_sobre_ip_y_volte/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-mic" viewBox="0 0 24 24"><path d="M12 19v3M19 10v2a7 7 0 0 1-14 0v-2"/><rect width="6" height="13" x="9" y="2" rx="3"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Voz sobre IP y voz sobre LTE
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_4" id="__nav_6_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Difusión
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_6_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Difusión
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/04_difusion/section_1_iptv_y_difusion/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-tv" viewBox="0 0 24 24"><path d="m17 2-5 5-5-5"/><rect width="20" height="15" x="2" y="7" rx="2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Televisión sobre IP y servicios de difusión
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_5" id="__nav_6_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Calidad de servicio
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_6_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Calidad de servicio
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/05_qos_y_qoe/section_1_qos_en_redes_ip/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4M3.34 19a10 10 0 1 1 17.32 0"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Calidad de servicio en redes IP
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/05_qos_y_qoe/section_2_calidad_de_experiencia/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-smile" viewBox="0 0 24 24"><path d="M15 10V9M16.472 15a6 6 0 0 1-8.943 0M9 10V9"/><circle cx="12" cy="12" r="10"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Calidad de experiencia
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6_6" id="__nav_6_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Servicios y regulación
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_6_6_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_6_6">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Servicios y regulación
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/06_servicios_y_regulacion/section_1_catalogo_de_servicios/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-list" viewBox="0 0 24 24"><path d="M3 5h.01M3 12h.01M3 19h.01M8 5h13M8 12h13M8 19h13"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Catálogo de servicios de telecomunicación
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../05_servicios/06_servicios_y_regulacion/section_2_regulacion_y_organismos/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-scale" viewBox="0 0 24 24"><path d="M12 3v18M19 8l3 8a5 5 0 0 1-6 0zV7"/><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1M5 8l3 8a5 5 0 0 1-6 0zV7M7 21h10"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Regulación y organismos
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tráfico
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_7">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Tráfico
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_7_1" id="__nav_7_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Teoría de colas
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_7_1_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_7_1">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Teoría de colas
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../06_trafico/01_colas/section_1_teoria_de_colas/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-list-ordered" viewBox="0 0 24 24"><path d="M11 5h10M11 12h10M11 19h10M4 4h1v5M4 9h2M6.5 20H3.4c0-1 2.6-1.925 2.6-3.5a1.5 1.5 0 0 0-2.6-1.02"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Teoría de colas
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../06_trafico/01_colas/section_2_erlang_y_dimensionado/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-calculator" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M8 6h8M16 14v4M16 10h.01M12 10h.01M8 10h.01M12 14h.01M8 14h.01M12 18h.01M8 18h.01"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Erlang y dimensionado de recursos
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Virtualización
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_8">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Virtualización
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_1" id="__nav_8_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Virtualización y contenedores
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_1_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_8_1">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Virtualización y contenedores
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../07_virtualizacion/01_virtualizacion/section_1_tipos_de_virtualizacion/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Tipos de virtualización
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../07_virtualizacion/01_virtualizacion/section_2_contenedores_y_orquestacion/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-container" viewBox="0 0 24 24"><path d="M22 7.7c0-.6-.4-1.2-.8-1.5l-6.3-3.9a1.72 1.72 0 0 0-1.7 0l-10.3 6c-.5.2-.9.8-.9 1.4v6.6c0 .5.4 1.2.8 1.5l6.3 3.9a1.72 1.72 0 0 0 1.7 0l10.3-6c.5-.3.9-1 .9-1.5Z"/><path d="M10 21.9V14L2.1 9.1M10 14l11.9-6.9M14 19.8v-8.1M18 17.5V9.4"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Contenedores y orquestación
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_2" id="__nav_8_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SDN y NFV
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_8_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  SDN y NFV
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../07_virtualizacion/02_sdn_y_nfv/section_1_sdn/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-workflow" viewBox="0 0 24 24"><rect width="8" height="8" x="3" y="3" rx="2"/><path d="M7 11v4a2 2 0 0 0 2 2h4"/><rect width="8" height="8" x="13" y="13" rx="2"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Redes definidas por software
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../07_virtualizacion/02_sdn_y_nfv/section_2_nfv_y_mano/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-boxes" viewBox="0 0 24 24"><path d="M2.97 12.92A2 2 0 0 0 2 14.63v3.24a2 2 0 0 0 .97 1.71l3 1.8a2 2 0 0 0 2.06 0L12 19v-5.5l-5-3zM7 16.5l-4.74-2.85M7 16.5l5-3M7 16.5v5.17M12 13.5V19l3.97 2.38a2 2 0 0 0 2.06 0l3-1.8a2 2 0 0 0 .97-1.71v-3.24a2 2 0 0 0-.97-1.71L17 10.5zM17 16.5l-5-3M17 16.5l4.74-2.85M17 16.5v5.17"/><path d="M7.97 4.42A2 2 0 0 0 7 6.13v4.37l5 3 5-3V6.13a2 2 0 0 0-.97-1.71l-3-1.8a2 2 0 0 0-2.06 0zM12 8 7.26 5.15M12 8l4.74-2.85M12 13.5V8"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Virtualización de funciones de red
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../07_virtualizacion/02_sdn_y_nfv/section_3_ran_virtualizada_y_edge/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-cloud" viewBox="0 0 24 24"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  RAN virtualizada y computación en el borde
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_8_3" id="__nav_8_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Software de comunicaciones
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_8_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_8_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Software de comunicaciones
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../07_virtualizacion/03_software_de_comunicaciones/section_1_desarrollo_de_software/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  Desarrollo de software de comunicaciones
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Tabla de contenidos">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Tabla de contenidos
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduccion" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Introducción
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plano-de-usuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Plano de usuario
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plano de usuario">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#protocolo-de-convergencia-de-datos-de-paquetes" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Protocolo de convergencia de datos de paquetes
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-de-enlace-radio" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Control de enlace radio
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modos-transparente-sin-confirmacion-y-con-confirmacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Modos transparente, sin confirmación y con confirmación
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#segmentacion-concatenacion-y-reordenamiento" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Segmentación, concatenación y reordenamiento
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#control-de-acceso-al-medio" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Control de acceso al medio
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#plano-de-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Plano de control
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Plano de control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#control-de-recursos-radio" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Control de recursos radio
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#estados-inactivo-y-conectado" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Estados inactivo y conectado
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#portadores-de-senalizacion-y-de-datos" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Portadores de señalización y de datos
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#procedimientos-del-estrato-de-no-acceso" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Procedimientos del estrato de no acceso
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#planificacion-de-recursos" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Planificación de recursos
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Planificación de recursos">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#informacion-que-utiliza-el-planificador" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Información que utiliza el planificador
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indice-de-equidad-de-jain" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Índice de equidad de Jain
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recepcion-discontinua" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Recepción discontinua
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alineacion-temporal-del-enlace-ascendente" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alineación temporal del enlace ascendente
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#codificacion-y-adaptacion-de-enlace" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Codificación y adaptación de enlace
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Codificación y adaptación de enlace">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#comprobacion-de-redundancia-por-bloque-de-transporte" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Comprobación de redundancia por bloque de transporte
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turbocodificacion-y-ajuste-de-tasa" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Turbocodificación y ajuste de tasa
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bufer-circular-y-versiones-de-redundancia" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Búfer circular y versiones de redundancia
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#indicador-de-calidad-de-canal" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Indicador de calidad de canal
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#retransmision-hibrida" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Retransmisión híbrida
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tecnicas-mimo-en-lte" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Técnicas MIMO en LTE
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Técnicas MIMO en LTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#diversidad-en-transmision-con-codificacion-espacio-frecuencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Diversidad en transmisión con codificación espacio-frecuencia
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diversidad-con-conmutacion-de-frecuencia" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Diversidad con conmutación de frecuencia
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#multiplexacion-con-precodificacion" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Multiplexación con precodificación
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#libros-de-codigos-e-indicadores-de-matriz-y-de-rango" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Libros de códigos e indicadores de matriz y de rango
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diversidad-de-retardo-ciclico" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Diversidad de retardo cíclico
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#beamforming-con-senales-de-referencia-especificas" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Beamforming con señales de referencia específicas
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mimo-multiusuario" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        MIMO multiusuario
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#movilidad-intra-lte" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Movilidad intra-LTE
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Movilidad intra-LTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#traspaso-sobre-x2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Traspaso sobre X2
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#traspaso-sobre-s1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Traspaso sobre S1
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preparacion-multiple-y-liberacion-de-recursos" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Preparación múltiple y liberación de recursos
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+  <h1>Protocolos radio y transmisión en LTE</h1>
+
+<p>La arquitectura del sistema de paquetes evolucionado descrita en
+<a href="../section_1_arquitectura_eps/">arquitectura del sistema de paquetes evolucionado</a> fija
+los elementos de la red troncal y sus interfaces, y la malla de recursos de
+<a href="../section_2_interfaz_radio/">interfaz radio de LTE</a> fija la estructura física sobre la
+que esos elementos transmiten. Entre ambas capas se sitúa la pila de protocolos que
+gobierna cómo el <code>eNodeB</code> y el terminal emplean esa malla: qué función añade cada capa a
+un paquete, cómo se reparten los recursos de radio entre los usuarios activos, qué
+técnicas de codificación y de transmisión con varias antenas aplica esta generación
+sobre la interfaz aérea ya descrita, y cómo se ejecuta el traspaso de una comunicación
+entre estaciones base sin interrumpirla. Este capítulo cierra la trilogía dedicada a LTE
+describiendo esa pila de protocolos y las técnicas de transmisión que sostiene.</p>
+<h2 id="introduccion">Introducción<a class="headerlink" href="#introduccion" title="Permanent link">&para;</a></h2>
+<p>La pila de protocolos de la red de acceso radio se organiza en capas apiladas, comunes
+en su mayor parte al plano de usuario y al plano de control, con una diferencia esencial
+entre ambos: el plano de control añade una capa adicional, el control de recursos radio,
+que no existe en el plano de usuario y que configura el resto de capas inferiores de
+ambos planos.</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>flowchart TB
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>    subgraph PU["Plano de usuario"]
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>        direction TB
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>        PDCPU["PDCP"] --&gt; RLCU["RLC"]
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>        RLCU --&gt; MACU["MAC"]
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>        MACU --&gt; PHYU["PHY"]
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>    end
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>    subgraph PC["Plano de control"]
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>        direction TB
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a>        RRC["RRC"] --&gt; PDCPC["PDCP"]
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11"></a>        PDCPC --&gt; RLCC["RLC"]
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a>        RLCC --&gt; MACC["MAC"]
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a>        MACC --&gt; PHYC["PHY"]
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14"></a>    end
+</span></code></pre></div></td></tr></table></div>
+<table>
+<thead>
+<tr>
+<th>Capa</th>
+<th>Plano</th>
+<th>Función principal.</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>RRC</code></td>
+<td>Control</td>
+<td>Configura las capas inferiores y gestiona la conexión del terminal.</td>
+</tr>
+<tr>
+<td><code>PDCP</code></td>
+<td>Ambos</td>
+<td>Comprime cabeceras, cifra y ordena los paquetes.</td>
+</tr>
+<tr>
+<td><code>RLC</code></td>
+<td>Ambos</td>
+<td>Segmenta, reordena y retransmite las unidades de datos.</td>
+</tr>
+<tr>
+<td><code>MAC</code></td>
+<td>Ambos</td>
+<td>Planifica los recursos radio y ejecuta la retransmisión híbrida.</td>
+</tr>
+<tr>
+<td><code>PHY</code></td>
+<td>Ambos</td>
+<td>Transmite sobre la malla de recursos descrita en el capítulo previo.</td>
+</tr>
+</tbody>
+</table>
+<p>Cada capa toma las unidades de datos de la capa superior, les añade su propia cabecera o
+su propia función, y las entrega a la capa inferior. El resto del capítulo recorre esta
+pila con más detalle, primero para el plano de usuario y después para el plano de
+control, antes de tratar la planificación de recursos, la codificación de canal, la
+retransmisión híbrida, las técnicas de transmisión con varias antenas y la movilidad
+dentro de esta misma generación.</p>
+<h2 id="plano-de-usuario">Plano de usuario<a class="headerlink" href="#plano-de-usuario" title="Permanent link">&para;</a></h2>
+<p>El plano de usuario transporta los datos de las aplicaciones del terminal a través de
+tres capas por encima de la capa física, cada una responsable de una función distinta
+sobre las mismas unidades de datos.</p>
+<h3 id="protocolo-de-convergencia-de-datos-de-paquetes">Protocolo de convergencia de datos de paquetes<a class="headerlink" href="#protocolo-de-convergencia-de-datos-de-paquetes" title="Permanent link">&para;</a></h3>
+<p>El <strong>protocolo de convergencia de datos de paquetes</strong> (<code>PDCP</code>) desempeña varias
+funciones sobre los paquetes del plano de usuario. Comprime las cabeceras IP, eliminando
+su parte estática para reducir la sobrecarga (<em>overhead</em>) que introduce cada paquete.
+Aplica cifrado para proteger la confidencialidad de los datos. Reordena los paquetes que
+llegan fuera de secuencia desde la capa inferior. Y retransmite, cuando el modo de
+operación configurado lo exige, los paquetes que se pierden durante un traspaso.</p>
+<p>La seguridad del plano de usuario se apoya en un contador <code>COUNT</code>, mantenido de forma
+independiente por el terminal y por el <code>eNodeB</code>, que nunca debe reutilizar el mismo
+valor para cifrar dos paquetes distintos, porque esa reutilización comprometería la
+confidencialidad del cifrado. Cada paquete se asocia además a un número de secuencia y,
+en el plano de control, a un código de autenticación de mensaje que garantiza su
+integridad.</p>
+<p>Durante un traspaso, el comportamiento de <code>PDCP</code> depende de la clasificación descrita en
+<a href="#movilidad-intra-lte">movilidad intra-LTE</a>. En un traspaso sin interrupciones, las
+entidades <code>PDCP</code> se restablecen por completo, incluidos los contextos de compresión de
+cabeceras, y los valores de <code>COUNT</code> se ponen a cero: los paquetes que el terminal aún no
+había empezado a transmitir se reenvían después del traspaso hacia la celda destino,
+mientras que los que ya se habían empezado a transmitir sin confirmación de entrega se
+pierden. En un traspaso sin pérdidas, aplicable a los portadores radio que emplean el
+modo con confirmación de la capa de control de enlace radio, el protocolo de compresión
+de cabeceras se restablece en el terminal, pero los números de secuencia y los valores
+de <code>COUNT</code> de <code>PDCP</code> se conservan, y es la propia capa de control de enlace radio la que
+garantiza la entrega en secuencia de todo lo pendiente. Un <strong>informe de estado de
+<code>PDCP</code></strong> intercambiado tras el traspaso evita retransmisiones innecesarias, al indicar
+qué unidades de datos de servicio ya se recibieron correctamente aunque no se hayan
+podido descomprimir.</p>
+<details class="example" open="open">
+<summary>Paquetes reenviados en un traspaso sin pérdidas</summary>
+<p>Un terminal transmite datos de usuario en el instante en que se decide ejecutar
+un traspaso sin pérdidas hacia una celda destino. En ese momento existen tres
+categorías de paquetes en las entidades <code>PDCP</code> del <code>eNodeB</code> origen: los que
+todavía no han comenzado a transmitirse hacia el terminal, los que han
+comenzado a transmitirse pero cuya recepción no se ha confirmado, y los que ya
+se han confirmado como recibidos correctamente.</p>
+<p>En un traspaso sin pérdidas, el <code>eNodeB</code> origen reenvía hacia el <code>eNodeB</code>
+destino tanto los paquetes que aún no había comenzado a enviar como los que
+había comenzado a enviar sin confirmación de recepción, porque de ambos no
+existe garantía de que el terminal los haya recibido. Los paquetes ya
+confirmados no se reenvían, porque reenviarlos sería una retransmisión sin
+ningún beneficio: el terminal ya los tiene. Esta distinción es la que
+diferencia un traspaso sin pérdidas de uno sin interrupciones, que renuncia a
+la garantía de entrega de los paquetes ya iniciados a cambio de una transición
+más rápida.</p>
+</details>
+<h3 id="control-de-enlace-radio">Control de enlace radio<a class="headerlink" href="#control-de-enlace-radio" title="Permanent link">&para;</a></h3>
+<p>La <strong>capa de control de enlace radio</strong> (<code>RLC</code>) segmenta y concatena las unidades de
+datos de servicio que recibe de <code>PDCP</code> para ajustarlas al tamaño que la capa de control
+de acceso al medio determina en cada intervalo de transmisión, reordena las unidades de
+datos de protocolo que le llegan fuera de secuencia y ejecuta la retransmisión mediante
+repetición automática de solicitud (<code>ARQ</code>) cuando el modo de operación configurado lo
+exige. En LTE, <code>RLC</code> también ordena los paquetes entregados a la capa superior, una
+función que en 5G se traslada a otra capa, lo que hace de esta responsabilidad un rasgo
+propio de esta generación y no un principio general de toda pila de protocolos móvil.</p>
+<h3 id="modos-transparente-sin-confirmacion-y-con-confirmacion">Modos transparente, sin confirmación y con confirmación<a class="headerlink" href="#modos-transparente-sin-confirmacion-y-con-confirmacion" title="Permanent link">&para;</a></h3>
+<p>La capa de control de enlace radio opera en tres modos, elegidos según el tipo de
+tráfico que transporta cada portador radio.</p>
+<table>
+<thead>
+<tr>
+<th>Modo</th>
+<th>Función de <code>RLC</code> aplicada</th>
+<th>Uso típico</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>TM</code> (transparente)</td>
+<td>Ninguna: transmite sin segmentar ni reordenar.</td>
+<td>Mensajes de <code>RRC</code> sin configuración de <code>RLC</code>.</td>
+</tr>
+<tr>
+<td><code>UM</code> (sin confirmación)</td>
+<td>Segmenta, concatena y reordena, sin confirmar entrega.</td>
+<td>Tiempo real tolerante a pérdidas.</td>
+</tr>
+<tr>
+<td><code>AM</code> (con confirmación)</td>
+<td>Añade <code>ARQ</code> sobre las funciones del modo <code>UM</code>.</td>
+<td>Mensajes de <code>RRC</code> y transmisión fiable.</td>
+</tr>
+</tbody>
+</table>
+<p>El <strong>modo transparente</strong> (<code>TM</code>) transmite los paquetes sin ninguna intervención de
+<code>RLC</code>, ni segmentación ni reordenamiento, y se reserva para mensajes de <code>RRC</code> que no
+necesitan ninguna de esas funciones. El <strong>modo sin confirmación</strong> (<code>UM</code>) no espera
+confirmación de la recepción de los paquetes transmitidos, lo que lo hace adecuado para
+aplicaciones en tiempo real sensibles al retardo y tolerantes a cierta pérdida de datos,
+así como para servicios punto a multipunto en los que confirmar la recepción de cada
+receptor sería impracticable. El <strong>modo con confirmación</strong> (<code>AM</code>) implementa la
+operación <code>ARQ</code> completa: espera confirmación de cada unidad de datos, retransmite las
+que no se confirman, y se emplea en mensajes de <code>RRC</code> y en aplicaciones que exigen una
+transmisión fiable, como la transferencia progresiva de vídeo.</p>
+<h3 id="segmentacion-concatenacion-y-reordenamiento">Segmentación, concatenación y reordenamiento<a class="headerlink" href="#segmentacion-concatenacion-y-reordenamiento" title="Permanent link">&para;</a></h3>
+<p>El tamaño de las unidades de datos de protocolo de <code>RLC</code> lo decide la capa de control de
+acceso al medio en función de la calidad del canal, no <code>RLC</code> mismo, lo que obliga a
+<code>RLC</code> a segmentar y concatenar las unidades de datos de servicio recibidas de <code>PDCP</code>
+para ajustarlas a ese tamaño variable. Las unidades del modo sin confirmación incluyen
+un número de secuencia y una indicación del tamaño de cada segmento, información
+necesaria porque el tamaño de los paquetes varía de una transmisión a otra. Con esa
+información, el receptor reordena las unidades que llegan fuera de secuencia y elimina
+los duplicados que pudieran producirse. Un temporizador de reordenamiento detecta los
+fallos de recepción sin bloquear indefinidamente la entrega de lo ya recibido, y solo se
+reensambla una unidad de datos de servicio completa cuando todos sus segmentos están
+disponibles.</p>
+<h3 id="control-de-acceso-al-medio">Control de acceso al medio<a class="headerlink" href="#control-de-acceso-al-medio" title="Permanent link">&para;</a></h3>
+<p>La <strong>capa de control de acceso al medio</strong> (<code>MAC</code>) actúa como planificador (<em>scheduler</em>)
+de los recursos de radio disponibles, distribuyéndolos entre los terminales activos en
+los enlaces ascendente y descendente. Además de la planificación, que se detalla en
+<a href="#planificacion-de-recursos">planificación de recursos</a>, <code>MAC</code> transfiere al terminal la
+información de la asignación resultante, gestiona el procedimiento de acceso aleatorio,
+mantiene alineada la temporización del enlace ascendente y ejecuta la retransmisión
+híbrida descrita más adelante en este capítulo.</p>
+<details class="example" open="open">
+<summary>Recorrido de un paquete de usuario por la pila del plano de usuario</summary>
+<p>Una aplicación del terminal genera un paquete IP destinado a un servidor
+externo. Antes de abandonar el terminal como señal radio, ese paquete atraviesa
+las cuatro capas del plano de usuario, y cada una le añade una función
+concreta.</p>
+<p><code>PDCP</code> recibe primero el paquete IP y comprime su cabecera, eliminando la parte
+estática para reducir la sobrecarga que introduciría transmitirla completa en
+cada paquete. A continuación cifra el contenido con la clave de seguridad
+vigente y le asigna un número de secuencia dentro del contador <code>COUNT</code> del
+portador. El resultado pasa a <code>RLC</code>, que lo segmenta o lo concatena con otras
+unidades pendientes hasta ajustarlo al tamaño que <code>MAC</code> ha fijado para el
+siguiente intervalo de transmisión, y que, si el portador opera en modo con
+confirmación, prepara la unidad para su eventual retransmisión si no llega
+confirmación de recepción. <code>MAC</code> multiplexa esa unidad junto con las de otros
+canales lógicos activos del mismo terminal en un único bloque de transporte,
+de acuerdo con la asignación de recursos que el planificador le ha concedido
+en ese intervalo, y añade la información necesaria para la retransmisión
+híbrida. Por último, la capa física codifica y modula ese bloque de transporte
+sobre los elementos de recurso asignados de la malla descrita en
+<a href="../section_2_interfaz_radio/">interfaz radio de LTE</a>, y lo transmite sobre el
+canal físico compartido correspondiente. En el <code>eNodeB</code>, las mismas cuatro
+capas se recorren en sentido inverso hasta reconstruir el paquete IP original.</p>
+</details>
+<h2 id="plano-de-control">Plano de control<a class="headerlink" href="#plano-de-control" title="Permanent link">&para;</a></h2>
+<p>El plano de control transporta la señalización que gestiona la conexión del terminal con
+la red, en lugar de los datos de las aplicaciones. Las capas inferiores al control de
+recursos radio realizan funciones similares a las del plano de usuario, con una
+excepción: <code>PDCP</code> no comprime cabeceras en el plano de control, porque los mensajes de
+señalización no comparten la estructura repetitiva de las cabeceras IP que justifica esa
+compresión en el plano de usuario. En su lugar, <code>PDCP</code> recibe los paquetes de <code>RRC</code>, les
+asigna un número de secuencia, calcula el código de autenticación de mensaje y cifra el
+resultado antes de generar la unidad de datos de protocolo que entrega a <code>RLC</code>.</p>
+<h3 id="control-de-recursos-radio">Control de recursos radio<a class="headerlink" href="#control-de-recursos-radio" title="Permanent link">&para;</a></h3>
+<p>El <strong>control de recursos radio</strong> (<code>RRC</code>) es la capa que gobierna la relación entre el
+terminal y la <code>E-UTRAN</code>. Su función principal es la configuración de los portadores
+radio y de los parámetros de las capas inferiores, pero además difunde la información
+del sistema, gestiona el aviso de llamada, establece y libera las conexiones y configura
+las mediciones que el terminal reporta para decidir un traspaso.</p>
+<h3 id="estados-inactivo-y-conectado">Estados inactivo y conectado<a class="headerlink" href="#estados-inactivo-y-conectado" title="Permanent link">&para;</a></h3>
+<p>El terminal, frente a la <code>E-UTRAN</code>, se encuentra en uno de dos estados de <code>RRC</code>. En
+<code>RRC_IDLE</code>, el terminal selecciona y reselecciona celda de forma autónoma y monitoriza
+el canal de aviso de llamada para detectar si la red intenta localizarlo. En
+<code>RRC_CONNECTED</code>, el terminal informa a la red de la asignación de recursos que necesita
+y de la celda en la que se encuentra, en preparación de un eventual traspaso.</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>stateDiagram-v2
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>    [*] --&gt; RRC_IDLE
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>    RRC_IDLE --&gt; RRC_CONNECTED: establecimiento de conexion RRC
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>    RRC_CONNECTED --&gt; RRC_IDLE: liberacion de la conexion RRC
+</span></code></pre></div></td></tr></table></div>
+<p>Estos dos estados de <code>RRC</code> son distintos de los estados <code>ECM-IDLE</code> y <code>ECM-CONNECTED</code>
+descritos en <a href="../section_1_arquitectura_eps/#estados-del-terminal">estados del terminal</a>,
+aunque están estrechamente acoplados entre sí: el paso de <code>ECM-IDLE</code> a <code>ECM-CONNECTED</code>
+exige establecer conexión tanto entre el terminal y el <code>eNodeB</code> como entre el <code>eNodeB</code> y
+la pasarela de servicio, y esa primera conexión es precisamente la que corresponde al
+paso de <code>RRC_IDLE</code> a <code>RRC_CONNECTED</code>. El estado de <code>RRC</code> describe la relación del
+terminal con la red de acceso radio, mientras que el estado <code>ECM</code> describe su relación
+con la red troncal, y ambos avanzan de forma coordinada aunque residan en capas
+distintas de la arquitectura.</p>
+<h3 id="portadores-de-senalizacion-y-de-datos">Portadores de señalización y de datos<a class="headerlink" href="#portadores-de-senalizacion-y-de-datos" title="Permanent link">&para;</a></h3>
+<p><code>RRC</code> distingue dos tipos de portador radio según el contenido que transportan. Los
+<strong>portadores de señalización</strong> (<code>SRB</code>) llevan los mensajes de <code>RRC</code> y la señalización
+del estrato de no acceso, mientras que los <strong>portadores de datos</strong> (<code>DRB</code>) llevan los
+datos de usuario del plano de usuario. Se emplean varios <code>SRB</code> para los mensajes de
+<code>RRC</code>, cada uno con un propósito y un nivel de prioridad distintos, y los mensajes que
+utilizan el canal de control dedicado se protegen mediante integridad y cifrado en la
+capa <code>PDCP</code> y emplean el modo con confirmación de <code>RLC</code>.</p>
+<p>Cada portador, de señalización o de datos, se mapea a través de <code>PDCP</code> y <code>RLC</code> hacia un
+<strong>canal lógico</strong>, que a su vez se mapea en <code>MAC</code> hacia un <strong>canal de transporte</strong>, y
+este finalmente hacia un <strong>canal físico</strong> en la capa física. La información del sistema
+y el aviso de llamada, que no dependen de un portador dedicado a un terminal concreto,
+se mapean directamente a canales lógicos comunes.</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>flowchart LR
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>    BCCH["BCCH (logico)"] --&gt; BCH["BCH (transporte)"] --&gt; PBCH_F["PBCH (fisico)"]
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a>    PCCH["PCCH (logico)"] --&gt; PCH["PCH (transporte)"] --&gt; PDSCH_F["PDSCH (fisico)"]
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a>    DCCH["DCCH (logico, DL)"] --&gt; DLSCH["DL-SCH (transporte)"] --&gt; PDSCH_F
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a>    DTCH["DTCH (logico)"] --&gt; DLSCH
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6"></a>    DCCHU["DCCH (logico, UL)"] --&gt; ULSCH["UL-SCH (transporte)"] --&gt; PUSCH_F["PUSCH (fisico)"]
+</span></code></pre></div></td></tr></table></div>
+<p>La información del sistema se transporta sin cifrar a través del canal de difusión
+(<code>BCH</code>), y el aviso de llamada a través del canal de aviso de llamada (<code>PCH</code>). Un canal
+de tráfico dedicado a un terminal concreto exige que este se encuentre en
+<code>RRC_CONNECTED</code>, y su tráfico se transporta sobre el canal compartido de enlace
+descendente (<code>DL-SCH</code>) o de enlace ascendente (<code>UL-SCH</code>) según el sentido, canales
+compartidos entre varios terminales cuya multiplexación y cuyo control de la
+retransmisión híbrida gestiona la planificación de <code>MAC</code>. Los canales físicos a los que
+finalmente llegan estos canales de transporte, <code>PDSCH</code>, <code>PUSCH</code> y <code>PBCH</code> entre otros, se
+describen con detalle en
+<a href="../section_2_interfaz_radio/#canales-fisicos-del-enlace-descendente">canales físicos del enlace descendente</a>
+y en
+<a href="../section_2_interfaz_radio/#canales-fisicos-del-enlace-ascendente">canales físicos del enlace ascendente</a>.</p>
+<h3 id="procedimientos-del-estrato-de-no-acceso">Procedimientos del estrato de no acceso<a class="headerlink" href="#procedimientos-del-estrato-de-no-acceso" title="Permanent link">&para;</a></h3>
+<p>El <strong>estrato de no acceso</strong> (<code>NAS</code>) define cómo el terminal se conecta a la red troncal,
+por encima de la relación con la red de acceso radio que gestiona <code>RRC</code>. Sus mensajes
+viajan encapsulados dentro de la señalización de <code>RRC</code>, mapeados a los portadores de
+señalización descritos en el apartado anterior, lo que hace de <code>RRC</code> el transporte de
+<code>NAS</code> sobre la interfaz radio del mismo modo en que la interfaz <code>S1-MME</code> lo transporta
+entre el <code>eNodeB</code> y la entidad de gestión de movilidad, según se describe en
+<a href="../section_1_arquitectura_eps/#interfaz-s1">interfaz S1</a>. El procedimiento de conexión
+inicial de un terminal, que combina la solicitud de acceso aleatorio, la creación de
+contexto en la entidad de gestión de movilidad y la autenticación mutua, se describe con
+su intercambio completo de mensajes en
+<a href="../section_1_arquitectura_eps/#estados-del-terminal">establecimiento inicial de conectividad de un terminal apagado</a>.
+Además de esa conexión inicial, el estrato de no acceso ejecuta la <strong>actualización de
+área de seguimiento</strong> (<code>TAU</code>) cuando el terminal, en <code>ECM-IDLE</code>, se desplaza fuera del
+área de seguimiento que la red troncal tenía registrada para él, un procedimiento que
+mantiene actualizada la localización aproximada del terminal sin exigirle permanecer
+conectado de forma continua.</p>
+<h2 id="planificacion-de-recursos">Planificación de recursos<a class="headerlink" href="#planificacion-de-recursos" title="Permanent link">&para;</a></h2>
+<p>El planificador de <code>MAC</code> reparte los bloques de recurso físico disponibles entre los
+terminales con datos pendientes en cada intervalo de transmisión, la misma unidad mínima
+de asignación descrita en
+<a href="../section_2_interfaz_radio/#bloque-de-recurso-fisico-y-elemento-de-recurso">bloque de recurso físico y elemento de recurso</a>.</p>
+<h3 id="informacion-que-utiliza-el-planificador">Información que utiliza el planificador<a class="headerlink" href="#informacion-que-utiliza-el-planificador" title="Permanent link">&para;</a></h3>
+<p>El planificador del <code>eNodeB</code> toma su decisión a partir de varias fuentes de información,
+distintas según el sentido del enlace. En el enlace descendente, dispone de los datos ya
+almacenados en el propio <code>eNodeB</code> esperando transmisión y de la calidad del canal medida
+directamente por el <code>eNodeB</code> a partir de las señales que recibe del terminal. En el
+enlace ascendente, depende en cambio de lo que el terminal le comunica: el indicador de
+calidad de canal, tratado en detalle en
+<a href="#indicador-de-calidad-de-canal">indicador de calidad de canal</a>, y los informes de
+estado del búfer del terminal, que indican cuántos datos tiene pendientes de transmitir.
+Con esa información, distintos algoritmos de planificación deciden qué terminales
+reciben recursos y con qué esquema de modulación y codificación, considerando los
+requisitos de calidad de servicio de cada portador radio configurado.</p>
+<details class="example" open="open">
+<summary>Reparto de bloques de recurso entre dos usuarios con distinta calidad</summary>
+<p>Una portadora de 10 MHz aloja <span class="arithmatex">\(N_\text{RB} = 50\)</span> bloques de recurso, según la
+cifra ya establecida en
+<a href="../section_2_interfaz_radio/#malla-de-recursos">régimen binario máximo de una portadora de 20 MHz</a>,
+con prefijo cíclico normal y catorce símbolos OFDM por subtrama. En una
+subtrama concreta, dos terminales tienen datos pendientes: el terminal A, con
+una relación señal-ruido alta, y el terminal B, con una relación señal-ruido
+baja, según reflejan sus indicadores de calidad de canal más recientes.</p>
+<p>El planificador, a partir de esa información de calidad y de los informes de
+estado del búfer de cada terminal, decide asignar 30 bloques de recurso al
+terminal A con un esquema de modulación y codificación de <code>64-QAM</code> y tasa
+<span class="arithmatex">\(R = 3/4\)</span>, y los 20 bloques de recurso restantes al terminal B con <code>QPSK</code> y
+tasa <span class="arithmatex">\(R = 1/2\)</span>, agotando entre ambos la capacidad completa de la portadora en
+esa subtrama.</p>
+<p>Cada bloque de recurso aporta <span class="arithmatex">\(12 \times 14 = 168\)</span> elementos de recurso por
+subtrama. Para el terminal A, cada elemento transporta
+<span class="arithmatex">\(\bar{B}\, R = 6 \times 0{,}75 = 4{,}5\)</span> bit, de modo que sus 30 bloques
+entregan en esa subtrama</p>
+<div class="arithmatex">\[
+b_A = 30 \times 168 \times 4{,}5 = 22\,680\ \text{bit}
+\]</div>
+<p>Para el terminal B, cada elemento transporta <span class="arithmatex">\(\bar{B}\, R = 2 \times 0{,}5 =
+1\ \text{bit}\)</span>, de modo que sus 20 bloques entregan</p>
+<div class="arithmatex">\[
+b_B = 20 \times 168 \times 1 = 3\,360\ \text{bit}
+\]</div>
+<p>Si esa asignación se mantuviera de forma sostenida, el terminal A alcanzaría un
+régimen binario de <span class="arithmatex">\(22\,680 \times 1000 = 22{,}68\ \text{Mbit/s}\)</span> y el
+terminal B, de <span class="arithmatex">\(3\,360 \times 1000 = 3{,}36\ \text{Mbit/s}\)</span>. La diferencia de
+régimen entre ambos terminales no procede solo de que A reciba más bloques de
+recurso, sino también de que su mejor calidad de canal le permite un esquema
+de modulación y codificación más denso: con la misma cantidad de bloques que
+B, A habría obtenido igualmente un régimen muy superior. El planificador
+combina ambos efectos, el reparto de bloques y la elección del esquema, para
+aprovechar la capacidad total de la portadora sin exceder la tasa de error
+tolerable de ninguno de los dos terminales.</p>
+</details>
+<h3 id="indice-de-equidad-de-jain">Índice de equidad de Jain<a class="headerlink" href="#indice-de-equidad-de-jain" title="Permanent link">&para;</a></h3>
+<p>El reparto de recursos del ejemplo anterior favorece de forma deliberada al terminal con
+mejor calidad de canal, lo que maximiza el <em>throughput</em> agregado de la portadora pero
+reparte ese <em>throughput</em> de forma desigual entre los dos terminales. El <strong>índice de
+equidad de Jain</strong> cuantifica ese reparto con un único número, sin necesidad de examinar
+la distribución completa de tasas:</p>
+<div class="arithmatex">\[
+J(x_1, \dots, x_n) = \frac{\left( \sum_{i=1}^{n} x_i \right)^2}{n \sum_{i=1}^{n} x_i^2}
+\]</div>
+<p>donde <span class="arithmatex">\(x_i\)</span> es la magnitud repartida entre el usuario <span class="arithmatex">\(i\)</span>, por ejemplo el <em>throughput</em>
+que recibe, y <span class="arithmatex">\(n\)</span> es el número total de usuarios considerados. El índice toma valores en
+el intervalo <span class="arithmatex">\(\lbrack 1/n, 1 \rbrack\)</span>: el valor <span class="arithmatex">\(J=1\)</span> se alcanza cuando todos los
+usuarios reciben exactamente la misma magnitud, con independencia de cuál sea esa
+magnitud común, y el valor mínimo <span class="arithmatex">\(J=1/n\)</span> se alcanza cuando un único usuario concentra
+la totalidad del recurso y el resto recibe cero. El índice no depende de la escala de
+los <span class="arithmatex">\(x_i\)</span>, solo de su reparto relativo, lo que permite comparar la equidad de dos
+planificadores distintos aunque operen con <em>throughput</em> agregados muy distintos entre
+sí.</p>
+<p>Esta métrica formaliza la tensión, ya presente en el ejemplo anterior, entre maximizar
+el <em>throughput</em> agregado y repartirlo de forma equitativa. Un planificador de tipo
+<em>máximo throughput</em> asigna siempre los recursos al terminal con mejor calidad de canal
+en cada instante, lo que maximiza la capacidad cursada de la portadora a costa de un
+índice de Jain bajo, porque los terminales con peor calidad reciben sistemáticamente
+menos recursos o ninguno. Un planificador de tipo <em>turno rotatorio</em> (<em>round robin</em>)
+reparte los recursos por igual entre todos los terminales activos con independencia de
+su calidad de canal, lo que alcanza el índice de Jain máximo pero desaprovecha parte de
+la capacidad de la portadora al asignar recursos también a terminales con canales
+peores. El planificador <strong>proporcionalmente justo</strong> (<em>proportional fair</em>) se sitúa entre
+ambos extremos: pondera la calidad instantánea de cada terminal por su tasa media
+reciente, de modo que favorece al terminal con mejor calidad relativa a su propio
+historial en lugar de al mejor en términos absolutos, consiguiendo un índice de Jain
+intermedio con una pérdida de capacidad agregada menor que la de un reparto por igual
+estricto.</p>
+<details class="example" open="open">
+<summary>Índice de Jain sobre el reparto de dos terminales</summary>
+<p>Retomando los dos terminales del ejemplo anterior, el terminal A recibe un
+régimen de <span class="arithmatex">\(22{,}68\)</span> Mbit/s y el terminal B, de <span class="arithmatex">\(3{,}36\)</span> Mbit/s. El índice de
+Jain de ese reparto es</p>
+<div class="arithmatex">\[
+J = \frac{(22{,}68 + 3{,}36)^2}{2 \cdot (22{,}68^2 + 3{,}36^2)} =
+\frac{26{,}04^2}{2 \times 526{,}12} = 0{,}645
+\]</div>
+<p>Un reparto alternativo que mantuviera el mismo <em>throughput</em> agregado de
+<span class="arithmatex">\(26{,}04\)</span> Mbit/s pero lo dividiera por igual entre ambos terminales,
+<span class="arithmatex">\(13{,}02\)</span> Mbit/s cada uno, alcanzaría <span class="arithmatex">\(J=1\)</span>, el máximo posible con dos
+usuarios. La diferencia entre ambos valores, <span class="arithmatex">\(0{,}645\)</span> frente a <span class="arithmatex">\(1\)</span>, mide en
+una sola cifra el precio en equidad que paga el planificador del ejemplo
+original por maximizar la capacidad total de la portadora: prioriza al
+terminal A porque su mejor calidad de canal permite transmitir más bits por
+elemento de recurso, pero deja al terminal B con menos de un séptimo del
+régimen de A, muy por debajo de un reparto proporcional a partes iguales.</p>
+</details>
+<h3 id="recepcion-discontinua">Recepción discontinua<a class="headerlink" href="#recepcion-discontinua" title="Permanent link">&para;</a></h3>
+<p>La <strong>recepción discontinua</strong> (<code>DRX</code>) permite al terminal suspender la monitorización
+continua del canal de control cuando no tiene datos pendientes, y reactivarla solo de
+forma periódica o cuando la red le indica que existen datos que entregarle. Al reducir
+el tiempo que el terminal mantiene activo su receptor de radiofrecuencia, <code>DRX</code> alarga
+la autonomía de su batería a costa de introducir cierto retardo adicional en la entrega
+de datos que llegan durante un intervalo de inactividad, un compromiso que la red ajusta
+configurando la duración de esos intervalos según el tipo de tráfico que el terminal
+recibe habitualmente.</p>
+<h3 id="alineacion-temporal-del-enlace-ascendente">Alineación temporal del enlace ascendente<a class="headerlink" href="#alineacion-temporal-del-enlace-ascendente" title="Permanent link">&para;</a></h3>
+<p>Los terminales conectados a una misma celda se encuentran a distancias distintas del
+<code>eNodeB</code>, y cada distancia introduce un retardo de propagación distinto entre la
+transmisión del terminal y su recepción en la estación base. Sin corrección, las
+transmisiones de terminales a distinta distancia llegarían al <code>eNodeB</code> desalineadas en
+el tiempo, lo que rompería la ortogonalidad entre usuarios que el acceso múltiple del
+enlace ascendente exige. La <strong>alineación temporal</strong> corrige este efecto: el <code>eNodeB</code>
+mide el desalineamiento de cada terminal a partir de sus transmisiones recibidas y le
+envía un comando de adelanto o retraso de temporización, de modo que cada terminal
+adelanta su transmisión en una cantidad proporcional a su distancia estimada, y todas
+las transmisiones llegan alineadas en el tiempo a la antena receptora del <code>eNodeB</code> con
+independencia de la distancia real de cada terminal.</p>
+<h2 id="codificacion-y-adaptacion-de-enlace">Codificación y adaptación de enlace<a class="headerlink" href="#codificacion-y-adaptacion-de-enlace" title="Permanent link">&para;</a></h2>
+<p>La codificación de canal de LTE combina varios mecanismos de protección aplicados en
+cascada sobre cada bloque de transporte, antes de que la adaptación de enlace decida,
+bloque a bloque, con qué modulación y con qué tasa de codificación transmitirlo.</p>
+<h3 id="comprobacion-de-redundancia-por-bloque-de-transporte">Comprobación de redundancia por bloque de transporte<a class="headerlink" href="#comprobacion-de-redundancia-por-bloque-de-transporte" title="Permanent link">&para;</a></h3>
+<p>Cada <strong>bloque de transporte</strong> recibe un elemento de comprobación de redundancia cíclica,
+del tipo ya descrito en
+<a href="../../../01_fundamentos/05_codificacion/section_1_codificacion_de_canal/#comprobacion-de-redundancia-ciclica">comprobación de redundancia cíclica</a>,
+que permite al receptor verificar si el bloque completo ha llegado sin errores. Cuando
+el bloque de transporte no cabe en un único bloque de código, porque su tamaño supera el
+máximo que el turbocodificador admite, se <strong>segmenta</strong> en varios bloques de código, y
+cada uno de ellos recibe además su propio elemento de comprobación de redundancia
+cíclica, que en este caso no verifica la entrega correcta frente al receptor final, sino
+que sirve como condición de parada del turbodecodificador iterativo: cuando la
+comprobación de un bloque de código pasa durante la decodificación, el decodificador
+puede detener las iteraciones sobre ese bloque sin esperar al número máximo configurado.</p>
+<h3 id="turbocodificacion-y-ajuste-de-tasa">Turbocodificación y ajuste de tasa<a class="headerlink" href="#turbocodificacion-y-ajuste-de-tasa" title="Permanent link">&para;</a></h3>
+<p>Los datos de usuario se protegen con un <strong>código turbo</strong>, del tipo descrito en
+<a href="../../../01_fundamentos/05_codificacion/section_2_codigos_convolucionales/#turbo-codigos">turbo códigos</a>,
+mientras que la señalización emplea en su lugar un código convolucional, una elección
+que refleja el menor volumen y la mayor sensibilidad al retardo de decodificación de los
+mensajes de señalización frente al tráfico de datos. El código turbo madre de LTE tiene
+tasa <span class="arithmatex">\(1/3\)</span>, y el <strong>ajuste de tasa</strong> (<em>rate matching</em>) recorta o repite esa salida
+mediante el mismo mecanismo de perforado descrito en
+<a href="../../../01_fundamentos/05_codificacion/section_2_codigos_convolucionales/#perforado">perforado</a>
+hasta ajustarla a los bits realmente disponibles en los bloques de recurso asignados por
+el planificador, según la tasa de codificación efectiva que el esquema de modulación y
+codificación elegido exige.</p>
+<p>Para permitir que varios decodificadores trabajen en paralelo sobre un mismo bloque, y
+así acelerar la decodificación, el código turbo de LTE incorpora un <strong>entrelazador</strong>
+diseñado específicamente con ese objetivo de paralelización, distinto del entrelazador
+genérico frente a errores en ráfaga que ya se trata en
+<a href="../../../01_fundamentos/05_codificacion/section_1_codificacion_de_canal/#entrelazado">entrelazado</a>.</p>
+<h3 id="bufer-circular-y-versiones-de-redundancia">Búfer circular y versiones de redundancia<a class="headerlink" href="#bufer-circular-y-versiones-de-redundancia" title="Permanent link">&para;</a></h3>
+<p>El ajuste de tasa de LTE recorre un <strong>búfer circular</strong>, la misma estructura de datos
+descrita en
+<a href="../../../01_fundamentos/05_codificacion/section_3_adaptacion_de_enlace_y_retransmision/#ajuste-de-tasa-con-bufer-circular">ajuste de tasa con búfer circular</a>,
+que almacena en orden fijo los bits sistemáticos seguidos de los bits de redundancia que
+produce el código turbo. LTE define cuatro <strong>versiones de redundancia</strong>, cada una
+correspondiente a un punto de inicio distinto dentro de ese búfer: la primera versión
+comienza por los bits sistemáticos, lo que produce la tasa de codificación efectiva más
+alta y el régimen binario más alto si el bloque se entrega al primer intento, y las
+versiones siguientes desplazan el punto de inicio hacia tramos del búfer con más
+redundancia y menos bits sistemáticos, la misma lógica de recorrido circular que emplea
+la retransmisión híbrida descrita más adelante en este capítulo para generar cada
+intento sucesivo.</p>
+<h3 id="indicador-de-calidad-de-canal">Indicador de calidad de canal<a class="headerlink" href="#indicador-de-calidad-de-canal" title="Permanent link">&para;</a></h3>
+<p>El terminal transmite el <strong>indicador de calidad de canal</strong> (<code>CQI</code>) hacia el <code>eNodeB</code> de
+forma periódica o bajo demanda, según lo determine el propio <code>eNodeB</code>. El <code>CQI</code> puede
+referirse al conjunto completo de la banda asignada, a subbandas concretas, o a las
+mejores <span class="arithmatex">\(M\)</span> subbandas, una elección que equilibra la precisión de la información frente
+a la sobrecarga de señalización que su transmisión introduce en el canal de
+retroalimentación descrito de forma genérica en
+<a href="../../../01_fundamentos/05_codificacion/section_3_adaptacion_de_enlace_y_retransmision/#canal-de-retroalimentacion">canal de retroalimentación</a>.
+El indicador resume la relación señal-ruido medida por el terminal, y el <code>eNodeB</code> lo
+traduce en la tasa de código y el esquema de modulación que debe emplear en su siguiente
+transmisión hacia ese terminal: a mayor relación señal-ruido reportada, constelaciones
+más densas y tasas de código más altas, siguiendo el mismo principio de adaptación de
+enlace descrito en detalle en
+<a href="../../../01_fundamentos/05_codificacion/section_3_adaptacion_de_enlace_y_retransmision/#adaptacion-conjunta-de-modulacion-y-codificacion">adaptación conjunta de modulación y codificación</a>.</p>
+<h2 id="retransmision-hibrida">Retransmisión híbrida<a class="headerlink" href="#retransmision-hibrida" title="Permanent link">&para;</a></h2>
+<p>LTE emplea <strong>retransmisión híbrida</strong> (<code>HARQ</code>) sobre el canal de datos de usuario,
+aplicando la misma lógica de detección mediante comprobación de redundancia cíclica y de
+confirmación positiva o negativa, y las mismas técnicas de combinación de búsqueda y de
+redundancia incremental, descritas de forma general en
+<a href="../../../01_fundamentos/05_codificacion/section_3_adaptacion_de_enlace_y_retransmision/#protocolos-de-retransmision">protocolos de retransmisión</a>
+y en
+<a href="../../../01_fundamentos/05_codificacion/section_3_adaptacion_de_enlace_y_retransmision/#combinacion-de-versiones-y-redundancia-incremental">combinación de versiones y redundancia incremental</a>.
+Lo que este capítulo añade es cómo LTE integra esa lógica genérica en su capa <code>MAC</code> y en
+su interfaz aérea. Cada intento sucesivo emplea una versión de redundancia distinta de
+las cuatro descritas en el apartado anterior, generadas recorriendo el mismo búfer
+circular que produce la primera transmisión, de modo que el ajuste de tasa y la
+retransmisión híbrida comparten un único mecanismo en lugar de dos independientes. Las
+confirmaciones y las peticiones de retransmisión del enlace ascendente viajan sobre el
+canal físico de indicador de <code>HARQ</code> (<code>PHICH</code>), descrito en
+<a href="../section_2_interfaz_radio/#canales-fisicos-del-enlace-descendente">canales físicos del enlace descendente</a>,
+mientras que las del enlace descendente se señalizan junto con la propia asignación de
+recursos en el canal físico de control correspondiente.</p>
+<h2 id="tecnicas-mimo-en-lte">Técnicas MIMO en LTE<a class="headerlink" href="#tecnicas-mimo-en-lte" title="Permanent link">&para;</a></h2>
+<p>La norma LTE especifica las técnicas de transmisión con varias antenas únicamente para
+el sentido de la transmisión, dejando el diseño del receptor a criterio del fabricante:
+cada dispositivo puede implementar de forma distinta cómo recibe una señal <code>MIMO</code>, y el
+estándar no impone ninguna técnica de recepción concreta. Las técnicas para un único
+usuario se aplican de forma preferente en el enlace descendente, que cuenta con más
+antenas transmisoras en el <code>eNodeB</code> que el terminal en el enlace ascendente, mientras
+que para las técnicas multiusuario el estándar no impone su implementación pero sí
+ofrece los mecanismos de soporte necesarios.</p>
+<h3 id="diversidad-en-transmision-con-codificacion-espacio-frecuencia">Diversidad en transmisión con codificación espacio-frecuencia<a class="headerlink" href="#diversidad-en-transmision-con-codificacion-espacio-frecuencia" title="Permanent link">&para;</a></h3>
+<p>La <strong>codificación espacio-frecuencia en bloque</strong> (<code>SFBC</code>) transmite sobre dos antenas y
+dos subportadoras adyacentes, en lugar de sobre dos intervalos de símbolo consecutivos
+como hace el esquema de Alamouti genérico descrito en
+<a href="../../../01_fundamentos/06_mimo/section_1_fundamentos_mimo/#esquema-de-alamouti">esquema de Alamouti</a>.
+Esta diferencia, cambiar el eje de la codificación de tiempo a frecuencia, es la que
+distingue <code>SFBC</code> de los códigos de bloque espacio-temporales ortogonales genéricos
+descritos en
+<a href="../../../01_fundamentos/06_mimo/section_1_fundamentos_mimo/#codigos-de-bloque-espacio-temporales-ortogonales">códigos de bloque espacio-temporales ortogonales</a>,
+y conserva la misma eficiencia espectral y la misma ganancia de diversidad máxima que la
+familia genérica.</p>
+<h3 id="diversidad-con-conmutacion-de-frecuencia">Diversidad con conmutación de frecuencia<a class="headerlink" href="#diversidad-con-conmutacion-de-frecuencia" title="Permanent link">&para;</a></h3>
+<p>La combinación de <strong>codificación espacio-frecuencia con conmutación de frecuencia en
+transmisión</strong> (<code>SFBC</code> &amp; <code>FSTD</code>) extiende la técnica anterior a cuatro antenas y cuatro
+subportadoras adyacentes, agrupando las antenas en dos pares que siguen cada uno un
+esquema de Alamouti independiente. El resultado equivale a aplicar dos instancias de
+<code>SFBC</code> en paralelo, una por cada par de antenas, lo que conserva la eficiencia espectral
+máxima de la técnica de dos antenas mientras extrae diversidad de las cuatro antenas
+disponibles.</p>
+<h3 id="multiplexacion-con-precodificacion">Multiplexación con precodificación<a class="headerlink" href="#multiplexacion-con-precodificacion" title="Permanent link">&para;</a></h3>
+<p>La <strong>multiplexación con precodificación</strong> transmite varios flujos de datos
+simultáneamente sobre el conjunto de antenas, aplicando una matriz de precodificación
+del tipo descrito en
+<a href="../../../01_fundamentos/06_mimo/section_2_multiplexacion_espacial/#matriz-de-precodificacion">matriz de precodificación</a>
+para repartir cada flujo entre las antenas transmisoras. Tanto esta técnica como el
+<em>beamforming</em> descrito más adelante exigen que el terminal estime el canal y comunique
+esa estimación al <code>eNodeB</code>, lo que supone un volumen apreciable de información de
+retorno, y exigen además que el terminal decida cuántos flujos, o capas, le interesa
+recibir, porque un mayor número de capas reparte la misma potencia total entre más
+flujos y reduce la potencia disponible para cada uno.</p>
+<h3 id="libros-de-codigos-e-indicadores-de-matriz-y-de-rango">Libros de códigos e indicadores de matriz y de rango<a class="headerlink" href="#libros-de-codigos-e-indicadores-de-matriz-y-de-rango" title="Permanent link">&para;</a></h3>
+<p>Para reducir el volumen de información de retorno, LTE no transmite directamente los
+elementos de la matriz de precodificación, sino dos índices que apuntan a una tabla
+compartida entre el <code>eNodeB</code> y el terminal, el <strong>libro de códigos</strong>. El <strong>indicador de
+matriz de precodificación</strong> (<code>PMI</code>) señala qué matriz o vector de la tabla ofrece el
+mejor rendimiento estimado, y el <strong>indicador de rango</strong> (<code>RI</code>) señala cuántos flujos
+deben emplearse. Los vectores del libro de códigos son unitarios, lo que preserva la
+potencia total de cada flujo, y sus coeficientes tienen módulo constante, lo que
+garantiza que todas las antenas transmitan con la misma potencia. La búsqueda del vector
+óptimo se limita a la tabla disponible, de modo que el resultado es el más cercano al
+óptimo real dentro de ese conjunto finito, no necesariamente el óptimo absoluto, y tanto
+<code>PMI</code> como <code>RI</code> pueden calcularse para toda la banda asignada o por subbandas.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>El catálogo completo del libro de códigos de LTE para cuatro antenas
+transmisoras y de una a cuatro capas no se ha podido recuperar con fiabilidad
+de las fuentes de origen, por lo que este capítulo describe el mecanismo de
+<code>PMI</code> y <code>RI</code> sin reproducir esa tabla concreta.</p>
+</div>
+<h3 id="diversidad-de-retardo-ciclico">Diversidad de retardo cíclico<a class="headerlink" href="#diversidad-de-retardo-ciclico" title="Permanent link">&para;</a></h3>
+<p>La <strong>diversidad de retardo cíclico</strong> (<code>CDD</code>) se emplea cuando el <code>eNodeB</code> no recibe
+información de <code>PMI</code> del terminal. En lugar de fijar una única matriz de
+precodificación, selecciona una matriz distinta de un subconjunto del libro de códigos
+para cada grupo de subportadoras, y aplica sobre cada antena una fase que varía
+linealmente con la frecuencia. Esa variación lineal de fase entre subportadoras
+equivale, tras el modulador OFDM, a un retardo circular de la señal en el dominio del
+tiempo, la misma relación entre desplazamiento de fase en frecuencia y retardo en el
+tiempo que rige cualquier sistema multiportadora. Aunque el retardo circular se propone
+habitualmente como técnica de diversidad, en LTE se aprovecha además como mecanismo para
+generar varias matrices de precodificación distintas a partir de una sola, con mejoras
+en algunas subportadoras a costa de pérdidas en otras.</p>
+<h3 id="beamforming-con-senales-de-referencia-especificas">Beamforming con señales de referencia específicas<a class="headerlink" href="#beamforming-con-senales-de-referencia-especificas" title="Permanent link">&para;</a></h3>
+<p>El <em>beamforming</em> con señales de referencia específicas resuelve un problema práctico de
+la multiplexación con precodificación adaptativa: si el receptor estima la matriz del
+canal a partir de los símbolos piloto, necesita conocer el vector de <em>beamforming</em>
+empleado para poder deshacerlo, y comunicarle ese vector resulta difícil cuando no
+procede de un libro de códigos compartido. LTE resuelve esta dificultad con una <strong>señal
+de referencia específica del usuario</strong> (<code>DMRS</code>), precodificada con el mismo vector de
+<em>beamforming</em> que los datos, de modo que el terminal estima directamente el canal
+equivalente sin necesitar conocer el vector por separado: desde su perspectiva, el
+<code>eNodeB</code> parece transmitir a través de una única antena virtual, el puerto de antena de
+LTE. El <code>eNodeB</code> puede conocer el canal por reciprocidad, si opera en <code>TDD</code>, o estimando
+el ángulo de llegada de la señal del terminal, aunque LTE no fija ningún procedimiento
+concreto para esa segunda vía. Desde la versión 10 de LTE Advanced, el precodificado sin
+libro de códigos puede aplicarse hasta con ocho puertos de antena.</p>
+<p>Dos familias de señales de referencia sirven a la estimación de canal en <code>MIMO</code>. Las
+<strong>señales de referencia específicas de celda</strong> (<code>CRS</code>) se emplean para la estimación de
+canal, la demodulación y el cálculo de <code>CQI</code>, <code>PMI</code> y <code>RI</code>. Las <strong>señales de referencia
+específicas del usuario o de demodulación</strong> (<code>DMRS</code>) se emplean para la estimación de
+canal en la demodulación cuando se aplica precodificación sin libro de códigos, según se
+acaba de describir.</p>
+<h3 id="mimo-multiusuario">MIMO multiusuario<a class="headerlink" href="#mimo-multiusuario" title="Permanent link">&para;</a></h3>
+<p>El <code>MIMO</code> multiusuario permite a un <code>eNodeB</code> comunicarse simultáneamente con varios
+terminales mediante <em>beamforming</em>, mejorando así la calidad de la señal y el rendimiento
+agregado de la celda, un caso particular de la multiplexación espacial de usuarios ya
+descrita en
+<a href="../../../01_fundamentos/06_mimo/section_2_multiplexacion_espacial/#multiplexacion-espacial-de-usuarios-en-el-enlace-descendente">multiplexación espacial de usuarios en el enlace descendente</a>.
+Su aplicación varía según el modo de duplexación. En <code>TDD</code>, el <code>eNodeB</code> estima el canal
+por reciprocidad y aplica la precodificación adecuada de forma transparente para el
+usuario, apoyándose en la señal de referencia específica del usuario. En <code>FDD</code>, la
+técnica solo resulta eficaz cuando las direcciones de <em>beamforming</em> que comunican los
+distintos usuarios son aproximadamente ortogonales entre sí, la condición que permite
+reducir la interferencia mutua entre los flujos dirigidos a cada uno. En ambos modos de
+duplexación, el <code>eNodeB</code> puede además estimar el canal y aplicar la ecualización
+espacial correspondiente apoyándose en la señal de referencia de demodulación.</p>
+<details class="example" open="open">
+<summary>Efecto del tamaño del libro de códigos sobre el rendimiento</summary>
+<p>Un sistema <code>MIMO</code> adaptativo puede precodificar sus flujos de dos formas: con
+una matriz de precodificación calculada de forma continua a partir del canal
+estimado, o con una matriz seleccionada de un libro de códigos de tamaño
+finito. La primera opción exige comunicar la matriz completa al transmisor, lo
+que consume un canal de retorno mucho mayor que comunicar simplemente un
+índice <code>PMI</code>.</p>
+<p>Cuando el libro de códigos tiene un tamaño adecuado para las condiciones del
+canal, la tasa de bits que se alcanza con la matriz seleccionada del libro de
+códigos apenas se aleja de la que ofrecería la matriz óptima continua, porque
+el conjunto de matrices disponibles ya cubre con suficiente densidad las
+direcciones de canal más probables. La pérdida de rendimiento solo se hace
+apreciable cuando el libro de códigos es demasiado pequeño para el número de
+condiciones de canal distintas que debe representar, porque en ese caso la
+matriz más cercana disponible se aleja de forma significativa de la matriz
+óptima real. El compromiso de diseño, por tanto, no es evitar el libro de
+códigos, sino dimensionarlo con suficiente densidad frente a la variabilidad
+del canal que debe cubrir.</p>
+</details>
+<h2 id="movilidad-intra-lte">Movilidad intra-LTE<a class="headerlink" href="#movilidad-intra-lte" title="Permanent link">&para;</a></h2>
+<p>La <strong>movilidad intra-LTE</strong> traslada una comunicación activa de un <code>eNodeB</code> a otro dentro
+de la misma red LTE, aplicando a esta generación concreta el marco general de traspaso
+ya descrito en
+<a href="../../01_fundamentos_celulares/section_2_movilidad_y_recursos_radio/#traspaso">traspaso</a>.
+La elección entre un traspaso sin interrupciones y uno sin pérdidas, en el sentido
+genérico descrito en
+<a href="../../01_fundamentos_celulares/section_2_movilidad_y_recursos_radio/#traspaso-sin-interrupcion-y-sin-perdidas">traspaso sin interrupción y sin pérdidas</a>,
+la realiza el <code>eNodeB</code> origen para cada portador EPS por separado, según la calidad de
+servicio que ese portador recibe a través de la interfaz <code>S1</code> y según el servicio
+concreto que transporta, y su efecto sobre las entidades <code>PDCP</code> ya se ha descrito en
+<a href="#protocolo-de-convergencia-de-datos-de-paquetes">protocolo de convergencia de datos de paquetes</a>.
+Ambos tipos de traspaso se apoyan en el reenvío de los datos pendientes del enlace
+descendente en el plano de usuario, con independencia de cuál de las dos interfaces
+descritas a continuación ejecute la señalización.</p>
+<h3 id="traspaso-sobre-x2">Traspaso sobre X2<a class="headerlink" href="#traspaso-sobre-x2" title="Permanent link">&para;</a></h3>
+<p>LTE da preferencia al <strong>traspaso sobre X2</strong> siempre que existe interfaz <code>X2</code> entre el
+<code>eNodeB</code> origen y el <code>eNodeB</code> destino, porque esa preferencia evita involucrar a la
+entidad de gestión de movilidad en la decisión. La interfaz <code>X2</code> no exige que todos los
+<code>eNodeB</code> de una red se conecten entre sí: solo se establece entre estaciones base
+suficientemente relacionadas por su proximidad o por el volumen de traspasos que
+intercambian, y puede además implementarse lógicamente sobre la propia interfaz <code>S1</code> sin
+requerir una malla física completa. Las funciones del protocolo de aplicación <code>X2</code>
+(<code>X2-AP</code>) abarcan la gestión de la movilidad, la gestión de la carga y de la
+interferencia entre celdas vecinas, y el intercambio de información histórica entre
+estaciones base, y el traspaso sobre <code>X2</code> puede ejecutarse sin requerir la aprobación de
+la entidad de gestión de movilidad.</p>
+<h3 id="traspaso-sobre-s1">Traspaso sobre S1<a class="headerlink" href="#traspaso-sobre-s1" title="Permanent link">&para;</a></h3>
+<p>El <strong>traspaso sobre S1</strong> se emplea cuando no existe interfaz <code>X2</code> entre los dos <code>eNodeB</code>
+implicados, o cuando la red configura explícitamente ese camino para un destino
+concreto. A diferencia del traspaso sobre <code>X2</code>, en el que las estaciones base se
+comunican de forma directa, el traspaso sobre <code>S1</code> señaliza a través de las entidades de
+gestión de movilidad de origen y de destino, precisamente porque no existe entre las
+estaciones base ningún enlace directo sobre el que negociar el traspaso.</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>sequenceDiagram
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>    participant UE as Terminal
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a>    participant ENBO as eNodeB origen
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a>    participant MMEO as MME origen
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a>    participant MMED as MME destino
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6"></a>    participant ENBD as eNodeB destino
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7"></a>    ENBO-&gt;&gt;MMEO: solicitud de traspaso (interfaz S1-MME)
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8"></a>    MMEO-&gt;&gt;MMED: solicitud de reubicacion
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9"></a>    MMED-&gt;&gt;ENBD: solicitud de traspaso (interfaz S1-MME)
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10"></a>    ENBD--&gt;&gt;MMED: recursos reservados (interfaz S1-MME)
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11"></a>    MMED--&gt;&gt;MMEO: confirmacion de reubicacion
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12"></a>    MMEO--&gt;&gt;ENBO: orden de traspaso (interfaz S1-MME)
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13"></a>    ENBO-&gt;&gt;UE: orden de traspaso
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14"></a>    UE-&gt;&gt;ENBD: acceso a la celda destino
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15"></a>    ENBD-&gt;&gt;MMED: notificacion de traspaso completado (interfaz S1-MME)
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16"></a>    MMED-&gt;&gt;MMEO: liberacion de recursos en origen
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17"></a>    MMEO-&gt;&gt;ENBO: liberacion de recursos (interfaz S1-MME)
+</span></code></pre></div></td></tr></table></div>
+<p>El <code>eNodeB</code> origen decide iniciar el traspaso y comunica esa decisión a su entidad de
+gestión de movilidad a través de la interfaz <code>S1-MME</code>, indicando la celda destino más
+adecuada. La entidad de gestión de movilidad de origen traslada la solicitud a la
+entidad de gestión de movilidad de destino, que a su vez señaliza al <code>eNodeB</code> destino,
+de nuevo a través de <code>S1-MME</code>, para que reserve los recursos necesarios. Una vez
+confirmada esa reserva, la confirmación recorre el mismo camino en sentido inverso hasta
+llegar al <code>eNodeB</code> origen, que ordena entonces al terminal ejecutar el traspaso. Cuando
+el terminal accede a la celda destino, el <code>eNodeB</code> destino lo notifica a través de su
+entidad de gestión de movilidad, lo que permite liberar los recursos que la celda origen
+mantenía reservados.</p>
+<h3 id="preparacion-multiple-y-liberacion-de-recursos">Preparación múltiple y liberación de recursos<a class="headerlink" href="#preparacion-multiple-y-liberacion-de-recursos" title="Permanent link">&para;</a></h3>
+<p>Tanto el traspaso sobre <code>X2</code> como el traspaso sobre <code>S1</code> admiten la <strong>preparación
+múltiple</strong>: el <code>eNodeB</code> origen puede solicitar la reserva de recursos a varios <code>eNodeB</code>
+destino candidatos en paralelo, aunque solo uno de ellos se señala finalmente al
+terminal como destino real. Esta preparación en paralelo permite una recuperación más
+rápida si el terminal no logra acceder a la celda elegida en primer lugar, porque ya
+existe al menos otra celda con recursos reservados a la que redirigir el intento. Con
+independencia de cuántas celdas candidatas se hayan preparado, el <code>eNodeB</code> origen recibe
+un único mensaje de liberación de recursos, procedente exclusivamente del <code>eNodeB</code>
+finalmente seleccionado como destino, lo que evita que la preparación múltiple se
+traduzca en múltiples liberaciones parciales que habría que coordinar por separado.</p>
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Volver al principio
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Pie" >
+        
+          
+          <a href="../section_2_interfaz_radio/" class="md-footer__link md-footer__link--prev" aria-label="Anterior: Interfaz radio de LTE">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Anterior
+              </span>
+              <div class="md-ellipsis">
+                Interfaz radio de LTE
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../04_5g/section_1_arquitectura_5gc/" class="md-footer__link md-footer__link--next" aria-label="Siguiente: Arquitectura del núcleo 5G">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Siguiente
+              </span>
+              <div class="md-ellipsis">
+                Arquitectura del núcleo 5G
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 Daniel Bazo Correa
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/daniel-bazo-correa/" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["announce.dismiss","content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.sections","navigation.tabs","navigation.top","navigation.tracking","search.highlight"],"redirect":null,"search":"../../../assets/javascripts/workers/search.c47bb847.min.js","tags":null,"translations":{"clipboard.copied":"Copiado al portapapeles","clipboard.copy":"Copiar al portapapeles","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 más en esta página","search.result.more.other":"# más en esta página","search.result.none":"No se encontraron documentos","search.result.one":"1 documento encontrado","search.result.other":"# documentos encontrados","search.result.placeholder":"Teclee para comenzar búsqueda","search.result.term.missing":"Falta","select.version":"Seleccionar versión"},"version":{"default":"latest","provider":"mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a2388154.min.js"></script>
+      
+        <script src="../../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
