@@ -24,3 +24,8 @@ cache-keys = [{ file = "pyproject.toml" }, { git = { commit = true } }]
 
 [tool.uv.sources]
 mike = { git = "https://github.com/squidfunk/mike.git" }
+
+[dependency-groups]
+pipeline = [
+    "pre-commit==4.5.1"
+]
