@@ -23,4 +23,4 @@ aprendizaje y que este contenido sea un apoyo real para alcanzar tus objetivos.
 ## Contacto
 
 Si te interesa conectar, no dudes en hacerlo a través de mi
-[LinkedIn](https://www.linkedin.com/in/danibcorr/).
+[LinkedIn](https://www.linkedin.com/in/daniel-bazo-correa/).
