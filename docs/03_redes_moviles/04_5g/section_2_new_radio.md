@@ -1,4 +1,5 @@
 ---
+icon: lucide/radio-tower
 authors: Daniel Bazo Correa
 description:
     Numerología flexible, canales de control, señales de referencia y MIMO masivo de la

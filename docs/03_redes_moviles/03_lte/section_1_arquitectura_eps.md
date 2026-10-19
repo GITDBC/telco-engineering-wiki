@@ -1,4 +1,5 @@
 ---
+icon: lucide/network
 authors: Daniel Bazo Correa
 description:
     Elementos, interfaces y portadores del núcleo de red de LTE, con su modelo de

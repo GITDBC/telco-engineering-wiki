@@ -1,4 +1,5 @@
 ---
+icon: lucide/smile
 authors: Daniel Bazo Correa
 description:
     Medida de la calidad percibida por el usuario, sus métodos de evaluación subjetiva y

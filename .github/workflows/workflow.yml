@@ -6,28 +6,98 @@ on:
   pull_request:
     branches: [main, dev]
 
+env:
+  docs-path: "./docs"
+  docs-branch: "gh-pages"
+
 concurrency:
-  group: pages
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  build-deploy-docs:
-    name: Build and Deploy Documentation
+  check-docs-format:
+    name: Check Documentation Format
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pages: write
-      id-token: write
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v7
 
-      - name: Check formatting
-        run: npx prettier@3 --check .
+      - name: Install Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: lts/*
+          cache: npm
 
-      - name: Setup Python Environment
-        uses: ./.github/actions/setup-python-env
+      - name: Install Node Dependencies
+        run: npm ci
 
-      - name: Build and Deploy Documentation
-        uses: ./.github/actions/build-docs
+      - name: Prettier Format Checking
+        run: npx prettier --check ${{ env.docs-path }}
+
+  build-deploy-docs:
+    needs: check-docs-format
+    name: Build and Deploy Documentation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Install Python Dependencies
+        run: uv sync --locked
+
+      - name: Build Documentation
+        run: uv run zensical build --clean
+
+      - name: Deploy Documentation with Mike
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          VERSION=$(uv version --short)
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git fetch origin ${{ env.docs-branch }} || echo "${{ env.docs-branch }} does not exist yet, mike will create it"
+          uv run mike deploy --branch ${{ env.docs-branch }} --push --update-aliases "v${VERSION}" latest
+          uv run mike set-default --branch ${{ env.docs-branch }} --push latest
+
+  release:
+    name: Release
+    needs: build-deploy-docs
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Resolve Version and Check Tag
+        id: get-version
+        run: |
+          tag="v$(uv version --short)"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+          if git ls-remote --tags origin "refs/tags/$tag" | grep -q .; then
+            echo "::notice::Tag $tag already exists, skipping release"
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Release
+        if: steps.get-version.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v3
+        with:
+          tag_name: ${{ steps.get-version.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          generate_release_notes: true

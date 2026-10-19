@@ -1,4 +1,5 @@
 ---
+icon: lucide/list-ordered
 authors: Daniel Bazo Correa
 description:
     Modelado de un sistema con recursos limitados en el que las peticiones esperan turno

@@ -1,4 +1,5 @@
 ---
+icon: lucide/share-2
 authors: Daniel Bazo Correa
 description:
     Redes móviles sin infraestructura y protocolos de encaminamiento reactivos,

@@ -1,4 +1,5 @@
 ---
+icon: lucide/map-pin
 authors: Daniel Bazo Correa
 description:
     Determinación de la posición de un terminal y mecanismos para consultarla en redes

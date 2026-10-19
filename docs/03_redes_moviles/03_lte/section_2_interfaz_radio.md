@@ -1,4 +1,5 @@
 ---
+icon: lucide/radio-tower
 authors: Daniel Bazo Correa
 description:
     Estructura de recursos en tiempo y frecuencia, canales físicos y señales de

@@ -1,4 +1,5 @@
 ---
+icon: lucide/cable
 authors: Daniel Bazo Correa
 description:
     Red telefónica conmutada, tecnologías de abonado digital y estructura jerárquica de

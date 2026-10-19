@@ -1,4 +1,5 @@
 ---
+icon: lucide/audio-waveform
 authors: Daniel Bazo Correa
 description:
     Caracterización de las señales que transportan información y de su conversión entre

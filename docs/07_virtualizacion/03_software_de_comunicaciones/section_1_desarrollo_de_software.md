@@ -1,4 +1,5 @@
 ---
+icon: lucide/code
 authors: Daniel Bazo Correa
 description:
     Rasgos distintivos del software de comunicaciones, programación de sockets, modelos

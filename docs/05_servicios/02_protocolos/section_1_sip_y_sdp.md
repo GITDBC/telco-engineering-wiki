@@ -1,4 +1,5 @@
 ---
+icon: lucide/phone-call
 authors: Daniel Bazo Correa
 description:
     Señalización de sesiones multimedia sobre IP y descripción negociada de los flujos

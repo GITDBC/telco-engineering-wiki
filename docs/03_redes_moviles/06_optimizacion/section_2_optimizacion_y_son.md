@@ -1,4 +1,5 @@
 ---
+icon: lucide/sliders-horizontal
 authors: Daniel Bazo Correa
 description:
     Ajuste de vecinas, cobertura, movilidad y carga, y automatización de esas tareas

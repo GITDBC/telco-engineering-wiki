@@ -1,4 +1,5 @@
 ---
+icon: lucide/route
 authors: Daniel Bazo Correa
 description:
     Tablas de encaminamiento, algoritmos de vector distancia y de estado del enlace, y

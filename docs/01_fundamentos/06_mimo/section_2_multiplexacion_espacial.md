@@ -1,4 +1,5 @@
 ---
+icon: lucide/split
 authors: Daniel Bazo Correa
 description:
     Precodificación, separación de flujos, MIMO multiusuario y estimación del canal con

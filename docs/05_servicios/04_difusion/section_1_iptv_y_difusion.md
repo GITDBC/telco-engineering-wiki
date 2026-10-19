@@ -1,4 +1,5 @@
 ---
+icon: lucide/tv
 authors: Daniel Bazo Correa
 description:
     Distribución de televisión y radio sobre redes gestionadas, con su arquitectura

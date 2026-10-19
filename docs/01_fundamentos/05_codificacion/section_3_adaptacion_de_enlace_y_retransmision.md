@@ -1,4 +1,5 @@
 ---
+icon: lucide/refresh-cw
 authors: Daniel Bazo Correa
 description:
     Ajuste de modulación y codificación a la calidad del canal y mecanismos de

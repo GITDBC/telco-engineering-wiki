@@ -1,4 +1,5 @@
 ---
+icon: lucide/clapperboard
 authors: Daniel Bazo Correa
 description:
     Clasificación de los servicios multimedia, requisitos que imponen a la red y

@@ -1,4 +1,5 @@
 ---
+icon: lucide/chart-spline
 authors: Daniel Bazo Correa
 description:
     Efecto del multitrayecto y de la movilidad sobre la respuesta temporal y frecuencial

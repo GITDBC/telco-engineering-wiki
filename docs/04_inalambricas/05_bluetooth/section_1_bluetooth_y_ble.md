@@ -1,4 +1,5 @@
 ---
+icon: lucide/bluetooth
 authors: Daniel Bazo Correa
 description:
     Arquitectura, capa física, establecimiento de conexión y pila de protocolos de

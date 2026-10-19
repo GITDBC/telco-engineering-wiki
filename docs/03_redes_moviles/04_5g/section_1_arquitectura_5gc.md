@@ -1,4 +1,5 @@
 ---
+icon: lucide/network
 authors: Daniel Bazo Correa
 description:
     Funciones de red del núcleo basado en servicios, segmentación de red y modelo de

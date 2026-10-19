@@ -1,4 +1,5 @@
 ---
+icon: lucide/circle-play
 authors: Daniel Bazo Correa
 description:
     Transporte de medios en tiempo real, realimentación de calidad y control remoto de

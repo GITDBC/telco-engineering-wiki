@@ -1,4 +1,5 @@
 ---
+icon: lucide/container
 authors: Daniel Bazo Correa
 description:
     Aislamiento de procesos mediante contenedores, construcción de imágenes y

@@ -15,15 +15,8 @@ __pycache__/
 *.ruff_cache/
 .cache
 .complexipy_cache/
+.kiro
 *target/
-
-# Material de partida y extracciones automáticas
-_source/
-_extracted/
-*.zip
-
-# Andamiaje de agentes, no forma parte del sitio publicado
-.kiro/
 
 # Files
 *.pyc

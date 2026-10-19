@@ -1,4 +1,5 @@
 ---
+icon: lucide/server
 authors: Daniel Bazo Correa
 description:
     Arquitectura del subsistema que controla las sesiones multimedia en redes de

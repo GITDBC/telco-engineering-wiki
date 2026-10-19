@@ -1,4 +1,5 @@
 ---
+icon: lucide/box
 authors: Daniel Bazo Correa
 description:
     Motivación de la virtualización en redes de operador, taxonomía completa de sus

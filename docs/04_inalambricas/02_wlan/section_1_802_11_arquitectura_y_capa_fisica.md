@@ -1,4 +1,5 @@
 ---
+icon: lucide/wifi
 authors: Daniel Bazo Correa
 description:
     Organización de una red local inalámbrica y evolución de su capa física a través de

@@ -1,4 +1,5 @@
 ---
+icon: lucide/dices
 authors: Daniel Bazo Correa
 description:
     Herramientas probabilísticas y modelo de ruido con que se describe un canal de

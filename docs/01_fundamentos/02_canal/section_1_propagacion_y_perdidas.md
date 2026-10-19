@@ -1,4 +1,5 @@
 ---
+icon: lucide/signal-low
 authors: Daniel Bazo Correa
 description:
     Mecanismos de propagación radio y modelos con los que se estiman las pérdidas de un

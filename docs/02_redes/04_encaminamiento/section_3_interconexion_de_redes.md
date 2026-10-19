@@ -1,4 +1,5 @@
 ---
+icon: lucide/handshake
 authors: Daniel Bazo Correa
 description:
     Sistemas autónomos, acuerdos de tránsito y peering, y modelos de interconexión entre

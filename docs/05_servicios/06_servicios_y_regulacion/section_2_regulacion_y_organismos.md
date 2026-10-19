@@ -1,4 +1,5 @@
 ---
+icon: lucide/scale
 authors: Daniel Bazo Correa
 description:
     Razones económicas de la regulación del sector, reparto de competencias entre

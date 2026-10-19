@@ -1,4 +1,5 @@
 ---
+icon: lucide/merge
 authors: Daniel Bazo Correa
 description:
     Técnicas que permiten compartir un medio de transmisión entre varios flujos de

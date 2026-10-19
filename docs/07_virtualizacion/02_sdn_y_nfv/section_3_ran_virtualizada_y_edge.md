@@ -1,4 +1,5 @@
 ---
+icon: lucide/cloud
 authors: Daniel Bazo Correa
 description:
     Desagregación de la estación base en unidades central, distribuida y de radio,

@@ -1,4 +1,5 @@
 ---
+icon: lucide/smartphone
 authors: Daniel Bazo Correa
 description:
     Localización del terminal, traspaso entre celdas, itinerancia y mecanismos de

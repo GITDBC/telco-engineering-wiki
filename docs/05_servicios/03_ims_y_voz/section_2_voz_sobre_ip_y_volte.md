@@ -1,4 +1,5 @@
 ---
+icon: lucide/mic
 authors: Daniel Bazo Correa
 description:
     Transporte de la voz sobre redes de paquetes, desde la red inteligente hasta VoLTE y

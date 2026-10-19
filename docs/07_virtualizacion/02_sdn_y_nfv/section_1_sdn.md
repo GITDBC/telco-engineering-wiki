@@ -1,4 +1,5 @@
 ---
+icon: lucide/workflow
 authors: Daniel Bazo Correa
 description:
     Separación del plano de control y del plano de datos, programación del reenvío

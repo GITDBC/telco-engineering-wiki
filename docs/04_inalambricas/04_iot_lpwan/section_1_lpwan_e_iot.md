@@ -1,4 +1,5 @@
 ---
+icon: lucide/cpu
 authors: Daniel Bazo Correa
 description:
     Tecnologías de área amplia y bajo consumo para el Internet de las cosas, con y sin
