@@ -1,4 +1,5 @@
 ---
+icon: lucide/ruler
 authors: Daniel Bazo Correa
 description:
     Herramientas cartográficas y geodésicas, antenas de estación base y balance del

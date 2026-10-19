@@ -1,4 +1,5 @@
 ---
+icon: lucide/users
 authors: Daniel Bazo Correa
 description:
     Protocolos de acceso aleatorio y de acceso controlado a un medio de transmisión

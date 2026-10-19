@@ -1,4 +1,5 @@
 ---
+icon: lucide/audio-lines
 authors: Daniel Bazo Correa
 description:
     Modulaciones lineales y angulares de una portadora y prestaciones que ofrecen frente

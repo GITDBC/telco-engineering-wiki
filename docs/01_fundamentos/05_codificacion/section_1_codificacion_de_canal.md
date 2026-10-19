@@ -1,4 +1,5 @@
 ---
+icon: lucide/shield-check
 authors: Daniel Bazo Correa
 description:
     Códigos de bloque para detección y corrección de errores, desde la paridad hasta los

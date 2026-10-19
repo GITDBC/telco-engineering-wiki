@@ -1,4 +1,5 @@
 ---
+icon: lucide/boxes
 authors: Daniel Bazo Correa
 description:
     Marco arquitectónico ETSI NFV, componentes de la función de red virtualizada, bloque

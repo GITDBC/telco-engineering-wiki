@@ -1,4 +1,5 @@
 ---
+icon: lucide/binary
 authors: Daniel Bazo Correa
 description:
     Transmisión digital en banda base y paso banda, con su probabilidad de error y sus

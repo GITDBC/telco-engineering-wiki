@@ -1,4 +1,5 @@
 ---
+icon: lucide/radio
 authors: Daniel Bazo Correa
 description:
     Pila de protocolos de la red de acceso, planificación de recursos, codificación y

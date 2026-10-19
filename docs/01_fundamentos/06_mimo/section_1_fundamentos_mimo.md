@@ -1,4 +1,5 @@
 ---
+icon: lucide/antenna
 authors: Daniel Bazo Correa
 description:
     Canal con múltiples antenas y ganancias de array, de diversidad y de multiplexación.

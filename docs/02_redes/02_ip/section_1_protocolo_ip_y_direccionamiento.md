@@ -1,4 +1,5 @@
 ---
+icon: lucide/globe
 authors: Daniel Bazo Correa
 description:
     Entrega de datagramas entre redes, direccionamiento lógico, subredes y servicios

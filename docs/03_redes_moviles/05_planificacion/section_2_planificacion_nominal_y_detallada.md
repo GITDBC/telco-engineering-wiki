@@ -1,4 +1,5 @@
 ---
+icon: lucide/map
 authors: Daniel Bazo Correa
 description:
     Selección de emplazamientos, planificación de capacidad y ajuste de los planes de

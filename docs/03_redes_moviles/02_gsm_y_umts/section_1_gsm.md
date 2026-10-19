@@ -1,4 +1,5 @@
 ---
+icon: lucide/phone
 authors: Daniel Bazo Correa
 description:
     Arquitectura, canales y procedimientos del sistema celular de segunda generación.

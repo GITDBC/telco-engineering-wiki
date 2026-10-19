@@ -1,4 +1,5 @@
 ---
+icon: lucide/align-vertical-distribute-center
 authors: Daniel Bazo Correa
 description:
     Multiplexación por división de frecuencia ortogonal, su implementación digital y su

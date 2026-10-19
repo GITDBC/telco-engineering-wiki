@@ -1,4 +1,5 @@
 ---
+icon: lucide/wifi-cog
 authors: Daniel Bazo Correa
 description:
     Funciones de coordinación, formato de trama, mecanismos de eficiencia y gestión de

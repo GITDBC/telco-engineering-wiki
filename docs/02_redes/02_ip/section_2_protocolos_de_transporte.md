@@ -1,4 +1,5 @@
 ---
+icon: lucide/truck
 authors: Daniel Bazo Correa
 description:
     Servicios de transporte extremo a extremo sobre IP y protocolos de control

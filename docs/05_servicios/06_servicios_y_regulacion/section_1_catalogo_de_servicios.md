@@ -1,4 +1,5 @@
 ---
+icon: lucide/list
 authors: Daniel Bazo Correa
 description:
     Clasificación de los servicios de telecomunicación en categorías normalizadas,

@@ -1,4 +1,5 @@
 ---
+icon: lucide/gauge
 authors: Daniel Bazo Correa
 description:
     Funciones de gestión, sistemas de información de red e indicadores con que se mide

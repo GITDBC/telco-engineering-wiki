@@ -1,4 +1,5 @@
 ---
+icon: lucide/house
 authors: Daniel Bazo Correa
 description:
     Presentación de la wiki de ingeniería de telecomunicaciones y de su organización por

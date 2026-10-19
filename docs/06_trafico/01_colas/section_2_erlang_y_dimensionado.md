@@ -1,4 +1,5 @@
 ---
+icon: lucide/calculator
 authors: Daniel Bazo Correa
 description:
     Medida de la intensidad de tráfico y fórmulas con que se dimensionan los recursos de

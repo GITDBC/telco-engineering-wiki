@@ -1,4 +1,5 @@
 ---
+icon: lucide/signpost
 authors: Daniel Bazo Correa
 description: Protocolos de encaminamiento interior y exterior empleados en Internet.
 title: OSPF y BGP

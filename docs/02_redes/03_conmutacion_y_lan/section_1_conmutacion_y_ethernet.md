@@ -1,4 +1,5 @@
 ---
+icon: lucide/ethernet-port
 authors: Daniel Bazo Correa
 description:
     Conmutación de circuitos y de paquetes, redes Ethernet y segmentación lógica en

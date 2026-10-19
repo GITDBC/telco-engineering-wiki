@@ -1,4 +1,5 @@
 ---
+icon: lucide/layers
 authors: Daniel Bazo Correa
 description:
     Organización de una red en capas de protocolo, encapsulado de datos y esquemas de

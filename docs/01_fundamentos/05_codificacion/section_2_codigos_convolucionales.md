@@ -1,4 +1,5 @@
 ---
+icon: lucide/git-merge
 authors: Daniel Bazo Correa
 description:
     Códigos con memoria, decodificación de máxima verosimilitud y códigos concatenados

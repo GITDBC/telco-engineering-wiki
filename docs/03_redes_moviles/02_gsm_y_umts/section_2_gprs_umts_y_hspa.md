@@ -1,4 +1,5 @@
 ---
+icon: lucide/smartphone-nfc
 authors: Daniel Bazo Correa
 description:
     Introducción de la conmutación de paquetes en la red móvil y evolución de la red de

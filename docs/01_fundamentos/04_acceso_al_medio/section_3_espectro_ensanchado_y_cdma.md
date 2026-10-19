@@ -1,4 +1,5 @@
 ---
+icon: lucide/expand
 authors: Daniel Bazo Correa
 description:
     Multiplexación por división de código, ensanchamiento espectral y control de

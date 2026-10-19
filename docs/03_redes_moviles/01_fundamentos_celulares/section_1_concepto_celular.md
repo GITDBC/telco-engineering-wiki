@@ -1,4 +1,5 @@
 ---
+icon: lucide/hexagon
 authors: Daniel Bazo Correa
 description:
     Organización del acceso radio en celdas, reutilización del espectro y jerarquía de

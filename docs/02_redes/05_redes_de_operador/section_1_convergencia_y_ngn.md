@@ -1,4 +1,5 @@
 ---
+icon: lucide/combine
 authors: Daniel Bazo Correa
 description:
     Evolución desde redes verticales hacia una infraestructura convergente basada en IP

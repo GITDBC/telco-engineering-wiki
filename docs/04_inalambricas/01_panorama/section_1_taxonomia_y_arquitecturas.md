@@ -1,4 +1,5 @@
 ---
+icon: lucide/network
 authors: Daniel Bazo Correa
 description:
     Clasificación de las redes inalámbricas por alcance, tecnología, aplicación y

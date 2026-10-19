@@ -1,4 +1,5 @@
 ---
+icon: lucide/gauge
 authors: Daniel Bazo Correa
 description:
     Indicadores objetivos de calidad, acuerdos de nivel de servicio y arquitecturas que
